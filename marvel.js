@@ -9,7 +9,7 @@ async function getFromMarvel(url, query=""){
   .then(response => response.json())
   .catch(error => console.log('error', error));
 } 
- 
+ //Add a comment here
 function getRandomInt(min, max) {
    min = Math.ceil(min);
    max = Math.floor(max);
