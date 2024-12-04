@@ -8,7 +8,7 @@ async function getFromMarvel(url, query=""){
   return fetch(`http://gateway.marvel.com/v1/${url}?${parameters}${query}`)
   .then(response => response.json())
   .catch(error => console.log('error', error));
-}
+} 
 
 function getRandomInt(min, max) {
    min = Math.ceil(min);
