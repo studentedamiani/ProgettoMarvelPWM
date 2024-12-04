@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Bootstrap demo</title>
+	</head>
+	<body>
+		<h1>Hello, world!</h1>
+		<div id="Qui_Characters">
+
+		</div>
+	</body>
+	<script src="marvel.js"></script>
+	<script type="module">
+		console.log('Starting function');
+		await getFromMarvel('public/characters').then(result => 
+		//function () {
+		//		document.getElementById("Qui_Characters").innerHTML = JSON.stringify(result.data.results[0], null, 4);
+				console.log(result.data.results[0].name)//;
+	//	}
+	)
+	console.log("End function");
+	</script>
+</html>
