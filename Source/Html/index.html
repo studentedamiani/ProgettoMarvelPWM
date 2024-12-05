@@ -11,14 +11,18 @@
 
 		</div>
 	</body>
-	<script src="marvel.js"></script>
+	<script src="../../marvel.js"></script>
 	<script type="module">
 		console.log('Starting function');
 		await getFromMarvel('public/characters').then(result => 
-		//function () {
-		//		document.getElementById("Qui_Characters").innerHTML = JSON.stringify(result.data.results[0], null, 4);
-				console.log(result.data.results[0].name)//;
-	//	}
+		{		for (let i = 0; i < result.data.results.length; i++) {
+				var Div_Car = document.getElementById("Qui_Characters")
+				Div_Car.innerHTML =
+				Div_Car.innerHTML + '<br><img style="height:100px;width:100px;" src="'+result.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+result.data.results[i].thumbnail.extension+'"><b>'+result.data.results[i].name+'</b>';
+				console.log(result.data.results[i].name);
+				}
+
+		}
 	)
 	console.log("End function");
 	</script>
