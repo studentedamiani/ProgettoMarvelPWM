@@ -3,23 +3,38 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../Css/style.css">
 		<title>Bootstrap demo</title>
 	</head>
 	<body>
+		<a href="card_template_test.html"> Open Card</a>
 		<h1>Hello, world!</h1>
 		<div id="Qui_Characters">
 
 		</div>
 	</body>
-	<script src="../../marvel.js"></script>
+	<script src="../Scripts/marvel.js"></script>
 	<script type="module">
 		console.log('Starting function');
 		await getFromMarvel('public/characters').then(result => 
 		{		for (let i = 0; i < result.data.results.length; i++) {
 				var Div_Car = document.getElementById("Qui_Characters")
 				Div_Car.innerHTML =
-				Div_Car.innerHTML + '<br><img style="height:100px;width:100px;" src="'+result.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+result.data.results[i].thumbnail.extension+'"><b>'+result.data.results[i].name+'</b>';
-				console.log(result.data.results[i].name);
+				Div_Car.innerHTML + '<br>'+
+				'<div class="card card-shine-effect-metal">'+
+        '<div class="card-header">'+
+            '<h2>'+result.data.results[i].name+'</h2>'+
+        '</div>'+
+        '<div class="card-content">'+
+            '<img src="'+result.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+result.data.results[i].thumbnail.extension+'">'+
+        '</div>'+
+        '<div class="card-body">'+
+            result.data.results[i].description+
+        '</div>'+
+    '</div>';
+				//Stampo l'
+				//Div_Car.innerHTML + '<br><img style="height:100px;width:100px;" src="'+result.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+result.data.results[i].thumbnail.extension+'"><b>'+result.data.results[i].name+'</b>';
+				console.log(result.data.results[i]);
 				}
 
 		}

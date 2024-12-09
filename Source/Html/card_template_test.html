@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhero Card</title>
+    <style>
+        body {
+            /*background-image: url('https://i.pinimg.com/originals/f2/d2/ee/f2d2ee07809be8f0139fb12071bb4d28.gif');*/
+            background-color: red;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .card {
+            background-color: #222;
+            border: 10px solid #999;
+            border-radius: 15px;
+            width: 300px;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: #111;
+            padding: 15px;
+            text-align: center;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 280px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+        }
+
+        .card-content {
+            position: absolute;
+            top: 70px;
+            left: 20px;
+            width: 260px;
+            height: 260px;
+            background-color: #111;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .card-content img {
+            width: 100%;
+            height: auto;
+        }
+
+        .card-body {
+            position: absolute;
+            top:  340px;
+            left: 20px;
+            width: 260px;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+        }
+
+
+
+
+    .card-shine-effect-metal {
+    --shine-deg: 45deg;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.875rem;
+   /* padding: 4rem 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    width: 200px;
+    height: 180px;
+    background: linear-gradient(to bottom, #dbdbdb, #f9f9f9, #dbdbdb);*/
+    }
+
+    .card-shine-effect-metal:after {
+    content: "";
+    top: 0;
+    transform: translateX(100%) rotate(var(--shine-deg));
+    width: 300%;
+    height: 300%;
+    position: absolute;
+    z-index: 1;
+    background: linear-gradient(
+        30deg,
+        transparent 20%,
+        transparent 40%,
+        rgb(255, 255, 255, 0.4) 50%,
+        rgb(255, 255, 255, 0.4) 55%,
+        transparent 70%,
+        transparent 100%
+    );
+    transition: transform 2s ease-in;
+    transform: translateX(100%) rotate(var(--shine-deg));
+    }
+
+.card-shine-effect-metal:hover:after {
+  animation: shine 1s infinite ease-in;
+}
+
+    @-webkit-keyframes shine {
+    0% {
+        transform: translateX(100%) rotate(var(--shine-deg));
+    }
+    100% {
+        transform: translateX(-100%) rotate(var(--shine-deg));
+    }
+    }
+
+    </style>
+</head>
+<body>
+    <div class="card card-shine-effect-metal">
+        <div class="card-header">
+            <h2>Wolverine</h2>
+        </div>
+        <div class="card-content">
+            <img src="http://i.annihil.us/u/prod/marvel/i/mg/2/60/537bcaef0f6cf.jpg" alt="Superhero Image">
+        </div>
+        <div class="card-body">
+            <p>Born with super-human senses and the power to heal from almost any wound, Wolverine was captured by a secret Canadian organization and given an unbreakable skeleton and claws. Treated like an animal, it took years for him to control himself. Now, he's a premiere member of both the X-Men and the Avengers.</p>
+        </div>
+    </div>
+</body>
+</html>

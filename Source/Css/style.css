@@ -1,0 +1,117 @@
+body {
+    /*background-image: url('https://i.pinimg.com/originals/f2/d2/ee/f2d2ee07809be8f0139fb12071bb4d28.gif');*/
+    background-color: red;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.card {
+    background-color: #222;
+    border: 10px solid #999;
+    border-radius: 15px;
+    width: 300px;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #111;
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 280px;
+}
+
+.card-header h2 {
+    margin: 0;
+}
+
+.card-content {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    width: 260px;
+    height: 260px;
+    background-color: #111;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.card-content img {
+    width: 100%;
+    height: auto;
+}
+
+.card-body {
+    position: absolute;
+    top:  340px;
+    left: 20px;
+    width: 260px;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+}
+
+
+
+
+.card-shine-effect-metal {
+--shine-deg: 45deg;
+position: relative;
+overflow: hidden;
+border-radius: 0.875rem;
+/* padding: 4rem 2rem;
+box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+width: 200px;
+height: 180px;
+background: linear-gradient(to bottom, #dbdbdb, #f9f9f9, #dbdbdb);*/
+}
+
+.card-shine-effect-metal:after {
+content: "";
+top: 0;
+transform: translateX(100%) rotate(var(--shine-deg));
+width: 300%;
+height: 300%;
+position: absolute;
+z-index: 1;
+background: linear-gradient(
+30deg,
+transparent 20%,
+transparent 40%,
+rgb(255, 255, 255, 0.4) 50%,
+rgb(255, 255, 255, 0.4) 55%,
+transparent 70%,
+transparent 100%
+);
+transition: transform 2s ease-in;
+transform: translateX(100%) rotate(var(--shine-deg));
+}
+
+.card-shine-effect-metal:hover:after {
+animation: shine 1s infinite ease-in;
+}
+
+@-webkit-keyframes shine {
+0% {
+transform: translateX(100%) rotate(var(--shine-deg));
+}
+100% {
+transform: translateX(-100%) rotate(var(--shine-deg));
+}
+}
