@@ -141,7 +141,7 @@ const doc = {
        }
    }
 }
-
+/*
 const generateSwagger = async () => {
   try {
     await swaggerAutogen()(outputFile, endpointsFiles,doc);
@@ -153,3 +153,4 @@ const generateSwagger = async () => {
 
 utils.createLogFolder();
 generateSwagger();
+*/
