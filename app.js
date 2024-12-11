@@ -3,13 +3,38 @@
 import express from "express";
 //import cors from "cors";
 import path from 'path';
-import mongo from 'mongodb';
+import { MongoClient } from 'mongodb';
 
 //var express = require('express'),
 var app = express(); 
 app.use(express.static(path.resolve('./public/')));
 app.listen(666);
 
+/*Manage the connection to database*/
+// Connection URL
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url);
+const dbName = 'myDatabase';
+
+async function main() {
+    try {
+        // Connect the client to the server
+        await client.connect();
+        console.log('Connected successfully to server');
+
+        const db = client.db(dbName);
+
+        // Perform operations
+        const collection = db.collection('myCollection');
+        const documents = await collection.find({}).toArray();
+        console.log(documents);
+    } catch (err) {
+        console.error(err);
+    } finally {
+        // Ensure the client is closed
+        await client.close();
+    }
+}
 
 //import { login,authuser } from "./src/lib/login.js";
 //import { getUsers, getUser, updateUser, deleteUser } from "./src/lib/user.js";
