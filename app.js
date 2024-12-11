@@ -1,18 +1,9 @@
 // Import dei moduli necessari utilizzando il sistema di moduli ES6
 
 import express from "express";
-import cors from "cors";
-//import { config } from "./src/api/docs/config/prefs.js";
-//import { fileURLToPath } from 'url';
-//import { dirname } from 'path';
+//import cors from "cors";
 import path from 'path';
-//const __filename = fileURLToPath(import.meta.url);
-//const __dirname = dirname(__filename);
-//import {
-//   serve as swaggerUiServe,
-//   setup as swaggerUiSetup,
-//} from "swagger-ui-express";
-//import 'dotenv/config'
+import mongo from 'mongodb';
 
 //var express = require('express'),
 var app = express(); 
@@ -49,14 +40,3 @@ const corsOptions = {
 */
  // Usa il middleware cors
 // app.use(cors(corsOptions));
-
-
-// Middleware per servire la documentazione API tramite Swagger UI
-//app.use('/api-docs', swaggerUiServe, swaggerUiSetup(swaggerDocument));
-
-// Middleware per servire file statici
-//app.use(express.static(config.__dirname));
-//app.use(express.static(join(config.__dirname, "/src/")));
-//app.use(express.static(join(config.__dirname, "/src/config/")));
-//app.use(express.static(join(config.__dirname, "/src/public/")));
-//app.use(express.static(join(config.__dirname, "/src/Html/")));
