@@ -7,16 +7,18 @@
 		<title>Index page</title>
 	</head>
 	<body>
+		<img src ="https://upload.wikimedia.org/wikipedia/commons/e/eb/Candy_canes.png">
+		<h1>Hello christmas</h1>
 		<a href="card_template_test.html"> Open Card</a>
-		<h1>Here you see a test of printing a set of characters</h1>
+		<!--<h1>Here you see a test of printing a set of characters</h1>-->
 		<div id="Qui_Characters">
 
 		</div>
 	</body>
-	<script src="../Scripts/marvel.js"></script>
-	<script type="module">
+	<script src="/Scripts/marvel.js"></script>
+	<script >
 		console.log('Starting function');
-		await getFromMarvel('public/characters').then(result => 
+		getFromMarvel('public/characters').then(result => 
 		{		for (let i = 0; i < result.data.results.length; i++) {
 				var Div_Car = document.getElementById("Qui_Characters")
 				Div_Car.innerHTML =
