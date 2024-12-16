@@ -1,2 +1,4 @@
 //Add here the files to not store on git
+//At the end of developement will add to the list the file ENV
 /node_modules
+/.vscode
