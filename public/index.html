@@ -9,11 +9,15 @@
 		<link rel="icon" href="/images/logo.png" type="image/x-icon">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
 			integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
-			<link rel="stylesheet" href="/Css/style.css">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+			<link rel="stylesheet" href="/css/style.css">
+			<link rel="stylesheet" href="/css/card.css">
+			<script src="/scripts/theme.js"></script>
 		</head>
 	<body>
 		<div id="header">
-			<img src ="/images/logo.png" style="width:150px;">
+			<img src ="/images/logo.png" class="logo">
 			<h1>Hello christmas</h1>
 			<a href="card_template_test.html"> Open Card</a>
 		</div>
@@ -22,43 +26,53 @@
 
 		</div>
 	</body>
-	<script src="/Scripts/marvel.js"></script>
-	<script >
+	<script type="module" >
+		//getFromMarvel('public/characters').
 		console.log('Starting function');
-		getFromMarvel('public/characters').then(result => 
-		{		for (let i = 0; i < result.data.results.length; i++) {
+		await fetch('\lib').then(response => {var pippo = response.json(); var Div_Car = document.getElementById("Qui_Characters"); Div_Car.innerHTML = pippo; console.log(pippo);})
+				//res.status(200).send()
+		.catch(error => console.log('error', error));
+		/*await fetch('\lib').then(result => 
+		
+		{		const resultato = result.json();
+			console.log(resultato);
+			for (let i = 0; i < resultato.data.results.length; i++) {
 				var Div_Car = document.getElementById("Qui_Characters");
 				var desc;
-				if (result.data.results[i].description) {desc = result.data.results[i].description;} else {desc = result.data.results[i].name+" story's is so secret that nobody kwnows it.";} ;
+				if (resultato.data.results[i].description) {desc = resultato.data.results[i].description;} else {desc = resultato.data.results[i].name+" story's is so secret that nobody kwnows it.";} ;
 				//Se l'immagine non è nulla o la descrizione non è nulla non lo stampo
-				if (result.data.results[i].description || result.data.results[i].thumbnail.path !="http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") 
+				if (resultato.data.results[i].description || resultato.data.results[i].thumbnail.path !="http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") 
 				{
 					Div_Car.innerHTML =
 						Div_Car.innerHTML + 
-						'<div class="card card-shine-effect-metal">'+
+						'<div class="card card-shine-effect-metal" id="char-'+resultato.data.results[i].id+'">'+
 							'<div class="card-header">'+
-								'<h2>'+result.data.results[i].name+'</h2>'+
+								resultato.data.results[i].name+
 							'</div>'+
+							//'<hr>'+
 							'<div class="card-content">'+
-								'<img src="'+result.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+result.data.results[i].thumbnail.extension+'">'+
+								'<img src="'+resultato.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+resultato.data.results[i].thumbnail.extension+'">'+
 							'</div>'+
 							'<div class="card-body">'+
 								desc+
 							'</div>'+
+							'<div class="card-footer">'+
+								resultato.attributionText+
+							'</div>'+
 						'</div>';
-				console.log(result.data.results[i]);		
+				console.log(resultato.data.results[i]);		
 				}
 				else
 				console.warn("Dato vuoto");
-				console.log(result.data.results[i]);
+				console.log(resultato.data.results[i]);
 				
 				//Stampo l'
-				//Div_Car.innerHTML + '<br><img style="height:100px;width:100px;" src="'+result.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+result.data.results[i].thumbnail.extension+'"><b>'+result.data.results[i].name+'</b>';
+				//Div_Car.innerHTML + '<br><img style="height:100px;width:100px;" src="'+resultato.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+resultato.data.results[i].thumbnail.extension+'"><b>'+resultato.data.results[i].name+'</b>';
 				
 				}
 
 		}
-	)
+	)*/
 	console.log("End function");
 	</script>
 </html>

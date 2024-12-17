@@ -1,0 +1,110 @@
+.card {
+    background-color: var(--bs-red);
+    border: 10px solid var(--bs-black);
+    border-radius: 15px;
+    width: 300px;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+    padding: 10px;
+    margin: 10px;
+}
+
+.card-header {
+    xpadding: 0px 0px 0px 15px;
+    min-height: 75px;
+    text-align: center;
+    font-size: 125%;
+    font-weight: bold;
+    width: 100%;
+    vertical-align: middle;
+}
+
+.card-content {
+    width: 100%;
+    height: 260px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border : 1px solid black
+    /*overflow: hidden;*/
+}
+.card-body::-webkit-scrollbar {
+
+    width: 3px;
+  }
+  .card-body::-webkit-scrollbar-thumb {
+    background: red; 
+  }
+/* Track */
+.card-body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+.card-content img {
+    width: 100%;
+    height: 260px;
+
+}
+
+.card-body {
+    font-size: 14px;
+    text-align: center;
+    overflow-y: auto;
+}
+.card-footer
+{
+    font-size :8px;
+    text-align: right;
+}
+
+@media (prefers-color-scheme: dark) {
+    .card {
+        border: 10px solid var(--bs-white);
+        color : var(--bs-white)
+
+    }
+}
+
+.card-shine-effect-metal {
+--shine-deg: 45deg;
+position: relative;
+overflow: hidden;
+border-radius: 0.875rem;
+}
+
+.card-shine-effect-metal:after {
+content: "";
+top: 0;
+transform: translateX(100%) rotate(var(--shine-deg));
+width: 300%;
+height: 300%;
+position: absolute;
+z-index: 1;
+background: linear-gradient(
+30deg,
+transparent 20%,
+transparent 40%,
+rgb(255, 255, 255, 0.4) 50%,
+rgb(255, 255, 255, 0.4) 55%,
+transparent 70%,
+transparent 100%
+);
+transition: transform 2s ease-in;
+transform: translateX(100%) rotate(var(--shine-deg));
+}
+
+.card-shine-effect-metal:hover:after {
+animation: shine 1s 1 ease-in;
+}
+
+@-webkit-keyframes shine {
+0% {
+transform: translateX(100%) rotate(var(--shine-deg));
+}
+100% {
+transform: translateX(-100%) rotate(var(--shine-deg));
+}
+}

@@ -6,13 +6,43 @@ import path from 'path';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import 'dotenv/config';
 import { marvel } from "./config/prefs.js";
-import * as marvel_API from './public/scripts/marvel.js';
+import * as marvel_API from './lib/marvel.js';
 
 //var express = require('express'),
 var app = express(); 
 app.use(express.static(path.resolve('./public/')));
 app.listen(process.env.PORT);
+/*Vuol dire che espone al percorso "/lib" con chiesta req e risposta res quello che c'è dentro la funzione.*/
+app.get("/lib",(req,res) => {
+ var pippo;
+marvel_API.getFromMarvel(req ,'public/characters',pippo).then(response => {res.send(response.json());console.log('req->'+req+'pippo->'+pippo+response.json().promise);})
+  /*result => 
+  {		
+    res.send(result.json())
+      console.log(result);
+    */ /*for (let i = 0; i < result.data.results.length; i++) {
+      var desc;
+      if (result.data.results[i].description) {desc = result.data.results[i].description;} else {desc = result.data.results[i].name+" story's is so secret that nobody kwnows it.";} ;
+      //Se l'immagine non è nulla o la descrizione non è nulla non lo stampo
+      if (result.data.results[i].description || result.data.results[i].thumbnail.path !="http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") 
+      {
+      console.log(result.data.results[i]);		
+      }
+      else
+      console.group("FATTO IN APPJS");
+      console.warn("Dato vuoto");
+      console.log(result.data.results[i]);
+      console.groupEnd();
+      
+      //Stampo l'
+      //Div_Car.innerHTML + '<br><img style="height:100px;width:100px;" src="'+result.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+result.data.results[i].thumbnail.extension+'"><b>'+result.data.results[i].name+'</b>';
+      
+      }
 
+      console.groupEnd();
+*/    /*});
+
+*/})
 /*Manage the connection to database*/
 // Crea un'istanza di MongoClient con un oggetto MongoClientOptions per impostare la versione Stable API
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}/?${process.env.DB_OPTIONS}`;
