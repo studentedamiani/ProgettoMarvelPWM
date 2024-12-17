@@ -3,7 +3,7 @@ body {
     background-color: red;
     background-repeat: no-repeat;
     background-size: cover;
-    display: flex;
+    /*display: flex;*/
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -19,6 +19,7 @@ body {
     height: 500px;
     position: relative;
     overflow: hidden;
+    float: left;
 }
 
 .card-header {

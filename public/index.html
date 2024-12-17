@@ -1,15 +1,22 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="/Css/style.css">
-		<title>Index page</title>
-	</head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			Album delle figurine dei super eroi (AFSE)
+		</title>
+		<link rel="icon" href="/images/logo.png" type="image/x-icon">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+			integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+			<link rel="stylesheet" href="/Css/style.css">
+		</head>
 	<body>
-		<img src ="https://upload.wikimedia.org/wikipedia/commons/e/eb/Candy_canes.png">
-		<h1>Hello christmas</h1>
-		<a href="card_template_test.html"> Open Card</a>
+		<div id="header">
+			<img src ="/images/logo.png" style="width:150px;">
+			<h1>Hello christmas</h1>
+			<a href="card_template_test.html"> Open Card</a>
+		</div>
 		<!--<h1>Here you see a test of printing a set of characters</h1>-->
 		<div id="Qui_Characters">
 
@@ -20,23 +27,34 @@
 		console.log('Starting function');
 		getFromMarvel('public/characters').then(result => 
 		{		for (let i = 0; i < result.data.results.length; i++) {
-				var Div_Car = document.getElementById("Qui_Characters")
-				Div_Car.innerHTML =
-				Div_Car.innerHTML + '<br>'+
-				'<div class="card card-shine-effect-metal">'+
-        '<div class="card-header">'+
-            '<h2>'+result.data.results[i].name+'</h2>'+
-        '</div>'+
-        '<div class="card-content">'+
-            '<img src="'+result.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+result.data.results[i].thumbnail.extension+'">'+
-        '</div>'+
-        '<div class="card-body">'+
-            result.data.results[i].description+
-        '</div>'+
-    '</div>';
+				var Div_Car = document.getElementById("Qui_Characters");
+				var desc;
+				if (result.data.results[i].description) {desc = result.data.results[i].description;} else {desc = result.data.results[i].name+" story's is so secret that nobody kwnows it.";} ;
+				//Se l'immagine non è nulla o la descrizione non è nulla non lo stampo
+				if (result.data.results[i].description || result.data.results[i].thumbnail.path !="http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") 
+				{
+					Div_Car.innerHTML =
+						Div_Car.innerHTML + 
+						'<div class="card card-shine-effect-metal">'+
+							'<div class="card-header">'+
+								'<h2>'+result.data.results[i].name+'</h2>'+
+							'</div>'+
+							'<div class="card-content">'+
+								'<img src="'+result.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+result.data.results[i].thumbnail.extension+'">'+
+							'</div>'+
+							'<div class="card-body">'+
+								desc+
+							'</div>'+
+						'</div>';
+				console.log(result.data.results[i]);		
+				}
+				else
+				console.warn("Dato vuoto");
+				console.log(result.data.results[i]);
+				
 				//Stampo l'
 				//Div_Car.innerHTML + '<br><img style="height:100px;width:100px;" src="'+result.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+result.data.results[i].thumbnail.extension+'"><b>'+result.data.results[i].name+'</b>';
-				console.log(result.data.results[i]);
+				
 				}
 
 		}
