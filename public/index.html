@@ -26,53 +26,59 @@
 
 		</div>
 	</body>
-	<script type="module" >
+	<script >
 		//getFromMarvel('public/characters').
-		console.log('Starting function');
-		await fetch('\lib').then(response => {var pippo = response.json(); var Div_Car = document.getElementById("Qui_Characters"); Div_Car.innerHTML = pippo; console.log(pippo);})
-				//res.status(200).send()
-		.catch(error => console.log('error', error));
-		/*await fetch('\lib').then(result => 
-		
-		{		const resultato = result.json();
-			console.log(resultato);
-			for (let i = 0; i < resultato.data.results.length; i++) {
-				var Div_Car = document.getElementById("Qui_Characters");
-				var desc;
-				if (resultato.data.results[i].description) {desc = resultato.data.results[i].description;} else {desc = resultato.data.results[i].name+" story's is so secret that nobody kwnows it.";} ;
-				//Se l'immagine non è nulla o la descrizione non è nulla non lo stampo
-				if (resultato.data.results[i].description || resultato.data.results[i].thumbnail.path !="http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") 
-				{
-					Div_Car.innerHTML =
-						Div_Car.innerHTML + 
-						'<div class="card card-shine-effect-metal" id="char-'+resultato.data.results[i].id+'">'+
-							'<div class="card-header">'+
-								resultato.data.results[i].name+
-							'</div>'+
-							//'<hr>'+
-							'<div class="card-content">'+
-								'<img src="'+resultato.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+resultato.data.results[i].thumbnail.extension+'">'+
-							'</div>'+
-							'<div class="card-body">'+
-								desc+
-							'</div>'+
-							'<div class="card-footer">'+
-								resultato.attributionText+
-							'</div>'+
-						'</div>';
-				console.log(resultato.data.results[i]);		
-				}
-				else
-				console.warn("Dato vuoto");
-				console.log(resultato.data.results[i]);
-				
+		async function getMarvelCarachters() {
+			return await fetch('\lib')
+				.then(response => response.json())
+				//.catch(error => console.log(error))
+
+		}
+	</script>
+	<script>
+			getMarvelCarachters()
+				.then(response =>
+					{	console.log(response.data);
+						for (let i = 0; i < response.data.count; i++) {
+							var Div_Car = document.getElementById("Qui_Characters");
+							var desc;
+							if (response.data.results[i].description) {desc = response.data.results[i].description;} else {desc = response.data.results[i].name+" story's is so secret that nobody kwnows it.";} ;
+							//Se l'immagine non è nulla o la descrizione non è nulla non lo stampo
+							if (response.data.results[i].description || response.data.results[i].thumbnail.path !="http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") 
+							{
+								Div_Car.innerHTML =
+									Div_Car.innerHTML + 
+									'<div class="card card-shine-effect-metal" id="char-'+response.data.results[i].id+'">'+
+										'<div class="card-header">'+
+											response.data.results[i].name+
+										'</div>'+
+										//'<hr>'+
+										'<div class="card-content">'+
+											'<img src="'+response.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+response.data.results[i].thumbnail.extension+'">'+
+										'</div>'+
+										'<div class="card-body">'+
+											desc+
+										'</div>'+
+										'<div class="card-footer">'+
+											response.attributionText+
+										'</div>'+
+									'</div>';
+							console.log(response.data.results[i]);		
+							}
+							else
+							console.warn("Dato vuoto");
+							console.log(response.data.results[i]);
+								
 				//Stampo l'
-				//Div_Car.innerHTML + '<br><img style="height:100px;width:100px;" src="'+resultato.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+resultato.data.results[i].thumbnail.extension+'"><b>'+resultato.data.results[i].name+'</b>';
+				//Div_Car.innerHTML + '<br><img style="height:100px;width:100px;" src="'+response.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+response.data.results[i].thumbnail.extension+'"><b>'+response.data.results[i].name+'</b>';
 				
 				}
 
-		}
-	)*/
-	console.log("End function");
+
+
+
+					}
+				) 
+				.catch(response => console.log("Error!"+response))
 	</script>
 </html>
