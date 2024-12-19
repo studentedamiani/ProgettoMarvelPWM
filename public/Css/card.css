@@ -1,3 +1,6 @@
+.character_container {
+    width: 300*3;
+}
 .card {
     background-color: var(--bs-red);
     border: 10px solid var(--bs-black);

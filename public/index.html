@@ -22,7 +22,7 @@
 			<a href="card_template_test.html"> Open Card</a>
 		</div>
 		<!--<h1>Here you see a test of printing a set of characters</h1>-->
-		<div id="Qui_Characters">
+		<div id="character_container">
 
 		</div>
 	</body>
@@ -31,16 +31,21 @@
 		async function getMarvelCarachters() {
 			return await fetch('\lib')
 				.then(response => response.json())
-				//.catch(error => console.log(error))
+				.catch(error => console.log(error))
 
 		}
 	</script>
 	<script>
 			getMarvelCarachters()
 				.then(response =>
-					{	console.log(response.data);
-						for (let i = 0; i < response.data.count; i++) {
-							var Div_Car = document.getElementById("Qui_Characters");
+					{	if (response.code !=200 ) {console.log("RESPONSE"+response.code);} else {
+						console.log(response.data);
+						var printed_characters_count =0; //Dichiarazione e inizializzazione della variabile
+						var i=0;
+						var sicurezza = 0;
+						//for (let i = 0; i < response.data.count || printed_characters_count < 10; i++) {
+							while (i < response.data.count || printed_characters_count < 10  || sicurezza <100) {
+							var Div_Car = document.getElementById("character_container");
 							var desc;
 							if (response.data.results[i].description) {desc = response.data.results[i].description;} else {desc = response.data.results[i].name+" story's is so secret that nobody kwnows it.";} ;
 							//Se l'immagine non è nulla o la descrizione non è nulla non lo stampo
@@ -63,20 +68,32 @@
 											response.attributionText+
 										'</div>'+
 									'</div>';
-							console.log(response.data.results[i]);		
-							}
-							else
+							console.log(response.data.results[i]);	
+							printed_characters_count++;	
+							if (printed_characters_count % 3 == 0) 
+								{
+									console.log("Ho stampato il terzo!");
+									//Div_Car.innerHTML = Div_Car.innerHTML + '<br>';
+								}
+							console.log("Stampati->"+printed_characters_count);
+							} else
+							{
 							console.warn("Dato vuoto");
 							console.log(response.data.results[i]);
-								
+							}
+							sicurezza ++;
+							if (sicurezza  >99 ) { console.error("sicurezza è saltata"); break; }
+							console.log("sicurezza ->"+sicurezza);
+							i++;
 				//Stampo l'
 				//Div_Car.innerHTML + '<br><img style="height:100px;width:100px;" src="'+response.data.results[i].thumbnail.path.replace(/"/g, "")+'.'+response.data.results[i].thumbnail.extension+'"><b>'+response.data.results[i].name+'</b>';
 				
-				}
+						}
 
 
 
 
+						}
 					}
 				) 
 				.catch(response => console.log("Error!"+response))

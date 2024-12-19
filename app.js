@@ -24,12 +24,12 @@ marvel_API.returnCharactersNumber().then(response => {pluto = response;
 /*Vuol dire che espone al percorso "/lib" con chiesta req e risposta res quello che c'è dentro la funzione.*/
 app.get("/lib",(req,res) => {
  var pippo;//= 'limit=1&';
-  console.log("max_characters "+(global.max_characters-1500));
-  var pippo = "limit="+(10)+"&";
+  console.log("max_characters "+(global.max_characters));
+  var pippo = "limit=9&";
   //for (let i = 0; i < 5; i++) {
     marvel_API.getFromMarvel(req ,'public/characters',pippo)
       .then(response => {res.send(response);})
-      .catch(console.log("ERROR!"))
+      //.catch( res.sendStatus(500)/* new Error('Parameter is not a number!');*/)
   //}
  
  
