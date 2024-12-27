@@ -1,21 +1,30 @@
-.character_container {
-    width: 300*3;
+
+:root {
+    --card-width: 300px;
+}
+.character_container{
+    display: grid;
+    grid-template-columns: repeat(3, var(--card-width));
+    gap: 20px;
+    max-width: calc(var(--card-width) * 3 + 40px);
+    margin: 0 auto;
+   /* width: calc(var(--card-width) *3 + 40);*/
 }
 .card {
     background-color: var(--bs-red);
     border: 10px solid var(--bs-black);
     border-radius: 15px;
-    width: 300px;
+    /*width: var(--card-width);*/
+    width: 100%;
     height: 500px;
     position: relative;
     overflow: hidden;
     float: left;
-    padding: 10px;
-    margin: 10px;
+    /*padding: 10px;
+    margin: 10px;*/
 }
 
 .card-header {
-    xpadding: 0px 0px 0px 15px;
     min-height: 75px;
     text-align: center;
     font-size: 125%;

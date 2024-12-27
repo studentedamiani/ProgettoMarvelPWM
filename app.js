@@ -7,9 +7,12 @@ import { MongoClient, ServerApiVersion } from 'mongodb';
 import 'dotenv/config';
 import { marvel } from "./config/prefs.js";
 import * as marvel_API from './lib/marvel.js';
+import * as Utils from './lib/utils.js';
+
 
 /*Dichiarazione variabili*/
 global.max_characters;
+global.db;
 var app = express(); 
 /*Indirizzamento della cartella alla quale puntare per renderizzare HTML*/
 app.use(express.static(path.resolve('./public/')));
@@ -21,11 +24,12 @@ marvel_API.returnCharactersNumber().then(response => {pluto = response;
   global.max_characters = pluto.data.total;
 })
 
+
 /*Vuol dire che espone al percorso "/lib" con chiesta req e risposta res quello che c'è dentro la funzione.*/
 app.get("/lib",(req,res) => {
  var pippo;//= 'limit=1&';
   console.log("max_characters "+(global.max_characters));
-  var pippo = "limit=9&";
+  //var pippo = "limit=9&";
   //for (let i = 0; i < 5; i++) {
     marvel_API.getFromMarvel(req ,'public/characters',pippo)
       .then(response => {res.send(response);})
@@ -36,6 +40,7 @@ app.get("/lib",(req,res) => {
 })
 /*Manage the connection to database*/
 // Crea un'istanza di MongoClient con un oggetto MongoClientOptions per impostare la versione Stable API
+
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}/?${process.env.DB_OPTIONS}`;
 const client = new MongoClient(uri, {
   serverApi: {
@@ -71,7 +76,18 @@ async function run() {
   } 
   finally {
     // Assicura che il client venga chiuso al termine
+    try {
+      const cursor = client.db("PWMDB").collection("customers").find();
+      await cursor.forEach(console.log);
+    }
+    catch (error) {
+      console.error('Connection to MongoDB failed:', error);
+      throw error;
+    } 
+    finally {
     await client.close();
+    console.log("Connection closed successfully!");
+    }
   }
 }
 

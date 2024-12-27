@@ -22,21 +22,21 @@
 			<a href="card_template_test.html"> Open Card</a>
 		</div>
 		<!--<h1>Here you see a test of printing a set of characters</h1>-->
-		<div id="character_container">
+		<div id="character_container" class="character_container">
 
 		</div>
 	</body>
 	<script >
 		//getFromMarvel('public/characters').
-		async function getMarvelCarachters() {
-			return await fetch('\lib')
+		async function getMarvelCarachters(query) {
+			return await fetch('\lib',query)
 				.then(response => response.json())
 				.catch(error => console.log(error))
 
 		}
 	</script>
 	<script>
-			getMarvelCarachters()
+			/*getMarvelCarachters()
 				.then(response =>
 					{	if (response.code !=200 ) {console.log("RESPONSE"+response.code);} else {
 						console.log(response.data);
@@ -70,6 +70,7 @@
 									'</div>';
 							console.log(response.data.results[i]);	
 							printed_characters_count++;	
+							num++;
 							if (printed_characters_count % 3 == 0) 
 								{
 									console.log("Ho stampato il terzo!");
@@ -96,6 +97,10 @@
 						}
 					}
 				) 
-				.catch(response => console.log("Error!"+response))
-	</script>
+				.catch(response => console.log("Error!"+response)) */
+		//stampo tutti e conto i buoni
+		for (let i = 0; i < 1564; i++) {
+			
+		}
+</script>
 </html>
