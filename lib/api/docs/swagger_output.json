@@ -1,0 +1,86 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Marvel Characters API",
+      "description": "API for retrieving Marvel characters information",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:666",
+        "description": "Development server"
+      }
+    ],
+    "paths": {
+      "/lib": {
+        "get": {
+          "summary": "Get Marvel characters",
+          "description": "Retrieves a list of Marvel characters",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CharacterResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "CharacterResponse": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "integer",
+              "example": 200
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Character"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Character": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "thumbnail": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "extension": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
