@@ -23,3 +23,11 @@ body {
     margin: 0;
     font-family: 'Arial', sans-serif;
 }
+.nav-user-icon{
+    height: 20%;
+    max-height: 20px;
+}
+.nav-logo {
+    height:30px;   
+    width:100%
+}
