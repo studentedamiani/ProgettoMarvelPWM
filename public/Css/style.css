@@ -14,7 +14,6 @@
 }
 
 body {
-    /*background-image: url('https://i.pinimg.com/originals/f2/d2/ee/f2d2ee07809be8f0139fb12071bb4d28.gif');*/
     background-color: var(--bs-body-bg);
     color: var(--bs-body-color);
     justify-content: center;
@@ -30,4 +29,27 @@ body {
 .nav-logo {
     height:30px;   
     width:100%
+}
+.hidden {
+    display: none !important;
+}
+/*Popup LOV*/
+.dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+}
+.search-results {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.search-item {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+.search-item:hover {
+    background-color: #f8f9fa;
+}
+.selected-item {
+    background-color: #e9ecef;
 }

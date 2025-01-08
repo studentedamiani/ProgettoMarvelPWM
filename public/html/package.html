@@ -12,63 +12,28 @@
     <!-- import of custom CSS-->
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/card.css">
-    <style>
-        .card-pack {
-            width: 200px;
-            height: 300px;
-            background: linear-gradient(45deg, #e31010, #ff4646);
-            border: 3px solid #gold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .shake {
-            animation: shake 0.5s;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-    </style>
 </head>
-<body class="bg-dark">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
-        <div class="container-fluid px-2" id="NavigationBar">
-        </div>
-    </nav>
+<body >
+    <div id="menu"></div>
     <div class="container min-vh-100 d-flex justify-content-center align-items-center">
-        <button id="cardPack" class="card-pack btn d-flex justify-content-center align-items-center">
-            <h3 class="text-white">OPEN PACK</h3>
-        </button>
+        <button id="cardPack" class="card-pack btn d-flex justify-content-center align-items-center"></button>
         
-        <div id="revealedContent" class="hidden text-white">
-            <h2>Congratulations!</h2>
-            <p>You've opened your pack!</p>
+        <div id="pack_cards" class="hidden pack_cards">
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.getElementById('cardPack').addEventListener('click', function() {
-            this.classList.add('shake');
-            setTimeout(() => {
-                this.classList.add('hidden');
-                document.getElementById('revealedContent').classList.remove('hidden');
-            }, 500);
+    <script >
+        document.getElementById('cardPack').addEventListener('click',async function() {
+            const button = this;
+                // Set loading state
+                button.disabled = true;  
+                button.classList.add('shake');          
+                await printPackage().then (result => {
+                    button.classList.add('hidden');
+                    document.getElementById('pack_cards').classList.remove('hidden');
+                    button.disabled = false;
+                });       // Then wait for data   
         });
     </script>
     <!-- import of JS -->

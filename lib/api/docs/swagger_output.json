@@ -2,9 +2,17 @@
     "openapi": "3.0.0",
     "info": {
       "title": "Marvel Characters API",
-      "description": "API for retrieving Marvel characters information",
+      "description" : "Documentation for the APIs of my website: AFSE (Album delle Figurine dei Super Eroi)",
       "version": "1.0.0"
     },
+    "host": "localhost:666",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "fetch",
+        "description": "Endpoints for fetching and searching content."
+      }
+    ],
     "servers": [
       {
         "url": "http://localhost:666",
@@ -12,7 +20,7 @@
       }
     ],
     "paths": {
-      "/lib": {
+      "/": {
         "get": {
           "summary": "Get Marvel characters",
           "description": "Retrieves a list of Marvel characters",
