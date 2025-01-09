@@ -84,7 +84,6 @@ async function loadHTML() {
     .then(response => response.text())
     .then(data => {
       htmlContent = data;
-      console.log(htmlContent);
     });
 }
 

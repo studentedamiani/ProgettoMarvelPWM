@@ -77,10 +77,7 @@ marvel_API.returnCharactersNumber().then(response => {pluto = response;
 
 // Middleware per servire la documentazione API tramite Swagger UI
 
-/*database.check_db_connection()
-.then(console.log("Ok"))
-.catch(sendStatus(500));
-*/
+
 
 
 app.get("/db",(req,res) => {
@@ -90,20 +87,15 @@ app.get("/db",(req,res) => {
 
 app.post("/register", async (req, res) => {
   try {
-    console.log("Registrazione avviata....");
-    console.log(req.body);
-    console.log("SCEMO SCEMO");
     const { username, password } = req.body ;
-    console.log(username);
     //const result = await
-     register.register(res,req.body);
+     await register.register(res,req.body);
     //res.status(result.status).json(result);
-    console.log("Registrazione avvenuta con successo");
     //res.status(200).json({ message: 'Registration successful' });
    // res.send("Registrazione avvenuta con successo");
     
   } catch (error) {
-    console.log("Errore di registrazione");//res.status(500).json({ error: 'Failed to register user' });
+    console.error("Errore di registrazione");//res.status(500).json({ error: 'Failed to register user' });
   }
 });
 
@@ -127,3 +119,11 @@ app.post("/characters",(req,res) => {
 /************ATTIVAZIONE APP***********/
 /*Metto in ascolto il server sulla porta definita a livello di .ENV*/
 app.listen(process.env.PORT);
+/************CONTROLLI VARI************/
+database.check_db_connection()
+  .then(console.log("Database connection successful"))
+  .catch(error => console.error("Database connection failed:", error));
+/*
+database.check_collections()
+  .then(console.log("Ok"))
+  .catch(sendStatus(500));*/

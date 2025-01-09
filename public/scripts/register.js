@@ -257,10 +257,14 @@ async function register() {
         });
         
 
-        const result = await response;
+        const result = await response;;
 
         if (!response.ok) {
-            throw new Error(result.message || `HTTP error! status: ${response.status}`);
+            if (response.status == 530) {
+                throw new Error(result.message || "Nome utente o email già esistente");
+            } else {
+                throw new Error(result.message);
+            }
         }
         
         // Pulisco localStorage per sicurezza
@@ -286,7 +290,7 @@ async function register() {
          button.innerHTML = 'Registrati';
          
          // Show error
-         alert('Registrazione fallita. Riprova.');
+         alert('Registrazione fallita. Riprova.' + error.message);
         console.error('Registration failed:', error);
         // Show error to user
         document.getElementById('error-message').textContent = 

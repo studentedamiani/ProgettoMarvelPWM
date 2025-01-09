@@ -9,7 +9,7 @@ async function getMarvelCarachters(query) {
         body: JSON.stringify({a: 1, b: 'Textual content'})
         })
         .then(response => response.json())
-        .catch(error => console.log(error))
+        .catch(error => console.error(error))
 }
 async function getPackage() {
     return await fetch('../package',{
@@ -21,7 +21,7 @@ async function getPackage() {
         body: JSON.stringify({a: 1, b: 'Textual content'})
         })
         .then(response => response.json())
-        .catch(error => console.log(error))
+        .catch(error => console.error(error))
 
 }
 
@@ -54,7 +54,7 @@ await getPackage()
         
         }
 )
-.catch(response => console.log("Errore di calcolo!"+response)) 
+.catch(response => console.error("Errore di calcolo!"+response)) 
 }
 
 
