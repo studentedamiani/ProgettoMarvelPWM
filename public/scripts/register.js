@@ -7,7 +7,7 @@ class SearchableSelect {
         this.selectedValue = document.getElementById('selected_Superhero');
         this.searchInput = document.getElementById('select_superhero');
         this.debounceTimeout = null;
-        this.minChars = config.minChars || 2;
+        this.minChars = config.minChars || 4;
         this.init();
     }
 
@@ -48,8 +48,6 @@ class SearchableSelect {
             // Creo la query
             query="nameStartsWith="+query+"&orderBy=name&"
             await getMarvelCarachters(query).then (response => {
-                console.log(response.data);
-                console.log("Appena stampato response");
                 this.displayResults(response.data);
                 if (response.code!=200) {
                 throw new Error('Network response was not ok'+response.code);
@@ -71,7 +69,6 @@ class SearchableSelect {
 
     displayResults(data) {
         this.searchResults.innerHTML = '';
-        console.log(data.code);
         if (data.length === 0) {
             const noResults = document.createElement('li');
             noResults.className = 'search-item text-muted';
@@ -138,7 +135,6 @@ const searchSelect = new SearchableSelect({
 
 // Listen for selection
 document.getElementById('select_superhero').addEventListener('item-selected', (e) => {
-    console.log('Selected item:', e.detail);
     // Handle the selection here
 });
 
@@ -170,7 +166,6 @@ async function register() {
     }
     // Controllo data di nascita con regexp
     var dataPattern = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
-    console.warn(data_di_nascita.value);
     if (!dataPattern.test(data_di_nascita.value)) {
        data_di_nascita.classList.add('border');
        data_di_nascita.classList.add('border-danger');
@@ -236,7 +231,6 @@ async function register() {
         superhero_selection.classList.remove('border');
         superhero_selection.classList.remove('border-danger');
      }
-     console.log(selected_Superhero.value);
     var data = {
        name: nome.value,
        username: username.value,
@@ -247,8 +241,10 @@ async function register() {
        superhero: selected_Superhero.value // Setto l'ID del supereroe selezionato
     };
  
-    console.log(data);
- 
+    const button = document.querySelector('button');
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Registrazione...';
+
     try {
         const response = await fetch('/register', {
             method: 'POST',
@@ -260,27 +256,41 @@ async function register() {
             credentials: 'include'
         });
         
-        console.log('Response received:', response.status);
+
+        const result = await response;
+
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(result.message || `HTTP error! status: ${response.status}`);
         }
-    
-        const result = await response.json();
-        console.log('Response parsed:', result);
-        console.log('Registration successful:', result);
         
-        // Clear localStorage
+        // Pulisco localStorage per sicurezza
         localStorage.removeItem("_id");
         localStorage.removeItem("email");
         localStorage.removeItem("username");
-        console.log("fine");
-        // Redirect or update UI
-        window.location.href = '/';
-    
+        //Nella pagina di registrazione se per qualsiasi motivo si chiude la modal torno alla pagina iniziale.
+        var loginModal = document.getElementById('loginModal');
+        loginModal.addEventListener('hidden.bs.modal', function () {
+            // Check if login was successful (you can set a flag after successful login)
+            // Or any other login success indicator
+                window.location.href = '/';
+        });
+        alert("Registrazione avvenuta con successo, verrai reindirizzato alla pagina di login");
+        //Cambio il target, prima mi serviva l'elemento HTML, adeso uso l'oggetto
+        loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+
+
     } catch (error) {
+         // Reset button state
+         button.disabled = false;
+         button.innerHTML = 'Registrati';
+         
+         // Show error
+         alert('Registrazione fallita. Riprova.');
         console.error('Registration failed:', error);
         // Show error to user
         document.getElementById('error-message').textContent = 
             'Registration failed. Please try again.';
     }
  }
+

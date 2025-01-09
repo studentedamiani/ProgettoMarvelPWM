@@ -18,45 +18,45 @@
     <div id="menu"></div>
     <form class="container p-3"> <!-- Container of the form-->
         <div class="form-floating mb-3">
-            <input id="email" type="email" required="required" class="form-control" placeholder="name@example.com" aria-label="Email" autocomplete="email" value="test@example.com">
+            <input id="email" type="email" required="required" class="form-control" placeholder="name@example.com" aria-label="Email" autocomplete="email">
             <label for="email">Indirizzo mail</label>
         </div>
         <div class="form-floating mb-3">
-            <input id="username" type="text" required="required" class="form-control" placeholder="Nome utente" aria-label="Nome utente" minlength="4" maxlength="16" value="SCEMO">
+            <input id="username" type="text" required="required" class="form-control" placeholder="Nome utente" aria-label="Nome utente" minlength="4" maxlength="16">
             <label for="username">Nome utente</label>
         </div>
         <p style="font-size: 80%; color: grey;">Il nome utente deve essere compreso tra i 4 e i 16 caratteri</p>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-floating mb-3">
-                    <input id="password1" type="password" name="password" required="required" class="form-control" placeholder="Password" aria-label="Password" autocomplete="new-password" autocomplete="on" minlength="7" value="test@example.com">
+                    <input id="password1" type="password" name="password" required="required" class="form-control" placeholder="Password" aria-label="Password" autocomplete="new-password" autocomplete="on" minlength="7">
                 <label for="password1">Password</label>
                 </div> 
             </div>
             <div class="col-md-6">
                 <div class="form-floating mb-3">
-                    <input id="password2" type="password" name="password" required="required" class="form-control" placeholder="Ripeti Password" aria-label="Password" autocomplete="new-password" autocomplete="on" minlength="7" value="test@example.com">
+                    <input id="password2" type="password" name="password" required="required" class="form-control" placeholder="Ripeti Password" aria-label="Password" autocomplete="new-password" autocomplete="on" minlength="7">
                     <label for="password2">Ripeti password</label>
                 </div>
             </div> 
-            <p style="font-size: 80%; color: grey;">La password deve essere di almeno 7 caratteri TODO:Fare controllo per una maiusc,una min un numero e uno speciale</p>
+            <p style="font-size: 80%; color: grey;">La password deve essere di almeno 7 caratteri</p>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-floating mb-3">
-                    <input id="nome" type="text" class="form-control" placeholder="Nome" aria-label="Nome" required="required" autocomplete="name" value="test@example.com">
+                    <input id="nome" type="text" class="form-control" placeholder="Nome" aria-label="Nome" required="required" autocomplete="name">
                     <label for="nome">Nome</label>
                 </div> 
             </div>
             <div class="col-md-6">
                 <div class="form-floating mb-3">    
-                    <input id="cognome" type="text" class="form-control" placeholder="Cognome" aria-label="Cognome" required="required" autocomplete="family-name" value="test@example.com">
+                    <input id="cognome" type="text" class="form-control" placeholder="Cognome" aria-label="Cognome" required="required" autocomplete="family-name">
                     <label for="cognome">Cognome</label>
                 </div>
             </div>
         </div>
         <div class="form-floating mb-3">
-            <input id="data_di_nascita" type="date" class="form-control" placeholder="Data di nascita" aria-label="Data di nascita" min="1900-01-01" required="required" autocomplete="bday" name="bday" pattern="\d{2}/\d{2}/\d{4}" value="2001-05-20">
+            <input id="data_di_nascita" type="date" class="form-control" placeholder="Data di nascita" aria-label="Data di nascita" min="1900-01-01" required="required" autocomplete="bday" name="bday" pattern="\d{2}/\d{2}/\d{4}">
             <label for="data_di_nascita">Data di nascita</label>
         </div>
             <div class="form-floating mb-3">
@@ -82,7 +82,7 @@
             <input type="hidden" id="selected_Superhero">
         </div>
       <div class="form-floating mb-3">
-         <button onclick="register()" class="btn btn-primary">Registrati</button>
+         <button type="button" onclick="register()" class="btn btn-primary">Registrati</button>
       </div>
       <p class="mt-3">Già registrato? <a id="login_Link_Register" data-bs-toggle="modal" data-bs-target="#loginModal" class="link"> Accedi qui</a></p>
     </form>
