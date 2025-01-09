@@ -238,7 +238,8 @@ async function register() {
        email: email.value,
        password: password1.value,
        date: data_di_nascita.value,
-       superhero: selected_Superhero.value // Setto l'ID del supereroe selezionato
+       superhero: selected_Superhero.value, // Setto l'ID del supereroe selezionato
+       credits: 0
     };
  
     const button = document.querySelector('button');
