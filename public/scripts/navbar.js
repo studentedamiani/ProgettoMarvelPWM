@@ -22,8 +22,8 @@ async function printNavBar() {
             <!-- Navigation links -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/card">Cerca SuperEroe</a>
+                            <li class="nav-item ">
+                                <a class="nav-link border-link" href="/card">Cerca SuperEroe</a>
                             </li>`;
                     //Se l'utente non è loggato stampo il link per il login che apre la modal
                     /*Se l'utente è loggato stampo il tutte le funzionalità da utente loggato
@@ -37,19 +37,23 @@ async function printNavBar() {
                         HTML_code = HTML_code+   
                         `
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Album</a>
+                            <a class="nav-link border-link" href="#">Album</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Scambi</a>
+                            <a class="nav-link border-link" href="#">Scambi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Pacchetti</a>
+                            <a class="nav-link border-link" href="#">Pacchetti</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Acquista crediti</a>
+                            <a class="nav-link border-link" href="#">Acquista crediti</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"> <img src="${userIcon}" alt ="user icon" class="nav-user-icon" ></img> `+ localStorage.getItem("username") + `</a> 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userdropdown" role="button" data-bs-toggle="dropdown"> <i alt ="user icon" class="fas fa-user" ></i> `+ localStorage.getItem("username") + `</a> 
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/user"> <i class= "fas fa-address-card"></i> Profilo</a></li>
+                                    <li><a class="dropdown-item" role="button" onclick=logout()><i class= "fas fa-right-from-bracket"></i> Logout</a></li>
+                                </ul>
                         </li>`;
                     }
                     else
@@ -104,3 +108,33 @@ async function loadHTML() {
 
 // Add event listener to update navbar when DOM is loaded
 document.addEventListener('DOMContentLoaded', printNavBar);
+/**
+ * Checks if a user is already logged in and redirects them if necessary.
+ *
+ * This function checks if user credentials are stored in local storage, indicating that the user
+ * is already logged in. If both email and username are found in local storage, the user is redirected
+ * to their profile page. Used also for fallback in case the user is logged but the navbar printed the wrong enter
+ *
+ * @returns {boolean} `true` if the user is logged in; otherwise, `false`.
+ */
+function checkUserLogged() {
+    var id = localStorage.getItem("_id");
+    var email = localStorage.getItem("email");
+    var username = localStorage.getItem("username");
+    if (email && username && id) {
+       // User is logged, bring him to profile page
+       return true;
+    }
+    else
+    {
+        return false;
+    }
+ }
+
+ function logout() {
+    localStorage.removeItem('_id');
+    localStorage.removeItem('email');
+    localStorage.removeItem('username');
+    //Torno alla pagina iniziale
+    window.location.href = '/';
+ }

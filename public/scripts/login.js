@@ -36,7 +36,7 @@ function login() {
              // Save user credentials in LocalStorage
              localStorage.setItem("email", responseData.email);
              localStorage.setItem("username", responseData.username);
-             setTimeout(() => {window.location.href = '/'}, 2000);
+             setTimeout(() => {window.location.href = '/'}, 1000);
           });
        } else {
           container.innerHTML += `
@@ -77,34 +77,4 @@ function login() {
        return false;
     }
     return true;
- }
-/**
- * Checks if a user is already logged in and redirects them if necessary.
- *
- * This function checks if user credentials are stored in local storage, indicating that the user
- * is already logged in. If both email and username are found in local storage, the user is redirected
- * to their profile page. Used also for fallback in case the user is logged but the navbar printed the wrong enter
- *
- * @returns {boolean} `true` if the user is logged in; otherwise, `false`.
- */
-function checkUserLogged() {
-    var id = localStorage.getItem("_id");
-    var email = localStorage.getItem("email");
-    var username = localStorage.getItem("username");
-    if (email && username && id) {
-       // User is logged, bring him to profile page
-       return true;
-    }
-    else
-    {
-        return false;
-    }
- }
-
- function logout() {
-    localStorage.removeItem('_id');
-    localStorage.removeItem('email');
-    localStorage.removeItem('username');
-    //Torno alla pagina iniziale
-    window.location.href = '/';
  }
