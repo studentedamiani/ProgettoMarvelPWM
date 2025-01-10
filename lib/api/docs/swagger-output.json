@@ -1,0 +1,546 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Marvel Characters API",
+    "description": "API for AFSE (Album delle Figurine dei Super Eroi)",
+    "version": "1.0.0"
+  },
+  "host": "localhost:666",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "fetch",
+      "description": "Endpoints for fetching and searching content."
+    },
+    {
+      "name": "users",
+      "description": "Endpoints for the management of user data and related operations."
+    },
+    {
+      "name": "auth",
+      "description": "Endpoints related to authentication and user authorization."
+    },
+    {
+      "name": "playlist",
+      "description": "Endpoints for the orchestration of playlists."
+    },
+    {
+      "name": "community",
+      "description": "Endpoints for managing community-related data and interactions."
+    },
+    {
+      "name": "tracks",
+      "description": "Endpoints for retrieving and managing track information."
+    },
+    {
+      "name": "misc",
+      "description": "Miscellaneous endpoints catering to various operations."
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "fetch"
+        ],
+        "description": "Endpoint that allows to obtain index.html page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/package": {
+      "get": {
+        "tags": [
+          "cards"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint to get a package of characters",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/card": {
+      "get": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint that allows to fetch the login modal page with the id of the card",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint that allows to fetch the user manage page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/login": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint that allows to fetch the login modal page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/register": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint that allows to fetch the login modal page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "description": "Endpoint that allows to register a new user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Body to be registered in the DB.",
+            "schema": {
+              "$ref": "#/definitions/registerrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "succesfully registered."
+          },
+          "400": {
+            "description": "User already exists, invalid parameter"
+          },
+          "500": {
+            "description": "Generic error"
+          }
+        }
+      }
+    },
+    "/test": {
+      "get": {
+        "tags": [
+          "test"
+        ],
+        "description": "Endpoint that allows to fetch the test page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/db": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/check-db": {
+      "post": {
+        "tags": [
+          "database"
+        ],
+        "description": "Endpoint to check the connection to the database",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/characters": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "ObjectId('64df73b31e5eda5eb868ddcd')"
+        },
+        "name": {
+          "type": "string",
+          "example": "Joe"
+        },
+        "nickname": {
+          "type": "string",
+          "example": "joedough"
+        },
+        "surname": {
+          "type": "string",
+          "example": "Joe"
+        },
+        "email": {
+          "type": "string",
+          "example": "joedough@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "md5 hashed password"
+        },
+        "date": {
+          "type": "string",
+          "example": "2001-09-11"
+        },
+        "genres": {
+          "type": "object",
+          "properties": {
+            "0": {
+              "type": "string",
+              "example": "pop"
+            },
+            "1": {
+              "type": "string",
+              "example": "rock"
+            },
+            "2": {
+              "type": "string",
+              "example": "metal"
+            }
+          }
+        }
+      }
+    },
+    "playlists": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "ObjectId('64e748f0cb18ad90657b9043')"
+        },
+        "owner_id": {
+          "type": "string",
+          "example": "ObjectId('64df73b31e5eda5eb868ddcd')"
+        },
+        "title": {
+          "type": "string",
+          "example": "Example Playlist"
+        },
+        "description": {
+          "type": "string",
+          "example": "Description of playlist"
+        },
+        "public": {
+          "type": "boolean",
+          "example": true
+        },
+        "tags": {
+          "type": "object",
+          "properties": {
+            "0": {
+              "type": "string",
+              "example": "chill"
+            },
+            "1": {
+              "type": "string",
+              "example": "relax"
+            },
+            "2": {
+              "type": "string",
+              "example": "vibes"
+            }
+          }
+        },
+        "songs": {
+          "type": "object",
+          "properties": {
+            "0": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Song 1"
+                },
+                "artist": {
+                  "type": "string",
+                  "example": "Artist1, Artist2, Artist3"
+                },
+                "duraion": {
+                  "type": "string",
+                  "example": "00:01:11"
+                }
+              }
+            },
+            "1": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Song 2"
+                },
+                "artist": {
+                  "type": "string",
+                  "example": "Artist1, Artist2, Artist3"
+                },
+                "duraion": {
+                  "type": "string",
+                  "example": "00:02:22"
+                }
+              }
+            },
+            "2": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Song 3"
+                },
+                "artist": {
+                  "type": "string",
+                  "example": "Artist1, Artist2, Artist3"
+                },
+                "duraion": {
+                  "type": "string",
+                  "example": "00:03:33"
+                }
+              }
+            }
+          }
+        },
+        "private": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "updateuser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jhon"
+        },
+        "nickname": {
+          "type": "string",
+          "example": "johndough"
+        },
+        "email": {
+          "type": "string",
+          "example": "johndough@example.com"
+        },
+        "surname": {
+          "type": "string",
+          "example": "Dough"
+        }
+      },
+      "required": [
+        "name",
+        "nickname",
+        "email",
+        "surname"
+      ]
+    },
+    "loggeduser": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "64df73b31e5eda5eb868ddcd"
+        },
+        "nickname": {
+          "type": "string",
+          "example": "johndough"
+        },
+        "email": {
+          "type": "string",
+          "example": "johndough@gmail.com"
+        }
+      },
+      "required": [
+        "_id",
+        "nickname",
+        "email"
+      ]
+    },
+    "song": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "78kf73b31e6yda5eb868dder"
+        },
+        "artist": {
+          "type": "string",
+          "example": "['artist1','artist2']"
+        },
+        "duration": {
+          "type": "string",
+          "example": "00:11:22"
+        },
+        "year": {
+          "type": "string",
+          "example": "1984"
+        },
+        "album": {
+          "type": "string",
+          "example": "Album Name"
+        }
+      },
+      "required": [
+        "_id",
+        "artist",
+        "duration",
+        "year",
+        "album"
+      ]
+    },
+    "loginrequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "johndough@gmail.com"
+        },
+        "nickname": {
+          "type": "string",
+          "example": "johndough"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        }
+      },
+      "required": [
+        "password"
+      ]
+    },
+    "registerrequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John"
+        },
+        "nickname": {
+          "type": "string",
+          "example": "johndough"
+        },
+        "email": {
+          "type": "string",
+          "example": "johndough@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        }
+      },
+      "required": [
+        "name",
+        "nickname",
+        "email",
+        "password"
+      ]
+    },
+    "authuser": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "64df73b31e5eda5eb868ddcd"
+        },
+        "nickname": {
+          "type": "string",
+          "example": "johndough"
+        },
+        "email": {
+          "type": "string",
+          "example": "johndough@gmail.com"
+        }
+      },
+      "required": [
+        "_id",
+        "nickname",
+        "email"
+      ]
+    },
+    "removesong": {
+      "type": "object",
+      "properties": {
+        "playlist_id": {
+          "type": "string",
+          "example": "ObjectId('64e748f0cb18ad90657b9043')"
+        },
+        "track_id": {
+          "type": "string",
+          "example": "78kf73b31e6yda5eb868dder"
+        },
+        "owner_id": {
+          "type": "string",
+          "example": "ObjectId('64df73b31e5eda5eb868ddcd')"
+        }
+      },
+      "required": [
+        "playlist_id",
+        "track_id",
+        "owner_id"
+      ]
+    }
+  }
+}

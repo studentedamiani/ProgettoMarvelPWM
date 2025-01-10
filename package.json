@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "node app.js ",
-    "test": "echo \"ERROR: no test specified\" && exit 1"
+    "test": "echo \"ERROR: no test specified\" && exit 1",
+    "swagger": "node ./lib/api/docs/swagger.js"
   },
   "homepage": "https://github.com/studentedamiani/ProgettoMarvelPWM",
   "type": "module",
