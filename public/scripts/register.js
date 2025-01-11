@@ -72,7 +72,7 @@ class SearchableSelect {
         if (data.length === 0) {
             const noResults = document.createElement('li');
             noResults.className = 'search-item text-muted';
-            noResults.textContent = 'No results found';
+            noResults.textContent = 'No valid results found';
             this.searchResults.appendChild(noResults);
         } else {
             data.forEach(item => {

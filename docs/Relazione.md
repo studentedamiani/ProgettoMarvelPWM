@@ -612,7 +612,11 @@ export async function getPlaylistFromId(res, playlistid) {
 
 ---
 
+## Personaggi Marvel
+I personaggi Marvel, per essere utilizzati all'iterno dell'applicazione devono essere validati. Per essere validi essi devono obbligatoriamente avere un nome, una descrizione e un'immagine, che può essere quella di default.
+
+---
+
 ## Lingua
-**TODO: Chiedere ad Andrea cosa fare.....**
 La scelta di utilizzare la lingua inglese, come standard di programmazione, è ampiamente diffusa nell'industria del software ed è guidata principalmente dal desiderio di aderire allo standard internazionale. Questo standard è anche noto nella community di programmatori come **"English-based programming"** . <br>
 Adottare questa convenzione ha numerosi vantaggi, in quanto rende il codice più leggibile e comprensibile per un pubblico globale di sviluppatori.
