@@ -19,11 +19,74 @@
 			<div id="header">
 			<img src ="../images/logo.png" class="logo">
 		</div>
-		<i class='fas fa-bell' style='font-size:24px'></i> 
-		<!--<h1>Here you see a test of printing a set of characters</h1>-->
-		<div id="card_album" class="card_album container-fluid">
-
+		<div class="container">
+			<div class="row mt-4 p-4">
+				<div class="col-md-12">
+					<div class="fade-in-element">
+						<h1>Welcome to SuperHeroes album community</h1>
+						<p>
+							Album delle Figurine dei Super Eroi is a network of marvel fans, just like you! If you want to discorver something about your favourite characthes, this is the place for you!
+						</p>
+					</div>
+					<div class="fade-in-element">
+						<h2>What it is?</h2>
+						<p>
+							AFSE is a social group of people where you can create your card album, open card packages and trade your cards with other people.
+						</p>
+					</div>
+					<div class="fade-in-element">
+						<h2>Key Features</h2>
+	
+						<ul>
+							<li>Create and populate your cards album.</li>
+							<li>Explore a vast selection of SuperHeroes.</li>
+							<li>Experience the surprise of opening packages of cards.</li>
+							<li>Connect with others enthusiasts and trade your cards.</li>
+						</ul>
+	
+					</div>
+					<div class="fade-in-element">
+						<h2>Using Marvel APIs</h2>
+						<p>
+							AFSE utilizes Marvel's APIs to provide access to a wide range of characters and informations about them
+							You can learn more about Marvel's APIs <a href="https://developer.marvel.com/documentation/getting_started" target="_blank">here</a>.
+						</p>
+					</div>
+					<div class="fade-in-element">
+						<h2>About this project</h2>
+						<p>
+							This platform uses Node.js and Express.js to create a robust and scalable backend that can handle
+							complex operations efficiently. It realyes on custom API endpoints to facilitate seamless
+							communication between the frontend and backend systems. <br>
+							You can explore the API documentation
+							<a href="/api-docs">here</a> to gain a deeper understanding of our endpoints and data
+							structures.<br>
+						</p>
+					</div>
+					<div class="fade-in-element">
+						<h2>About the Author</h2>
+						<p>
+							Album delle Figurine dei SuperEroi was developed by <a class="fw-bold" href="https://github.com/studentedamiani">Stefano Damiani</a></b>
+						</p>
+					</div>
+				</div>
+			</div>
 		</div>
+		<div class="spacer"></div>
+		<footer id="footer"></footer>
+		
+		</script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const elements = document.querySelectorAll(".fade-in-element");
+				elements.forEach(function (element, index) {
+					setTimeout(function () {
+						element.style.opacity = "1";
+						element.style.transform = "translateY(0)";
+					}, index * 1200);
+				});
+			});
+		</script>
 		<!-- import of JS -->
 			<script src="../scripts/theme.js"></script>
 			<!-- import of the bootstrap js -->
@@ -32,7 +95,10 @@
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 			<script src="../scripts/marvel.js"></script>
 			<script src="../scripts/navbar.js"></script>
+			<script type="module" src="../scripts/footer.js"></script>
 			<script src="../scripts/login.js"></script>
+			<script type="module" src="../scripts/footer.js"></script>
+
 		<!-- end of import of JS -->
 	</body>
 </html>

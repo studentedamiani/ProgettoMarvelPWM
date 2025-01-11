@@ -15,7 +15,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 20%;
+    width: 30%;
 }
 
 body {
@@ -29,7 +29,7 @@ body {
 }
 
 .nav-logo {
-    height:30px;   
+    height:50px;   
     width:100%
 }
 .hidden {
@@ -67,3 +67,17 @@ body {
         border: none;
     }
 }
+.fade-in-element {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  } 
+
+  footer {
+    background-color: gray;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px; 
+    font-style:italic;
+
+  }
