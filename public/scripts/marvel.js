@@ -18,7 +18,7 @@ async function getPackage() {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({a: 1, b: 'Textual content'})
+        body: JSON.stringify({username: localStorage.getItem("username"), cards:5})
         })
         .then(response => response.json())
         .catch(error => console.error(error))

@@ -132,7 +132,32 @@ app.post("/register", async (req, res) => {
 app.post('/package',(req,res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint to get a package of characters'
-  marvel_API.returnPackage(5).then(response => {res.send(response);})
+  marvel_API.returnPackage(req.body).then(response => {res.send(response);})
+});
+
+/*Endpoint to get a buy credits*/
+app.post('/edit-credits',(req,res) => {
+  // #swagger.tags = ['users']
+  // #swagger.description = 'Endpoint to buy credits'
+
+  /* #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'Body containing credit variation information',
+    type: 'object',
+    schema: { $ref: "#/definitions/creditrequest" }
+     }
+  */
+  /* #swagger.responses[200] = {
+    description: 'Credits successfully updated'
+     }
+     #swagger.responses[400] = {
+    description: 'Invalid parameters or insufficient credits'
+     }
+     #swagger.responses[500] = {
+    description: 'Internal server error'
+     }
+  */
+  database.variate_credits(req.headers).then(response => {res.send(response);})
 });
 
 /*Endpoint to check the connection to the database*/

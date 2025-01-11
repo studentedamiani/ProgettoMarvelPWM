@@ -253,6 +253,27 @@
         }
       }
     },
+    "/edit-credits/{amount}": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint to buy credits",
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/check-db": {
       "post": {
         "tags": [
@@ -571,33 +592,6 @@
         "username",
         "email",
         "password"
-      ]
-    },
-    "authuser": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string",
-          "example": "64df73b31e5eda5eb868ddcd"
-        },
-        "username": {
-          "type": "string",
-          "example": "johndough"
-        },
-        "email": {
-          "type": "string",
-          "example": "johndough@gmail.com"
-        },
-        "name": {
-          "type": "string",
-          "example": "John"
-        }
-      },
-      "required": [
-        "_id",
-        "username",
-        "email",
-        "name"
       ]
     },
     "removesong": {

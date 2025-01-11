@@ -15,8 +15,8 @@ function login() {
        password: password.value
     };
     // POST REQUEST
-    let container = document.getElementsByClassName('container')[0];
-    container.innerHTML += ``
+    let container = document.getElementsByClassName('resultContainer')[0];
+    container.innerHTML = ``
     fetch("/login", {
        method: "POST",
        headers: {
