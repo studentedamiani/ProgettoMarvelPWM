@@ -1,11 +1,10 @@
 async function printNavBar() {
     const basePath = '../images/';
-    const userIcon = `${basePath}user-solid.png`;
     const logoIcon = `${basePath}logo.png`;
     const navbarContainer = document.getElementById('menu');
     var HTML_code;
-    //Stampo la prima parte della barra di navigazione, il logo e il menu mobile sono sempre presenti
-    //È sempre disponibile Cerca Supereroe solo che se non sono loggato vedo solo info base, se sono loggato e ho quella carta nell'album vedo tutto
+//I print the first part of the navigation bar; the logo and the mobile menu are always present
+//The "Search Superhero" feature is always available, but if I'm not logged in, I only see basic information; if I'm logged in and have that card in the album, I see everything.
 
     HTML_code = `
         <nav class="navbar navbar-expand-lg " > 
@@ -23,16 +22,16 @@ async function printNavBar() {
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                             <li class="nav-item ">
-                                <a class="nav-link border-link" href="/card">Cerca SuperEroe</a>
+                                <a class="nav-link border-link" href="/card">Find superhero</a>
                             </li>`;
-                    //Se l'utente non è loggato stampo il link per il login che apre la modal
-                    /*Se l'utente è loggato stampo il tutte le funzionalità da utente loggato
-                        Che sono:
-                            -Acquisto crediti
-                            -Acquisto pacchetti
-                            -Scambi (Accettazione + Inserimento)
-                            -Album (Vedi Supereroe dett+ Vendita carte) Se supereroe non trovato lo opacizzo e non faccio vedere dettaglio
-                    */
+                            //If the user is not logged in, I display the login link that opens the modal
+                            /*If the user is logged in, I display all the features available for logged-in users, which are:
+
+                            -Purchasing credits
+                            -Purchasing packs
+                            -Trades (Acceptance + Submission)
+                            -Album (View Superhero details + Sell cards). If the superhero is not found, I make it semi-transparent and do not show the details.
+                            */
                     if (checkUserLogged() ) {
                         HTML_code = HTML_code+   
                         `
@@ -40,25 +39,25 @@ async function printNavBar() {
                             <a class="nav-link border-link" href="/album">Album</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border-link" href="/exchange">Scambi</a>
+                            <a class="nav-link border-link" href="/exchange">Exchange</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border-link" href="/package">Pacchetti</a>
+                            <a class="nav-link border-link" href="/package">Packages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border-link" href="/get-credits">Acquista crediti</a>
+                            <a class="nav-link border-link" href="/get-credits">Buy credits</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="userdropdown" role="button" data-bs-toggle="dropdown"> <i alt ="user icon" class="fas fa-user" ></i> `+ localStorage.getItem("name") + `</a> 
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/user"> <i class= "fas fa-address-card"></i> Profilo</a></li>
+                                    <li><a class="dropdown-item" href="/user"> <i class= "fas fa-address-card"></i> User profile</a></li>
                                     <li><a class="dropdown-item" role="button" onclick=logout()><i class= "fas fa-right-from-bracket"></i> Logout</a></li>
                                 </ul>
                         </li>`;
                     }
                     else
                     {
-                        /*Se non è loggato stampo il bottone per il login e anche la modal*/
+                        /*If is not logged print the button for login and the modal dialog*/
                         HTML_code = HTML_code+    
                         `<li class="nav-item">
                             <a id="login_Link" data-bs-toggle="modal" data-bs-target="#loginModal" class= "nav-link">Login</a>
@@ -71,24 +70,27 @@ async function printNavBar() {
                             console.error('Error fetching login modal:', error);
                         }
                     }
-    //Stampo sempre la chiusura.
+    //Always print the closing of tags
     HTML_code = HTML_code+    
                     `</ul>
                 </div>
             </div>
         </nav>`; 
          navbarContainer.innerHTML =HTML_code;
-    //Gestisco il tema
+         adaptNavbar();
+}
 
-        /*Adatto la barra di navigazione al tema scelto*/
-        const navbar = document.querySelector('.navbar');
-        if (document.querySelector("html").getAttribute("data-bs-theme") === "dark") {
-            navbar.classList.remove('navbar-light', 'bg-light');
-            navbar.classList.add('navbar-dark', 'bg-dark');
-        } else {
-            navbar.classList.remove('navbar-dark', 'bg-dark');
-            navbar.classList.add('navbar-light', 'bg-light');
-        }
+//Theme management
+/*Adapting the navbar to the selected theme*/
+function adaptNavbar (){
+    const navbar = document.querySelector('.navbar');
+    if (document.querySelector("html").getAttribute("data-bs-theme") === "dark") {
+        navbar.classList.remove('navbar-light', 'bg-light');
+        navbar.classList.add('navbar-dark', 'bg-dark');
+    } else {
+        navbar.classList.remove('navbar-dark', 'bg-dark');
+        navbar.classList.add('navbar-light', 'bg-light');
+    }
 }
 
 async function loadHTML() {
@@ -135,6 +137,8 @@ function checkUserLogged() {
     localStorage.removeItem('username');
     localStorage.removeItem("name");
 
-    //Torno alla pagina iniziale
+    //Going back to the homepage
     window.location.href = '/';
  }
+
+ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', adaptNavbar)

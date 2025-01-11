@@ -1,6 +1,5 @@
-/*Inizio import dei moduli necessari attraverso la sintassi ES6*/
+/*Start of import of necessary modules through ES6 syntax*/
 import express from "express";
-//import cors from "cors";
 import path from 'path';
 import 'dotenv/config';
 import { marvel } from "./config/prefs.js";
@@ -14,97 +13,95 @@ import {
   setup as swaggerUiSetup,
 } from "swagger-ui-express"
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './lib/api/docs/swagger-output.json'assert { type: 'json' };; // Specifica il percorso al tuo file Swagger JSON generato
-/*Fine import dei moduli necessari attraverso la sintassi ES6*/
+import swaggerDocument from './lib/api/docs/swagger-output.json'assert { type: 'json' };; // Specify the path to your generated Swagger JSON file
+/*End of import of necessary modules through ES6 syntax*/
 
-/*Dichiarazione variabili globali*/
-global.max_characters;
+/*Global variable declaration*/
 global.db;
+/*End of global variable declaration*/
+/*Start of the declaration of the express app*/
 var app = express(); 
 app.use(express.json());
+/*End of the declaration of the express app*/
+
 /*******************FETCH*************/
-/*Indirizzamento della cartella alla quale puntare per renderizzare HTML*/
+/*This section contains the endpoints for the fetch of the various pages of the application*/
+/* Folder routing for HTML rendering */
 app.use(express.static(path.resolve('./public/')));
-/*Enpoint per la pagina base*/
+/*Enpoint for the base page*/
 app.get('/',async (_, res) => {
   // #swagger.tags = ['fetch']
   // #swagger.description = 'Endpoint that allows to obtain index.html page'
    res.sendFile(path.resolve("./public/html/index.html"));
 });
-/*Endpoint per la pagina di package*/
+/*Endpoint for the package page*/
 app.get('/package',(req,res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint that allows to obtain the package page.
   res.sendFile(path.resolve("./public/html/package.html"));
 });
+/*Endpoint for the card page*/
 app.get('/card', async (req, res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint that allows to fetch the login modal page with the id of the card'
   res.sendFile(path.resolve("./public/html/card_detail.html"));
 });
-/*Endpoint per la pagina dell'utente*/
+/*Endpoint for the user manage page*/
 app.get('/user', async (req, res) => {
   // #swagger.tags = ['users']
   // #swagger.description = 'Endpoint that allows to fetch the user manage page'
   res.sendFile(path.resolve("./public/html/user_profile.html"));
 });
-/*Endpoint per la modal di login*/
+/*Endpoint for the login modal page*/
 app.get('/login', async (req, res) => {
   // #swagger.tags = ['users']
   // #swagger.description = 'Endpoint that allows to fetch the login modal page'
   res.sendFile(path.resolve("./public/html/login.html"));
 });
-/*Endpoint per la pagina di registrazione*/
+/*Endpoint for the user registration page*/
 app.get('/register', async (req, res) => {
   // #swagger.tags = ['users']
-  // #swagger.description = 'Endpoint that allows to fetch the login modal page'
+  // #swagger.description = 'Endpoint that allows to fetch the user registration page'
   res.sendFile(path.resolve("./public/html/register.html"));
 });
-/*Endpoint per la pagina degli album*/
+/*Endpoint for the album page*/
 app.get('/album', async (req, res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint that allows to fetch the album page'
   res.sendFile(path.resolve("./public/html/album.html"));
 });
-/*Endpoint per la pagina degli scambi*/
+/*Endpoint for the exchange page*/
 app.get('/exchange', async (req, res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint that allows to fetch the exchange page'
   res.sendFile(path.resolve("./public/html/exchange.html"));
 });
-/*Endpoint per la pagina degli scambi*/
+/*Endpoint for the credits buying*/
 app.get('/get-credits', async (req, res) => {
   // #swagger.tags = ['users']
-  // #swagger.description = 'Endpoint that allows to fetch the page to get credits'
+  // #swagger.description = 'Endpoint that allows to fetch the page to buy credits'
   res.sendFile(path.resolve("./public/html/get_credits.html"));
 });
-/*Endpoint per la test pagine*/
+/*Endpoint for test page DEVONLY*/
 app.get('/test', async (req, res) => {
   // #swagger.tags = ['test']
-  // #swagger.description = 'Endpoint that allows to fetch the test page'
+  // #swagger.description = 'Endpoint that allows to fetch the test page - DEVONLY'
   res.sendFile(path.resolve("./public/html/test_page.html"));
 });
-/*************FINE FETCH***************/
+/*************END OF FETCH***************/
 
-/***********GESTIONE SWAGGER***********/
+/***********SWAGGER MAAGEMENT***********/
 app.use('/api-docs', swaggerUiServe, swaggerUiSetup(swaggerDocument));
-var pluto;
-marvel_API.returnCharactersNumber().then(response => {pluto = response; 
-  global.max_characters = pluto.data.total;
-});
-/********FINE GESTIONE SWAGGER*********/
+/*******END OF SWAGGER MANAGEMENT*********/
 
-// Middleware per servire la documentazione API tramite Swagger UI
-
-
-
-
+/* ****************** API ENDPOINTS ****************** */
 app.get("/db",(req,res) => {
   // #swagger.tags = ['database']
   // #swagger.description = 'Endpoint that allows to register a new user'
 })
 
-
+/* ****************** POST ENDPOINTS ****************** */
+/*Endpoint to registrer a user*/
 app.post("/register", async (req, res) => {
   // #swagger.tags = ['auth']
   // #swagger.description = 'Endpoint that allows to register a new user'
@@ -126,31 +123,26 @@ app.post("/register", async (req, res) => {
       }
       */
   try {
-    //const result = await
      await register.register(res,req.body);
-    //res.status(result.status).json(result);
-    //res.status(200).json({ message: 'Registration successful' });
-   // res.send("Registrazione avvenuta con successo");
-    
   } catch (error) {
-    console.error("Errore di registrazione");//res.status(500).json({ error: 'Failed to register user' });
+    console.error("Registration error");
   }
 });
-
+/*Endpoint to get a package of cards*/
 app.post('/package',(req,res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint to get a package of characters'
   marvel_API.returnPackage(5).then(response => {res.send(response);})
 });
 
-/**/
+/*Endpoint to check the connection to the database*/
 app.post('/check-db', async (req, res) => {
     // #swagger.tags = ['database']
   // #swagger.description = 'Endpoint to check the connection to the database'
   const result = await database.check_db_connection();
   res.status(result.status).json(result);
 });
-
+/*Endpoint to get the characters from the Marvel API*/
 app.post("/characters",(req,res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint to check get characters from Marvel API'
@@ -158,9 +150,8 @@ app.post("/characters",(req,res) => {
        .then(response => {res.send(response);})
  });
 
-/* ------------------- AUTHENTICATION ------- ------------------- */
-// Login Endpoint
-// CALLS FILE: LOGIN.JS
+/* ****************** AUTHENTICATION  ****************** */
+/*Endpoint to login a user*/
 app.post("/login", async (req, res) => {
   // #swagger.tags = ['auth']
   // #swagger.description = 'Endpoint that allows to check if user's login data is correct and valid for logging in the application'
@@ -190,14 +181,10 @@ app.post("/login", async (req, res) => {
 });
 
 
-/************ATTIVAZIONE APP***********/
-/*Metto in ascolto il server sulla porta definita a livello di .ENV*/
+/************APP ACTIVATION***********/
+/*Start the server on the port defined in the .env file*/
 app.listen(process.env.PORT);
-/************CONTROLLI VARI************/
+/************STARTUP CHECK************/
 database.check_db_connection()
   .then(console.log("Database connection successful"))
   .catch(error => console.error("Database connection failed:", error));
-/*
-database.check_collections()
-  .then(console.log("Ok"))
-  .catch(sendStatus(500));*/

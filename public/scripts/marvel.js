@@ -30,7 +30,7 @@ async function printPackage() {
 await getPackage()
 .then(response =>
     {   var i=0;
-        var sicurezza = 0;
+        var loop_check = 0;
             var Div_Car = document.getElementById("pack_cards");
             response.forEach(item => {
                 Div_Car.innerHTML =
@@ -54,7 +54,7 @@ await getPackage()
         
         }
 )
-.catch(response => console.error("Errore di calcolo!"+response)) 
+.catch(response => console.error("Calculation error!"+response)) 
 }
 
 

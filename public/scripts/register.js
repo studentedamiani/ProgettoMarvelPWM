@@ -45,7 +45,7 @@ class SearchableSelect {
         try {
             this.showLoading();
             
-            // Creo la query
+            // Creation of the query
             query="nameStartsWith="+query+"&orderBy=name&"
             await getMarvelCarachters(query).then (response => {
                 this.displayResults(response.data);
@@ -143,20 +143,20 @@ async function register() {
     var username = document.getElementById('username');
     var password1 = document.getElementById('password1');
     var password2 = document.getElementById('password2');
-    var nome = document.getElementById('nome');
-    var cognome = document.getElementById('cognome');
-    var data_di_nascita = document.getElementById('data_di_nascita');
-    //Contiene il valore selezionato (nascosto)
+    var name = document.getElementById('name');
+    var surname = document.getElementById('surname');
+    var date_of_birth = document.getElementById('date_of_birth');
+    //This hidden item contains the selected superhero
     var selected_Superhero = document.getElementById("selected_Superhero");
-    //Contiene l'elemento che seleziona (visibile)
+    //This item is the one used to select the superhero and is visible
     var superhero_selection = document.getElementById("select_superhero");
-    // Controllo password
+    // Check of the password
     if (password1.value != password2.value || password1.value.length < 7) {
        password1.classList.add('border');
        password1.classList.add('border-danger');
        password2.classList.add('border');
        password2.classList.add('border-danger');
-       alert("La password deve essere lunga almeno 7 caratteri e coincidere nei due campi");
+       alert("The password must be at least 7 characters long and match the confirmation!");
        return;
     } else {
        password1.classList.remove('border');
@@ -164,81 +164,81 @@ async function register() {
        password2.classList.remove('border');
        password2.classList.remove('border-danger');
     }
-    // Controllo data di nascita con regexp
+    // Check the date of birth with regexp
     var dataPattern = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
-    if (!dataPattern.test(data_di_nascita.value)) {
-       data_di_nascita.classList.add('border');
-       data_di_nascita.classList.add('border-danger');
-       alert("Data di nascita nel formato sbagliato");
+    if (!dataPattern.test(date_of_birth.value)) {
+       date_of_birth.classList.add('border');
+       date_of_birth.classList.add('border-danger');
+       alert("The date of birth must be in the format DD/MM/YYYY!");
        return;
     } else {
-       data_di_nascita.classList.remove('border');
-       data_di_nascita.classList.remove('border-danger');
+       date_of_birth.classList.remove('border');
+       date_of_birth.classList.remove('border-danger');
     }
  
-    // Controllo email con regexp
+    // Check email with regexp
     var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailPattern.test(email.value)) {
        email.classList.add('border');
        email.classList.add('border-danger');
-       alert("Inserisci un indirizzo email valido!");
+       alert("Insert a valid email address!");
        return;
     } else {
        email.classList.remove('border');
        email.classList.remove('border-danger');
     }
  
-    // Controllo nickname con lunghezza e regexp
-    var nicknamePattern = /^[a-zA-Z0-9_]{4,16}$/;
-    if (!nicknamePattern.test(username.value)) {
+    // Check length of username and check with regexp
+    var usermanePattern = /^[a-zA-Z0-9_]{4,16}$/;
+    if (!usermanePattern.test(username.value)) {
         username.classList.add('border');
         username.classList.add('border-danger');
-       alert("Il nome utente deve avere tra 4 e 16 caratteri e contenere solo lettere, numeri e underscore!");
+       alert("The username must be between 4 and 16 characters long and contain only letters, numbers and underscores!");
        return;
     } else {
         username.classList.remove('border');
        username.classList.remove('border-danger');
     }
  
-    // Controllo altri campi
-    if (!nome.value) {
-       nome.classList.add('border');
-       nome.classList.add('border-danger');
-       alert("Inserisci il tuo nome!");
+    // Check of the angrafic data
+    if (!name.value) {
+       name.classList.add('border');
+       name.classList.add('border-danger');
+       alert("Insert your name!");
        return;
     } else {
-       nome.classList.remove('border');
-       nome.classList.remove('border-danger');
+       name.classList.remove('border');
+       name.classList.remove('border-danger');
     }
  
-    if (!cognome.value) {
-       cognome.classList.add('border');
-       cognome.classList.add('border-danger');
-       alert("Inserisci il tuo cognome!");
+    if (!surname.value) {
+       surname.classList.add('border');
+       surname.classList.add('border-danger');
+       alert("Insert your surname!");
        return;
     } else {
-       cognome.classList.remove('border');
-       cognome.classList.remove('border-danger');
+       surname.classList.remove('border');
+       surname.classList.remove('border-danger');
     }
  
-    //Controllo supereroe (Verifico solo se è selezionato tanto quelli non validi non possono essere selezionati)
+    //Check if superhero is selected. Only check is selected because the non valid characters are not selectable
     if (!selected_Superhero.value) {
         superhero_selection.classList.add('border');
         superhero_selection.classList.add('border-danger');
-        alert("Seleziona un supereroe!");
+        alert("Select a superhero!");
         return;
      } else {
         superhero_selection.classList.remove('border');
         superhero_selection.classList.remove('border-danger');
      }
     var data = {
-       name: nome.value,
+       name: name.value,
        username: username.value,
-       surname: cognome.value,
+       surname: surname.value,
        email: email.value,
        password: password1.value,
-       date: data_di_nascita.value,
-       superhero: selected_Superhero.value, // Setto l'ID del supereroe selezionato
+       date: date_of_birth.value,
+       superhero: selected_Superhero.value, // I set the selected superhero ID
        credits: 0
     };
  
@@ -262,25 +262,23 @@ async function register() {
 
         if (!response.ok) {
             if (response.status == 530) {
-                throw new Error(result.message || "Nome utente o email già esistente");
+                throw new Error(result.message || "Username or email already in use");
             } else {
                 throw new Error(result.message);
             }
         }
         
-        // Pulisco localStorage per sicurezza
+        // Clean of localstorage for security
         localStorage.removeItem("_id");
         localStorage.removeItem("email");
         localStorage.removeItem("username");
         localStorage.removeItem("name");
-        //Nella pagina di registrazione se per qualsiasi motivo si chiude la modal torno alla pagina iniziale.
+        //In the modal dialog of login if the modal is closed I redirect to the homepage
         var loginModal = document.getElementById('loginModal');
         loginModal.addEventListener('hidden.bs.modal', function () {
-            // Check if login was successful (you can set a flag after successful login)
-            // Or any other login success indicator
                 window.location.href = '/';
         });
-        alert("Registrazione avvenuta con successo, verrai reindirizzato alla pagina di login");
+        alert("User registered successfully! You can now log in.");
         //Cambio il target, prima mi serviva l'elemento HTML, adeso uso l'oggetto
         loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
         loginModal.show();
@@ -289,10 +287,10 @@ async function register() {
     } catch (error) {
          // Reset button state
          button.disabled = false;
-         button.innerHTML = 'Registrati';
+         button.innerHTML = 'Register';
          
          // Show error
-         alert('Registrazione fallita. Riprova.' + error.message);
+         alert('Registration failed. Please try again' + error.message);
         console.error('Registration failed:', error);
         // Show error to user
         document.getElementById('error-message').textContent = 

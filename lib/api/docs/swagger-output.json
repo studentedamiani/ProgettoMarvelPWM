@@ -153,7 +153,7 @@
         "tags": [
           "users"
         ],
-        "description": "Endpoint that allows to fetch the login modal page",
+        "description": "Endpoint that allows to fetch the user registration page",
         "responses": {
           "200": {
             "description": "OK"
@@ -219,7 +219,7 @@
         "tags": [
           "users"
         ],
-        "description": "Endpoint that allows to fetch the page to get credits",
+        "description": "Endpoint that allows to fetch the page to buy credits",
         "responses": {
           "200": {
             "description": "OK"
@@ -232,7 +232,7 @@
         "tags": [
           "test"
         ],
-        "description": "Endpoint that allows to fetch the test page",
+        "description": "Endpoint that allows to fetch the test page - DEVONLY",
         "responses": {
           "200": {
             "description": "OK"
@@ -242,7 +242,10 @@
     },
     "/db": {
       "get": {
-        "description": "",
+        "tags": [
+          "database"
+        ],
+        "description": "Endpoint that allows to register a new user",
         "responses": {
           "default": {
             "description": ""
@@ -296,7 +299,7 @@
           "type": "string",
           "example": "John"
         },
-        "nickname": {
+        "username": {
           "type": "string",
           "example": "Jhonny"
         },
@@ -444,7 +447,7 @@
           "type": "string",
           "example": "Jhon"
         },
-        "nickname": {
+        "username": {
           "type": "string",
           "example": "johndough"
         },
@@ -459,7 +462,7 @@
       },
       "required": [
         "name",
-        "nickname",
+        "username",
         "email",
         "surname"
       ]
@@ -471,19 +474,24 @@
           "type": "string",
           "example": "64df73b31e5eda5eb868ddcd"
         },
-        "nickname": {
+        "username": {
           "type": "string",
           "example": "johndough"
         },
         "email": {
           "type": "string",
           "example": "johndough@gmail.com"
+        },
+        "name": {
+          "type": "string",
+          "example": "John"
         }
       },
       "required": [
         "_id",
-        "nickname",
-        "email"
+        "username",
+        "email",
+        "name"
       ]
     },
     "song": {
@@ -525,7 +533,7 @@
           "type": "string",
           "example": "johndough@gmail.com"
         },
-        "nickname": {
+        "username": {
           "type": "string",
           "example": "johndough"
         },
@@ -545,7 +553,7 @@
           "type": "string",
           "example": "John"
         },
-        "nickname": {
+        "username": {
           "type": "string",
           "example": "johndough"
         },
@@ -560,7 +568,7 @@
       },
       "required": [
         "name",
-        "nickname",
+        "username",
         "email",
         "password"
       ]
@@ -572,19 +580,24 @@
           "type": "string",
           "example": "64df73b31e5eda5eb868ddcd"
         },
-        "nickname": {
+        "username": {
           "type": "string",
           "example": "johndough"
         },
         "email": {
           "type": "string",
           "example": "johndough@gmail.com"
+        },
+        "name": {
+          "type": "string",
+          "example": "John"
         }
       },
       "required": [
         "_id",
-        "nickname",
-        "email"
+        "username",
+        "email",
+        "name"
       ]
     },
     "removesong": {

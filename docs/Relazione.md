@@ -246,7 +246,7 @@ La collezione *users* è destinata a contenere i dati degli utenti all'interno d
     "bsonType": "object",
     "required": [
       "_id",
-      "nickname",
+      "username",
       "email",
       "password"
     ],
@@ -259,9 +259,9 @@ La collezione *users* è destinata a contenere i dati degli utenti all'interno d
         "bsonType": "string",
         "description": "name must be a string and is required"
       },
-      "nickname": {
+      "username": {
         "bsonType": "objectId",
-        "description": "nickname must be an ObjectId and is required"
+        "description": "username must be an ObjectId and is required"
       },
       "email": {
         "bsonType": "string",
@@ -289,7 +289,7 @@ La collezione *users* è destinata a contenere i dati degli utenti all'interno d
 
 - **name**: nome dell'utente, di tipo stringa. È un campo obbligatorio e contiene il nome dell'utente.
 
-- **nickname**: nickname dell'utente, di tipo ObjectId. È un campo obbligatorio e serve a collegare il soprannome dell'utente.
+- **username**: username dell'utente, di tipo ObjectId. È un campo obbligatorio e serve a collegare il soprannome dell'utente.
 
 - **email**: indirizzo email dell'utente, di tipo stringa. È un campo obbligatorio e contiene l'indirizzo email dell'utente.
 
@@ -372,7 +372,7 @@ const doc = {
       user: {
           _id: "ObjectId('64df73b31e5eda5eb868ddcd')",
           name: "John",
-          nickname: "Jhonny",
+          username: "Jhonny",
           surname: "Doe",
           email: "jhonny@example.com",
           password: "md5 hashed password",
@@ -415,13 +415,13 @@ const doc = {
     },
       updateuser: {
           $name: "Jhon",
-          $nickname: "johndough",
+          $username: "johndough",
           $email: "johndough@example.com",
           $surname: "Dough"
       },
       loggeduser: {
            $_id: "64df73b31e5eda5eb868ddcd",
-           $nickname:"johndough",
+           $username:"johndough",
            $email: "johndough@gmail.com"
       },
       song: {
@@ -433,18 +433,18 @@ const doc = {
       },
       loginrequest: {
         email: "johndough@gmail.com",
-        nickname:"johndough",        
+        username:"johndough",        
         $password: "password"  
       },
       registerrequest: {
         $name: "John",
-        $nickname: "johndough",
+        $username: "johndough",
         $email: "johndough@example.com",
         $password: "password"
       },
       authuser:{
         $_id: "64df73b31e5eda5eb868ddcd",
-        $nickname: "johndough",
+        $username: "johndough",
         $email: "johndough@gmail.com"
       },
       removesong: {

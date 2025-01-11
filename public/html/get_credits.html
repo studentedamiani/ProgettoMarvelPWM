@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="it">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="Album delle figurine dei super eroi (AFSE) - Base page">
 		<title>
-			Album delle figurine dei super eroi (AFSE)
+			Buy credits
 		</title>
 		<!-- import of the logo -->
 		<link rel="icon" href="../images/logo.png" type="image/x-icon">
@@ -16,7 +16,38 @@
 	<body>
 		<!-- Navigation bar -->
 		<div id="menu"></div>
-		ACQUISTA CREDITI	
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h1 class="text-center">Buy credits</h1>
+					<button > 5€ <br><hr> 5 Credits</button>
+					<button > 10€ <br><hr> 12 Credits</button>
+					<button > 15€ <br><hr> 18 Credits</button>
+					<button > 20€ <br><hr> 24 Credits</button>
+					<button > 50€ <br><hr> 60 Credits</button>
+					<button > Other amount</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<input type="range" min="50" max="500" value="50" class="slider" id="myRange">
+					<p>Value: <span id="demo"></span>€</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<button id="buy">Buy</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<i class="fab fa-2x fa-paypal"></i>
+					<i class="fab fa-2x fa-apple-pay"></i>
+					<i class="fab fa-2x fa-amazon-pay"></i>
+					<i class="fab fa-2x fa-google-pay"></i>
+					<i class="fas fa-2x fa-credit-card"></i>
+				</div>
+		</div>
         <!-- import of JS -->
 			<script src="../scripts/theme.js"></script>
 			<!-- import of the bootstrap js -->
