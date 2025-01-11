@@ -290,7 +290,7 @@ async function register() {
          button.innerHTML = 'Register';
          
          // Show error
-         alert('Registration failed. Please try again' + error.message);
+         alert('Registration failed. Please try again. ' + error.message);
         console.error('Registration failed:', error);
         // Show error to user
         document.getElementById('error-message').textContent = 
