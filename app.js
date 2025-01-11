@@ -60,6 +60,24 @@ app.get('/register', async (req, res) => {
   // #swagger.description = 'Endpoint that allows to fetch the login modal page'
   res.sendFile(path.resolve("./public/html/register.html"));
 });
+/*Endpoint per la pagina degli album*/
+app.get('/album', async (req, res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint that allows to fetch the album page'
+  res.sendFile(path.resolve("./public/html/album.html"));
+});
+/*Endpoint per la pagina degli scambi*/
+app.get('/exchange', async (req, res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint that allows to fetch the exchange page'
+  res.sendFile(path.resolve("./public/html/exchange.html"));
+});
+/*Endpoint per la pagina degli scambi*/
+app.get('/get-credits', async (req, res) => {
+  // #swagger.tags = ['users']
+  // #swagger.description = 'Endpoint that allows to fetch the page to get credits'
+  res.sendFile(path.resolve("./public/html/get_credits.html"));
+});
 /*Endpoint per la test pagine*/
 app.get('/test', async (req, res) => {
   // #swagger.tags = ['test']
@@ -82,7 +100,8 @@ marvel_API.returnCharactersNumber().then(response => {pluto = response;
 
 
 app.get("/db",(req,res) => {
-
+  // #swagger.tags = ['database']
+  // #swagger.description = 'Endpoint that allows to register a new user'
 })
 
 

@@ -21,16 +21,8 @@
       "description": "Endpoints related to authentication and user authorization."
     },
     {
-      "name": "playlist",
-      "description": "Endpoints for the orchestration of playlists."
-    },
-    {
-      "name": "community",
-      "description": "Endpoints for managing community-related data and interactions."
-    },
-    {
-      "name": "tracks",
-      "description": "Endpoints for retrieving and managing track information."
+      "name": "cards",
+      "description": "Endpoints for managing the cards of the album."
     },
     {
       "name": "misc",
@@ -121,6 +113,39 @@
             "description": "OK"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "description": "Endpoint that allows to check if user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Body to validate login.",
+            "schema": {
+              "$ref": "#/definitions/loginrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User login data is valid",
+            "schema": {
+              "$ref": "#/definitions/loggeduser"
+            }
+          },
+          "400": {
+            "description": "Data is not valid, missing parameter"
+          },
+          "401": {
+            "description": "User not authorized"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
       }
     },
     "/register": {
@@ -163,6 +188,45 @@
         }
       }
     },
+    "/album": {
+      "get": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint that allows to fetch the album page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/exchange": {
+      "get": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint that allows to fetch the exchange page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/get-credits": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint that allows to fetch the page to get credits",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/test": {
       "get": {
         "tags": [
@@ -201,7 +265,10 @@
     },
     "/characters": {
       "post": {
-        "description": "",
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint to check get characters from Marvel API",
         "parameters": [
           {
             "name": "query",
@@ -227,19 +294,19 @@
         },
         "name": {
           "type": "string",
-          "example": "Joe"
+          "example": "John"
         },
         "nickname": {
           "type": "string",
-          "example": "joedough"
+          "example": "Jhonny"
         },
         "surname": {
           "type": "string",
-          "example": "Joe"
+          "example": "Doe"
         },
         "email": {
           "type": "string",
-          "example": "joedough@example.com"
+          "example": "jhonny@example.com"
         },
         "password": {
           "type": "string",
@@ -247,7 +314,7 @@
         },
         "date": {
           "type": "string",
-          "example": "2001-09-11"
+          "example": "2001-05-20"
         },
         "genres": {
           "type": "object",
