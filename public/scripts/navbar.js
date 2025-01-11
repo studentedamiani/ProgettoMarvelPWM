@@ -37,19 +37,19 @@ async function printNavBar() {
                         HTML_code = HTML_code+   
                         `
                         <li class="nav-item">
-                            <a class="nav-link border-link" href="#">Album</a>
+                            <a class="nav-link border-link" href="/album">Album</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border-link" href="#">Scambi</a>
+                            <a class="nav-link border-link" href="/exchange">Scambi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border-link" href="#">Pacchetti</a>
+                            <a class="nav-link border-link" href="/package">Pacchetti</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border-link" href="#">Acquista crediti</a>
+                            <a class="nav-link border-link" href="/get-credits">Acquista crediti</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userdropdown" role="button" data-bs-toggle="dropdown"> <i alt ="user icon" class="fas fa-user" ></i> `+ localStorage.getItem("username") + `</a> 
+                            <a class="nav-link dropdown-toggle" href="#" id="userdropdown" role="button" data-bs-toggle="dropdown"> <i alt ="user icon" class="fas fa-user" ></i> `+ localStorage.getItem("name") + `</a> 
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="/user"> <i class= "fas fa-address-card"></i> Profilo</a></li>
                                     <li><a class="dropdown-item" role="button" onclick=logout()><i class= "fas fa-right-from-bracket"></i> Logout</a></li>
@@ -91,13 +91,6 @@ async function printNavBar() {
         }
 }
 
-// Function to handle logout
-function logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = '/login';
-}
-
 async function loadHTML() {
     fetch('/login')
     .then(response => response.text())
@@ -127,6 +120,11 @@ function checkUserLogged() {
     }
     else
     {
+        //If user not logged and I am in a page that requires login I redirect to homepage
+        if (['/album', '/get-credits', '/package', '/exchange', '/user' ].includes(window.location.pathname))
+        {   //Only just for
+            window.location.href = '/';
+        }
         return false;
     }
  }
@@ -135,6 +133,8 @@ function checkUserLogged() {
     localStorage.removeItem('_id');
     localStorage.removeItem('email');
     localStorage.removeItem('username');
+    localStorage.removeItem("name");
+
     //Torno alla pagina iniziale
     window.location.href = '/';
  }

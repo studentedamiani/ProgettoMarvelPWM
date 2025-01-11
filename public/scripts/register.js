@@ -272,6 +272,7 @@ async function register() {
         localStorage.removeItem("_id");
         localStorage.removeItem("email");
         localStorage.removeItem("username");
+        localStorage.removeItem("name");
         //Nella pagina di registrazione se per qualsiasi motivo si chiude la modal torno alla pagina iniziale.
         var loginModal = document.getElementById('loginModal');
         loginModal.addEventListener('hidden.bs.modal', function () {

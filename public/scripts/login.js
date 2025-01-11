@@ -36,6 +36,7 @@ function login() {
              // Save user credentials in LocalStorage
              localStorage.setItem("email", responseData.email);
              localStorage.setItem("username", responseData.username);
+             localStorage.setItem("name", responseData.name);
              setTimeout(() => {window.location.href = '/'}, 1000);
           });
        } else {
