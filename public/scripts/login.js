@@ -37,6 +37,7 @@ function login() {
              localStorage.setItem("email", responseData.email);
              localStorage.setItem("username", responseData.username);
              localStorage.setItem("name", responseData.name);
+             localStorage.setItem("credits",responseData.credits);
              setTimeout(() => {window.location.href = '/'}, 1000);
           });
        } else {

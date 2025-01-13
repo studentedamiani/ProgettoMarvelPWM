@@ -24,6 +24,7 @@
 			</div>
 			<div class="row">
 				<p> Here you can buy credits to buy packages.</p>
+				<p> You have <span class="current_credits"></span> credits</p>
 			</div>
 			<div class="row p-4 md-4">
 				<div class="col-12 ">
@@ -58,6 +59,7 @@
 		</div>
 		<footer id="footer"></footer>
 		<script>
+			
 			let selectedAmount = null;
 
 			// Add click handlers to all amount buttons
@@ -94,11 +96,17 @@
 						}
 					})
 					.then(response => response.json())
-					.then(data => alert("Credits purchased."))
+					.then(data => {
+						alert("Credits purchased. You now have " + data.credits + " credits");
+						printCredits();
+						localStorage.setItem("credits",data.credits);
+					})
+					//.then(data => )
 					.catch(error => console.error('Error:', error));
 				}
 			});
 		</script>
+
         <!-- import of JS -->
 			<script src="../scripts/theme.js"></script>
 			<!-- import of the bootstrap js -->
@@ -109,7 +117,9 @@
 			<script src="../scripts/navbar.js"></script>
 			<script src="../scripts/login.js"></script>
 			<script type="module" src="../scripts/footer.js"></script>
-
+			<script>
+				printCredits();
+			</script>
 		<!-- end of import of JS -->
 	</body>
 </html>

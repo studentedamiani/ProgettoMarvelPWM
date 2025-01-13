@@ -45,7 +45,7 @@ async function printNavBar() {
                             <a class="nav-link border-link" href="/package">Packages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border-link" href="/get-credits">Buy credits</a>
+                            <a class="nav-link border-link " href="/get-credits"> Credits:<span class="current_credits"> `+ await get_credits()+`</span></a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="userdropdown" role="button" data-bs-toggle="dropdown"> <i alt ="user icon" class="fas fa-user" ></i> `+ localStorage.getItem("name") + `</a> 
@@ -132,13 +132,31 @@ function checkUserLogged() {
  }
 
  function logout() {
-    localStorage.removeItem('_id');
-    localStorage.removeItem('email');
-    localStorage.removeItem('username');
-    localStorage.removeItem("name");
-
+    localStorage.clear();
     //Going back to the homepage
     window.location.href = '/';
  }
 
  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', adaptNavbar)
+
+ async function printCredits() {
+    const elements = document.getElementsByClassName('current_credits');
+    const credits = await get_credits();
+    Array.from(elements).forEach(element => {
+        element.textContent = credits;
+    });
+}
+
+
+ async function get_credits() {
+    console.log(localStorage.getItem("username"));
+    return await fetch(`/print-credits/${localStorage.getItem("username")}`,{
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        })
+    .then(response => response.json())
+    .then(response => response.credits)
+ }

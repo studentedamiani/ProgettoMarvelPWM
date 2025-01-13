@@ -88,6 +88,12 @@ app.get('/test', async (req, res) => {
   // #swagger.description = 'Endpoint that allows to fetch the test page - DEVONLY'
   res.sendFile(path.resolve("./public/html/test_page.html"));
 });
+app.get('/print-credits/:username', async (req,res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint to get a package of characters'
+  console.log(req.params.username);
+await database.get_Credits(req.params.username).then(response => {res.send(response);})
+});
 /*************END OF FETCH***************/
 
 /***********SWAGGER MAAGEMENT***********/

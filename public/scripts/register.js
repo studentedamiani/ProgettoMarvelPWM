@@ -269,10 +269,7 @@ async function register() {
         }
         
         // Clean of localstorage for security
-        localStorage.removeItem("_id");
-        localStorage.removeItem("email");
-        localStorage.removeItem("username");
-        localStorage.removeItem("name");
+        localStorage.clear();
         //In the modal dialog of login if the modal is closed I redirect to the homepage
         var loginModal = document.getElementById('loginModal');
         loginModal.addEventListener('hidden.bs.modal', function () {
