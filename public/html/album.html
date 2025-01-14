@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Package open</title>
+    <title>Albums</title>
     <!-- import of the logo -->
     <link rel="icon" href="../images/logo.png" type="image/x-icon">
     <!-- import of custom CSS-->
@@ -18,11 +18,13 @@
 				<div class="col-md-12">
 						<h1>Select your album</h1>
 					<p>Select the album you want to see and put cards in it, if you open a package</p>
+                    <p>If you don't have any album you can create one.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
 					<div id="album_selector_container" class="button-container"></div>
+                    
 					<div id="lock" class="text-center hidden">
                         <p class="text-danger" id="error_Message"></p>
                         <i class="fas fa-lock fa-2x"></i>
@@ -54,12 +56,13 @@
     }
 }
     </script>
+    	<script>
+            localStorage.setItem("album_ID",1234);
+        </script>
         <script> 
             toggleLock();
     </script>
-	<script>
-		localStorage.setItem("album_ID",1234);
-	</script>
+
 		<!-- import of JS -->
         <script src="../scripts/theme.js"></script>
         <!-- import of the bootstrap js -->
@@ -70,7 +73,58 @@
         <script src="../scripts/navbar.js"></script>
         <script src="../scripts/login.js"></script>
         <script type="module" src="../scripts/footer.js"></script>
+        <script>
+            async function createAlbumButtons() {
+                var id=localStorage.getItem("_id");
+                console.log("_id",id);
+                try {
+                    const response = await fetch(`/albums/${id}`);
+                    const albums = await response.json();
+                    const container = document.getElementById('album_selector_container');
+                    if (albums && albums.length > 0) {
+                        albums.forEach(album => {
+                            const button = document.createElement('button');
+                            button.className = 'btn btn-primary m-2';
+                            button.textContent = `Album ${album.id}`;
+                            button.onclick = () => selectAlbum(album.id);
+                            container.appendChild(button);
+                        });
+                    } else{
+                        console.log("no_album");
+                    }
+                    // Create form for new album
+                    const form = document.createElement('form');
+                    form.className = 'form-floating mt-3';
+                    form.onsubmit = (e) => {
+                        var name = document.getElementById("new_album_name").value;
+                        e.preventDefault();
+                        createAlbum(id,name);
+                    };
 
+                    const input = document.createElement('input');
+                    input.className = 'form-control m-2';
+                    input.id = 'new_album_name';
+                    input.name = 'new_album_name';
+                    input.required = true;
+                    form.appendChild(input);
+                    const label = document.createElement('label');
+                    label.for = 'new_album_name';
+                    label.textContent = 'New album name';
+                    form.appendChild(label);
+                    const button = document.createElement('button');
+                    button.className = 'btn btn-primary m-2';
+                    button.type = 'submit';
+                    button.textContent = 'Create album';
+                    form.appendChild(button);
+
+                    container.appendChild(form);
+                } catch (error) {
+                    console.error('Error loading albums:', error);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', createAlbumButtons);
+            </script>
     <!-- end of import of JS -->
 </body>
 </html>

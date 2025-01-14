@@ -18,7 +18,7 @@ async function getPackage() {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({username: localStorage.getItem("username"), cards:9})
+        body: JSON.stringify({username: localStorage.getItem("username"), cards:5})
         })
         .then(response => response.json())
         .catch(error => console.error(error))
@@ -85,6 +85,34 @@ async function getSingleHero(id) {
         }
         
         return await response.json();
+    } catch (error) {
+        console.error('Error fetching hero:', error);
+        throw error; // Re-throw to handle it in the calling function
+    }
+}
+
+async function createAlbum(userid,name) {
+    console.log("Funzione JS",userid);
+    console.log(name);
+
+    try{
+        const response = await fetch(`../create_album`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({userId:userid, name:name})
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        } else {
+            let JsonResponse = await response.json();
+            console.log("Album_ID",JsonResponse);
+        localStorage.setItem("album_ID",JsonResponse.insertedId);
+        alert("Album created");
+        window.location.reload();
+        }
     } catch (error) {
         console.error('Error fetching hero:', error);
         throw error; // Re-throw to handle it in the calling function

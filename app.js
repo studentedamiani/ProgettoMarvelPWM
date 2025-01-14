@@ -70,6 +70,18 @@ app.get('/album', async (req, res) => {
   // #swagger.description = 'Endpoint that allows to fetch the album page'
   res.sendFile(path.resolve("./public/html/album.html"));
 });
+/*Endpoint for the albums of the user*/
+app.get('/albums/:userid', async (req, res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint that allows to fetch the album page'
+  try {
+    const response = await database.getUserAlbums(req.params.userid);
+    res.json(response);
+} catch (error) {
+    console.error("Error fetching character:", error);
+    res.status(500).json({ error: "Failed to fetch character" });
+}
+});
 /*Endpoint for the exchange page*/
 app.get('/exchange', async (req, res) => {
   // #swagger.tags = ['cards']
@@ -151,7 +163,12 @@ app.post('/package',(req,res) => {
   // #swagger.description = 'Endpoint to get a package of characters'
   marvel_API.returnPackage(req.body).then(response => {res.send(response);})
 });
-
+app.post('/create_album',(req,res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint to get a package of characters'
+  console.log("Endpooint",req.body);
+  database.createAlbum(req.body).then(response => {console.log("appJSresponse",response);res.send(response);})
+});
 /*Endpoint to get a buy credits*/
 app.post('/edit-credits',(req,res) => {
   // #swagger.tags = ['users']
