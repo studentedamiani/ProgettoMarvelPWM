@@ -103,6 +103,28 @@ class SearchableSelect {
             detail: item 
         });
         this.searchInput.dispatchEvent(event);
+        if (['/card' ].includes(window.location.pathname))
+            {
+                console.log(item);
+                var Div_Car =
+                '<div class="card card-shine-effect-metal" id="char-'+item.id+'">'+
+                    '<div class="card-header">'+
+                        item.name+
+                    '</div>'+
+                    //'<hr>'+
+                    '<div class="card-content">'+
+                        '<img src="'+item.thumbnail.path.replace(/"/g, "")+'.'+item.thumbnail.extension+'">'+
+                    '</div>'+
+                    '<div class="card-body">'+
+                    item.description+
+                    '</div>'+
+                    '<div class="card-footer">'+
+                    'Data provided by ©Marvel'
+                    '</div>'+
+                '</div>';
+                document.getElementById("CardContainer").innerHTML = Div_Car;
+                //If the user is logged and has selected an album and have the card in the album i present all data
+            }
     }
 
     displayError(message) {
