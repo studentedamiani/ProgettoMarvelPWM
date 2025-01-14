@@ -201,6 +201,30 @@
         }
       }
     },
+    "/albums/{userid}": {
+      "get": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint that allows to fetch the album page",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/exchange": {
       "get": {
         "tags": [
@@ -278,6 +302,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -291,6 +318,19 @@
         "responses": {
           "default": {
             "description": ""
+          }
+        }
+      }
+    },
+    "/create_album": {
+      "post": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint to get a package of characters",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -395,6 +435,24 @@
     "/update-user": {
       "put": {
         "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/delete-user/{userid}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

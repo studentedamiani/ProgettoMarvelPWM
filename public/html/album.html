@@ -40,29 +40,6 @@
     </div>
     <footer id="footer"></footer>
 
-    <script>
-        function toggleLock() {
-    const lockDiv = document.getElementById('lock');
-   // const cardPackButton = document.getElementById('cardPack');
-    
-    if (!localStorage.getItem("album_ID")) {
-        lockDiv.classList.add('active');
-        lockDiv.classList.remove('hidden');
-       // cardPackButton.disabled = true;
-    } else {
-        lockDiv.classList.remove('active');
-        lockDiv.classList.add('hidden');
-       // cardPackButton.disabled = false;
-    }
-}
-    </script>
-    	<script>
-            localStorage.setItem("album_ID",1234);
-        </script>
-        <script> 
-            toggleLock();
-    </script>
-
 		<!-- import of JS -->
         <script src="../scripts/theme.js"></script>
         <!-- import of the bootstrap js -->
@@ -74,19 +51,38 @@
         <script src="../scripts/login.js"></script>
         <script type="module" src="../scripts/footer.js"></script>
         <script>
+            function selectAlbum(albumid){
+                if (!albumid) return;
+                console.log(albumid);
+                document.querySelectorAll('.btn-album').forEach(b => {
+                        b.classList.remove('btn-success');
+                        b.classList.add('btn-primary');
+                    });
+                localStorage.setItem("album_ID", albumid);
+                const albumElement = document.getElementById(`album-${albumid}`);
+                if (albumElement) {
+                    albumElement.classList.remove("btn-primary");
+                    albumElement.classList.add("btn-success");
+                }
+            }
             async function createAlbumButtons() {
                 var id=localStorage.getItem("_id");
                 console.log("_id",id);
                 try {
                     const response = await fetch(`/albums/${id}`);
                     const albums = await response.json();
+                    console.log(albums);
+                    const albumsArray = Array.isArray(albums) ? albums : [albums];
+                    console.log(albumsArray.length);
                     const container = document.getElementById('album_selector_container');
-                    if (albums && albums.length > 0) {
-                        albums.forEach(album => {
+                    if (albumsArray.length > 0 && albumsArray[0] !== null) {
+                        albumsArray.forEach(album => {
+                            console.log("EACH",album);
                             const button = document.createElement('button');
-                            button.className = 'btn btn-primary m-2';
-                            button.textContent = `Album ${album.id}`;
-                            button.onclick = () => selectAlbum(album.id);
+                            button.className = 'btn btn-primary m-2 btn-album';
+                            button.textContent = `${album.name}`;
+                            button.id =`album-${album._id}`;
+                            button.onclick = () => selectAlbum(album._id);
                             container.appendChild(button);
                         });
                     } else{
@@ -118,11 +114,14 @@
                     form.appendChild(button);
 
                     container.appendChild(form);
+                    
                 } catch (error) {
                     console.error('Error loading albums:', error);
+                } finally
+                {
+                    selectAlbum(localStorage.getItem("album_ID"));
                 }
             }
-
             document.addEventListener('DOMContentLoaded', createAlbumButtons);
             </script>
     <!-- end of import of JS -->

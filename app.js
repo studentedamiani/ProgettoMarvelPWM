@@ -76,10 +76,11 @@ app.get('/albums/:userid', async (req, res) => {
   // #swagger.description = 'Endpoint that allows to fetch the album page'
   try {
     const response = await database.getUserAlbums(req.params.userid);
-    res.json(response);
+    res.send(response);
+    
 } catch (error) {
-    console.error("Error fetching character:", error);
-    res.status(500).json({ error: "Failed to fetch character" });
+    console.error("Error fetching albums:", error.message);
+    res.status(500).json({ error: "Failed to fetch albums: " + error.message });
 }
 });
 /*Endpoint for the exchange page*/
