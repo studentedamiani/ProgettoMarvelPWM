@@ -1,3 +1,4 @@
+
 class SearchableSelect {
     constructor(config) {
         this.apiUrl = config.apiUrl;
@@ -125,6 +126,24 @@ class SearchableSelect {
 
     hideLoading() {
         this.loadingIndicator.classList.add('d-none');
+    }
+    async setSuperheroById(id) {
+        try {
+            this.showLoading();
+            const response = await getSingleHero(id);
+            
+            if (response.data && response.data.length > 0) {
+                const hero = response.data[0];
+                this.selectItem(hero);
+            } else {
+                this.displayError('Superhero not found');
+            }
+        } catch (error) {
+            console.error('Error fetching superhero:', error);
+            this.displayError('Error loading superhero');
+        } finally {
+            this.hideLoading();
+        }
     }
 }
 
@@ -295,3 +314,242 @@ async function register() {
     }
  }
 
+
+ async function populateUserProfile() {
+    console.log("partito");
+    var email = localStorage.getItem("email");
+    var username = localStorage.getItem("username");
+    var _id = localStorage.getItem("_id");
+    if (!email || !username || !_id) {
+        console.error("Missing required user data in localStorage");
+        return;
+    }
+    try {
+        console.log("partito");
+        const response = await fetch('/get_user_data', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                username: username,
+                _id: _id // invio dell'id al posto della password.
+            })
+        });
+        console.log("partito");
+        if (!response.ok) {
+            throw new Error("Autenticazione non valida");
+        }
+        console.log("partito");
+        const userData = await response.json();
+        console.log(userData);
+        // Mostra i dati dell'utente nel profilo
+        document.getElementById("username").value = userData.username;
+        document.getElementById("email").value = userData.email;
+        document.getElementById("name").value = userData.name;
+        document.getElementById("surname").value = userData.surname;
+        // Get correct select element and update
+        const selectElement = document.getElementById('selected_Superhero');
+        
+        if (selectElement) {
+            selectElement.value = userData.superhero;
+             // Fetch superhero details using the ID
+             try {
+                const heroResponse = await getSingleHero(userData.superhero);    
+                const searchInput = document.getElementById('select_superhero');
+                if (!heroResponse) {
+                    throw new Error('No response from hero fetch');
+                }
+                
+                if (heroResponse.data && heroResponse.data.length > 0) {
+                    const hero = heroResponse.data[0];
+                    // Update the visible search input with the hero name
+                    searchInput.value = hero.name;
+                } else {
+                    console.error("Superhero not found");
+                    searchInput.value = "Superhero not found";
+                }
+            } catch (error) {
+                console.error("Error fetching superhero details:", error);
+                searchInput.value = "Error loading superhero";
+            }
+        }
+        /*Check the superhero that doesn't work*/
+        document.getElementById("date_of_birth").value = userData.date;    }
+     catch (error) {
+        console.error("Errore!",error);
+        return "ERR";
+    }
+    
+}
+
+async function updateUser() {
+    var email = document.getElementById('email');
+    var username = document.getElementById('username');
+    var password1 = document.getElementById('password1');
+    var password2 = document.getElementById('password2');
+    var name = document.getElementById('name');
+    var surname = document.getElementById('surname');
+    var date_of_birth = document.getElementById('date_of_birth');
+    //This hidden item contains the selected superhero
+    var selected_Superhero = document.getElementById("selected_Superhero");
+    //This item is the one used to select the superhero and is visible
+    var superhero_selection = document.getElementById("select_superhero");
+    // Check of the password
+    if ((password1.value != password2.value || password1.value.length < 7 ) && password1.value) {
+       password1.classList.add('border');
+       password1.classList.add('border-danger');
+       password2.classList.add('border');
+       password2.classList.add('border-danger');
+       alert("The password must be at least 7 characters long and match the confirmation!");
+       return;
+    } else {
+       password1.classList.remove('border');
+       password1.classList.remove('border-danger');
+       password2.classList.remove('border');
+       password2.classList.remove('border-danger');
+    }
+    // Check the date of birth with regexp
+    var dataPattern = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+    if (!dataPattern.test(date_of_birth.value)) {
+       date_of_birth.classList.add('border');
+       date_of_birth.classList.add('border-danger');
+       alert("The date of birth must be in the format DD/MM/YYYY!");
+       return;
+    } else {
+       date_of_birth.classList.remove('border');
+       date_of_birth.classList.remove('border-danger');
+    }
+ 
+    // Check email with regexp
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailPattern.test(email.value)) {
+       email.classList.add('border');
+       email.classList.add('border-danger');
+       alert("Insert a valid email address!");
+       return;
+    } else {
+       email.classList.remove('border');
+       email.classList.remove('border-danger');
+    }
+ 
+    // Check length of username and check with regexp
+    var usermanePattern = /^[a-zA-Z0-9_]{4,16}$/;
+    if (!usermanePattern.test(username.value)) {
+        username.classList.add('border');
+        username.classList.add('border-danger');
+       alert("The username must be between 4 and 16 characters long and contain only letters, numbers and underscores!");
+       return;
+    } else {
+        username.classList.remove('border');
+       username.classList.remove('border-danger');
+    }
+ 
+    // Check of the angrafic data
+    if (!name.value) {
+       name.classList.add('border');
+       name.classList.add('border-danger');
+       alert("Insert your name!");
+       return;
+    } else {
+       name.classList.remove('border');
+       name.classList.remove('border-danger');
+    }
+ 
+    if (!surname.value) {
+       surname.classList.add('border');
+       surname.classList.add('border-danger');
+       alert("Insert your surname!");
+       return;
+    } else {
+       surname.classList.remove('border');
+       surname.classList.remove('border-danger');
+    }
+ 
+    //Check if superhero is selected. Only check is selected because the non valid characters are not selectable
+    if (!selected_Superhero.value) {
+        superhero_selection.classList.add('border');
+        superhero_selection.classList.add('border-danger');
+        alert("Select a superhero!");
+        return;
+     } else {
+        superhero_selection.classList.remove('border');
+        superhero_selection.classList.remove('border-danger');
+     }
+    var data = {
+       name: name.value,
+       _id : localStorage.getItem("_id"),
+       username: username.value,
+       password: password1.value,
+       surname: surname.value,
+       email: email.value,
+       date: date_of_birth.value,
+       superhero: selected_Superhero.value // I set the selected superhero ID
+    };
+ 
+    const button = document.querySelector('button');
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Registrazione...';
+
+    try {
+        const response = await fetch('/update-user', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data),
+            credentials: 'include'
+        });
+        
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message);
+        }
+
+        // Save user credentials in LocalStorage using the result data
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("name", data.name);
+        alert("User update successfully! ");
+        window.location.reload();
+        return;
+    } catch (error) {
+         // Reset button state
+         button.disabled = false;
+         button.innerHTML = 'Register';
+         
+         // Show error
+         alert('Update failed failed. Please try again. ' + error.message);
+        console.error('Update failed:', error);
+        // Show error to user
+        document.getElementById('error-message').textContent = 
+            'Update failed. Please try again.';
+    }
+}
+
+async function deleteUser() {
+    var _id = localStorage.getItem("_id");
+    console.log("deleteUser",_id);
+    try{
+        const response = await fetch(`../delete-user/${_id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log("Ended");
+        alert("User successfully deleted. Now you will return to homepage");
+        localStorage.clear();    
+        //Going back to the homepage
+        window.location.href = '/';
+
+    } catch (error) {
+        console.error("Errore!",error);
+        return "ERR";
+    }
+}

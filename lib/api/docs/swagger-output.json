@@ -240,6 +240,48 @@
         }
       }
     },
+    "/print-credits/{username}": {
+      "get": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint to get a package of characters",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/character/{id}": {
+      "get": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint to check get characters from Marvel API",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/db": {
       "get": {
         "tags": [
@@ -253,7 +295,7 @@
         }
       }
     },
-    "/edit-credits/{amount}": {
+    "/edit-credits": {
       "post": {
         "tags": [
           "users"
@@ -261,15 +303,23 @@
         "description": "Endpoint to buy credits",
         "parameters": [
           {
-            "name": "amount",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Body containing credit variation information",
+            "schema": {
+              "$ref": "#/definitions/creditrequest"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Credits successfully updated"
+          },
+          "400": {
+            "description": "Invalid parameters or insufficient credits"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -300,6 +350,51 @@
             "type": "string"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/get_user_data": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "description": "Endpoint that allows to verify if user tuple of _id, email and nickname are valid in the database.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "tuple used for verification",
+            "schema": {
+              "$ref": "#/definitions/authuser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "succesfully authorized.",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid body parameter"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      }
+    },
+    "/update-user": {
+      "put": {
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"

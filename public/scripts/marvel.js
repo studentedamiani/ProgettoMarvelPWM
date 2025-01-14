@@ -70,3 +70,23 @@ await getPackage()
 }
 
 
+async function getSingleHero(id) {
+    try {
+        const response = await fetch(`../character/${id}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching hero:', error);
+        throw error; // Re-throw to handle it in the calling function
+    }
+}

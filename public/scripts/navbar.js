@@ -101,8 +101,16 @@ async function loadHTML() {
     });
 }
 
-// Add event listener to update navbar when DOM is loaded
-document.addEventListener('DOMContentLoaded', printNavBar);
+if (!['/user' ].includes(window.location.pathname))
+{   //Only just for
+    // Wait for DOM and all resources to load
+    window.addEventListener('load', () => {
+        printNavBar().catch(error => {
+            console.error("Failed to load navbar:", error);
+        });
+    });       
+ }
+
 /**
  * Checks if a user is already logged in and redirects them if necessary.
  *
@@ -149,7 +157,6 @@ function checkUserLogged() {
 
 
  async function get_credits() {
-    console.log(localStorage.getItem("username"));
     return await fetch(`/print-credits/${localStorage.getItem("username")}`,{
         method: 'GET',
         headers: {

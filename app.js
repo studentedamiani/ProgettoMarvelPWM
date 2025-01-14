@@ -91,9 +91,20 @@ app.get('/test', async (req, res) => {
 app.get('/print-credits/:username', async (req,res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint to get a package of characters'
-  console.log(req.params.username);
 await database.get_Credits(req.params.username).then(response => {res.send(response);})
 });
+/*Endpoint to get the characters from the Marvel API*/
+app.get("/character/:id", async (req,res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint to check get characters from Marvel API'
+  try {
+    const response = await marvel_API.getFromMarvel(req, 'public/characters/' + req.params.id);
+    res.json(response);
+} catch (error) {
+    console.error("Error fetching character:", error);
+    res.status(500).json({ error: "Failed to fetch character" });
+}
+ });
 /*************END OF FETCH***************/
 
 /***********SWAGGER MAAGEMENT***********/
@@ -173,6 +184,7 @@ app.post('/check-db', async (req, res) => {
   const result = await database.check_db_connection();
   res.status(result.status).json(result);
 });
+
 /*Endpoint to get the characters from the Marvel API*/
 app.post("/characters",(req,res) => {
   // #swagger.tags = ['cards']
@@ -180,7 +192,6 @@ app.post("/characters",(req,res) => {
      marvel_API.getFromMarvel(req ,'public/characters',req.query.query)
        .then(response => {res.send(response);})
  });
-
 /* ****************** AUTHENTICATION  ****************** */
 /*Endpoint to login a user*/
 app.post("/login", async (req, res) => {
@@ -210,8 +221,41 @@ app.post("/login", async (req, res) => {
      */
   login(req, res);
 });
+app.post("/get_user_data", async (req, res) => {
+  // #swagger.tags = ['auth']
+  // #swagger.description = 'Endpoint that allows to verify if user tuple of _id, email and nickname are valid in the database.'
+  /* #swagger.parameters['body'] = {
+       in: 'body',
+        description: 'tuple used for verification',
+        type: 'object',
+        schema: { $ref: "#/definitions/authuser" }
+     }
+*/
+  /* #swagger.responses[200] = {
+        schema: { $ref: "#/definitions/user"},
+        description: 'succesfully authorized.'
+     }
+     #swagger.responses[401] = {
+        description: 'Unauthorized'
+     }
+     #swagger.responses[401] = {
+        description: 'Invalid body parameter'
+     }
+     #swagger.responses[500] = {
+        description: 'Internal Error'
+     }
+     */
+     await register.authuser(req, res);
+});
 
+app.put("/update-user", async (req, res) => {
+  await database.update_user(req.body).then(response => {res.send(response);})
+});
 
+app.delete("/delete-user/:userid", async (req, res) => {
+  console.log("REQ BODY!",req.params.userid);
+  await database.delete_user(req.params.userid).then(response => {res.send(response);})
+});
 /************APP ACTIVATION***********/
 /*Start the server on the port defined in the .env file*/
 app.listen(process.env.PORT);

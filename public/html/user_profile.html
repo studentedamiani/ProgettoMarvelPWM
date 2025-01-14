@@ -1,18 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- import of the logo -->
-    <link rel="icon" href="../images/logo.png" type="image/x-icon">
-    <!-- import of the bootstrap css -->
-    <!-- import of custom CSS-->
-    <link rel="stylesheet" href="../css/style.css">
-    <title>User manage</title>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Album delle figurine dei super eroi (AFSE) - Base page">
+		<title>
+			User profile
+		</title>
+		<!-- import of the logo -->
+		<link rel="icon" href="../images/logo.png" type="image/x-icon">
+		<!-- import of custom CSS-->
+		<link rel="stylesheet" href="../css/style.css">
+	</head>
 <body>
     <div id="menu"></div>
-    User profile
+    <form class="container p-3"> <!-- Container of the form-->
+        <div class="form-floating mb-3">
+        <h1> User profile</h1>
+        <p>Here you can manage your data, even delete your account if you want. <span class="text-danger fw-bold">Deletion of the account is irreversible
+        </span></p>
+        </div>
+        <div class="form-floating mb-3">
+            <input id="email" type="email" required="required" class="form-control" placeholder="name@example.com" aria-label="Email" autocomplete="email">
+            <label for="email">Email address</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input id="username" type="text" required="required" class="form-control" placeholder="Username" aria-label="Nome utente" minlength="4" maxlength="16">
+            <label for="username">Username</label>
+        </div>
+        <p style="font-size: 80%; color: grey;">The username length must be betwheen 4 and 16 charachters</p>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    <input id="password1" type="password" name="password" required="required" class="form-control" placeholder="Password" aria-label="Password" autocomplete="new-password" autocomplete="on" minlength="7">
+                <label for="password1">You can change the password here.</label>
+                </div> 
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    <input id="password2" type="password" name="password" required="required" class="form-control" placeholder="Repeat Password" aria-label="Password" autocomplete="repeat-password" autocomplete="on" minlength="7">
+                    <label for="password2">Confirm password</label>
+                </div>
+            </div> 
+            <p style="font-size: 80%; color: grey;">The password must be at least 7 charachters</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    <input id="name" type="text" class="form-control" placeholder="Name" aria-label="Name" required="required" autocomplete="name">
+                    <label for="name">Name</label>
+                </div> 
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating mb-3">    
+                    <input id="surname" type="text" class="form-control" placeholder="Surname" aria-label="Surname" required="required" autocomplete="family-name">
+                    <label for="surname">Surname</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input id="date_of_birth" type="date" class="form-control" placeholder="Date of birth" aria-label="Data di nascita" min="1900-01-01" required="required" autocomplete="bday" name="bday" pattern="\d{2}/\d{2}/\d{4}">
+            <label for="date_of_birth">Date of birth</label>
+        </div>
+            <div class="form-floating mb-3">
+                <div class="form-floating">
+                    <input type="text" 
+                           class="form-control" 
+                           id="select_superhero" 
+                           placeholder="Favourite superhero"
+                           autocomplete="off"
+                           required="required">
+                    <label for="select_superhero">Favourite superhero</label>
+                    <div class="dropdown-menu w-100" id="resultsDropdown">
+                        <ul class="search-results" id="searchResults">
+                            <!-- Results will be populated here -->
+                        </ul>
+                        <div class="text-center p-2 d-none" id="loadingIndicator">
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <input type="hidden" id="selected_Superhero">
+        </div>
+      <div class="form-floating mb-3">
+         <button type="button" onclick="updateUser()" class="btn btn-primary"><i class="far fa-floppy-disk"></i> Save</button>
+         <button type="button" onclick="confirmDelete()" class="btn btn-danger "><i class="far fa-trash-can"></i> Delete account</button>
+      </div>
+    </form>
     <footer id="footer"></footer>
     <!-- import of JS -->
         <script src="../scripts/theme.js"></script>
@@ -20,9 +96,36 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <!-- import of the jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="../scripts/navbar.js"></script>
+        <script src="../scripts/marvel.js"></script>
+        <script src="../scripts/register.js"></script>
         <script src="../scripts/login.js"></script>
+       
         <script type="module" src="../scripts/footer.js"></script>
     <!-- end of import of JS -->
+
+<script>
+    function confirmDelete() {
+      const confirmed = confirm("Are you sure you want to delete your account? This action cannot be undone.");
+      if (confirmed) {
+        deleteUser();
+      }
+    }
+</script>
+<script type="module">
+       // Wait for DOM and all resources to load
+       window.addEventListener('load',async () => {
+        await populateUserProfile().catch(error => {
+            console.error("Failed to populate user profile:", error);
+        });
+        await printNavBar();
+    });
+</script>
+<script>
+    window.addEventListener('unhandledrejection', function(event) {
+        console.error('Unhandled promise rejection:', event.reason);
+    });
+</script>
+ <script src="../scripts/navbar.js"></script>
 </body>
+
 </html>
