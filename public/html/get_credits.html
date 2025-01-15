@@ -73,7 +73,7 @@
 					// Highlight selected button and store amount
 					this.classList.remove('btn-info');
 					this.classList.add('btn-success');
-					selectedAmount = parseInt(this.getAttribute('data-credits'));
+					selectedAmount = Number(this.getAttribute('data-credits'));
 					
 					// Enable buy button
 					document.getElementById('buy').disabled = false;

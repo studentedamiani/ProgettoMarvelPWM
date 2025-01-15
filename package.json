@@ -12,6 +12,7 @@
   },
   "author": "Stefano Damiani",
   "dependencies": {
+    "decimal.js": "^10.4.3",
     "dotenv": "^16.4.7",
     "express": "^4.18.2",
     "mongodb": "^6.12.0",
