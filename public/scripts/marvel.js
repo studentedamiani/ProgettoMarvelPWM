@@ -38,6 +38,19 @@ async function getAlbumcardsDB(albumID) {
 
 }
 
+async function getDuplicatedAlbumcardsDB(albumID) {
+    return await fetch(`/albums_duplicated_cards/${albumID}`,{
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+        })
+        .then(response => response.json())
+        .catch(error => console.error(error))
+
+}
+
 async function printPackage() {
 await getPackage()
 .then(response =>
@@ -130,8 +143,71 @@ async function printAlbumCards(albumId) {
     )
     .catch(response => console.error("Calculation error!"+response)) 
 }
-    
 
+async function removeCard(cardId) {
+    var albumId = localStorage.getItem("album_ID");
+    var username = localStorage.getItem("username");
+    var user_id = localStorage.getItem("_id");
+    if(confirm('Are you sure you want to sell this card?')) {
+        fetch('/sell_card', 
+            { method: 'DELETE',
+             headers: { 'Content-Type': 'application/json' }, 
+             body: JSON.stringify({ card_id: cardId,
+                                    album_id: albumId,
+                                    username: username,
+                                    user_id: user_id
+                         }) 
+            }
+        )
+        .then(() => window.location.reload());
+}
+}
+    
+async function printDuplicatedAlbumCards(albumId) {
+    document.getElementById("pack_cards")
+    .innerHTML = '<i class="fas fa-spinner fa-spin fa-3x"></i>';
+    await getDuplicatedAlbumcardsDB(albumId)
+    .then(response =>
+        {               var i=0;
+                var Div_Car = `<div class="row">
+                            <div class="col-md-12 text-center"> `
+                response.forEach(item => {
+                    if (i % 3 ==0 ) {
+                        Div_Car = Div_Car + 
+                        `   </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center"> `;
+                    }
+
+                    Div_Car =
+                        Div_Car + 
+                        `<a onclick="removeCard(`+item.marvel_data.data[0].id+`)"> `+
+                        `<div class="card card-shine-effect-metal" id="char-`+item.marvel_data.data[0].id+`">`+
+                            `<div class="card-header">`+
+                                item.marvel_data.data[0].name+
+                            `</div>`+
+                            //`<hr>`+
+                            `<div class="card-content">`+
+                                `<img src="`+item.marvel_data.data[0].thumbnail.path.replace(/"/g, "")+`.`+item.marvel_data.data[0].thumbnail.extension+`">`+
+                            `</div>`+
+                            `<div class="card-body">`+
+                            item.marvel_data.data[0].description+
+                            `</div>`+
+                            `<div class="card-footer">`+
+                            item.marvel_data.attributionText+
+                            `</div>`+
+                        `</div> </a>`;//
+                        i++;
+                });
+                Div_Car = Div_Car + `   </div>
+                                    </div>`;
+                document.getElementById("pack_cards").innerHTML = Div_Car;
+                document.getElementById("pack_cards").classList.remove("hidden");
+            }
+    )
+    .catch(response => console.error("Calculation error!"+response)) 
+}
 
 
 async function getSingleHero(id) {

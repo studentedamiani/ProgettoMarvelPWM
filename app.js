@@ -70,6 +70,12 @@ app.get('/album', async (req, res) => {
   // #swagger.description = 'Endpoint that allows to fetch the album page'
   res.sendFile(path.resolve("./public/html/album.html"));
 });
+/*Endpoint for the sell cards*/
+app.get('/sell_cards', async (req, res) => {
+  // #swagger.tags = ['users']
+  // #swagger.description = 'Endpoint that allows to fetch the user registration page'
+  res.sendFile(path.resolve("./public/html/sell_cards.html"));
+});
 /*Endpoint for the albums of the user*/
 app.get('/albums/:userid', async (req, res) => {
   // #swagger.tags = ['cards']
@@ -93,7 +99,24 @@ app.get('/albums_cards/:albumid', async (req, res) => {
     // For each card in response, fetch its Marvel character details
     console.log(response.length);
     for (let i = 0; i < response.length; i++) {
-      console.log("LG in APP_JS",response[i].card_Id);
+      const marvelData = await marvel_API.getFromMarvel(req, 'public/characters/'+ response[i].card_Id);
+      response[i].marvel_data = marvelData;
+    }
+    res.send(response);
+    
+} catch (error) {
+    console.error("Error fetching albums:", error.message);
+    res.status(500).json({ error: "Failed to fetch albums: " + error.message });
+}
+});
+/*Endpoint for the cards of albums of the user*/
+app.get('/albums_duplicated_cards/:albumid', async (req, res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint that allows to fetch the album page'
+  try {
+    const response = await database.getDuplicatedAlbumsCards(req.params.albumid);
+    // For each card in response, fetch its Marvel character details
+    for (let i = 0; i < response.length; i++) {
       const marvelData = await marvel_API.getFromMarvel(req, 'public/characters/'+ response[i].card_Id);
       response[i].marvel_data = marvelData;
     }
@@ -299,6 +322,10 @@ app.put("/update-user", async (req, res) => {
 app.delete("/delete-user/:userid", async (req, res) => {
   console.log("REQ BODY!",req.params.userid);
   await database.delete_user(req.params.userid).then(response => {res.send(response);})
+});
+app.delete("/sell_card/", async (req, res) => {
+  console.log("REQ BODY!",req.body);
+ await database.remove_card(req.body,'sell_card').then(response => {res.send(response);})
 });
 /************APP ACTIVATION***********/
 /*Start the server on the port defined in the .env file*/
