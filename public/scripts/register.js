@@ -372,7 +372,7 @@ async function register() {
        password: password1.value,
        date: date_of_birth.value,
        superhero: selected_Superhero.value, // I set the selected superhero ID
-       credits: 0
+       credits: 0.0
     };
  
     const button = document.querySelector('button');
