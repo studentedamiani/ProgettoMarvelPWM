@@ -83,6 +83,27 @@ app.get('/albums/:userid', async (req, res) => {
     res.status(500).json({ error: "Failed to fetch albums: " + error.message });
 }
 });
+
+/*Endpoint for the cards of albums of the user*/
+app.get('/albums_cards/:albumid', async (req, res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint that allows to fetch the album page'
+  try {
+    const response = await database.getAlbumsCards(req.params.albumid);
+    // For each card in response, fetch its Marvel character details
+    console.log(response.length);
+    for (let i = 0; i < response.length; i++) {
+      console.log("LG in APP_JS",response[i].card_Id);
+      const marvelData = await marvel_API.getFromMarvel(req, 'public/characters/'+ response[i].card_Id);
+      response[i].marvel_data = marvelData;
+    }
+    res.send(response);
+    
+} catch (error) {
+    console.error("Error fetching albums:", error.message);
+    res.status(500).json({ error: "Failed to fetch albums: " + error.message });
+}
+});
 /*Endpoint for the exchange page*/
 app.get('/exchange', async (req, res) => {
   // #swagger.tags = ['cards']

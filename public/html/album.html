@@ -24,7 +24,6 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div id="album_selector_container" class="button-container"></div>
-                    
 					<div id="lock" class="text-center hidden">
                         <p class="text-danger" id="error_Message"></p>
                         <i class="fas fa-lock fa-2x"></i>
@@ -34,7 +33,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<div id="pack_cards" class="hidden pack_cards"></div>
+				<div id="pack_cards" class="pack_cards"></div>
 			</div>  
 		</div>
     </div>
@@ -64,6 +63,7 @@
                     albumElement.classList.remove("btn-primary");
                     albumElement.classList.add("btn-success");
                 }
+                printAlbumCards(albumid);
             }
             async function createAlbumButtons() {
                 var id=localStorage.getItem("_id");

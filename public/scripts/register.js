@@ -105,6 +105,7 @@ class SearchableSelect {
         this.searchInput.dispatchEvent(event);
         if (['/card' ].includes(window.location.pathname))
             {
+                document.getElementById('character_details').innerHTML=``;
                 console.log(item);
                 var Div_Car =
                 '<div class="card card-shine-effect-metal" id="char-'+item.id+'">'+
@@ -185,30 +186,6 @@ class SearchableSelect {
                     {
                         console.log("NO");
                     }
-                    // Get correct select element and update
-                    
-                  /*  if (character_details) {
-                        selectElement.value = userData.superhero;
-                        // Fetch superhero details using the ID
-                        try {
-                            const heroResponse = await getSingleHero(userData.superhero);    
-                            const searchInput = document.getElementById('select_superhero');
-                            if (!heroResponse) {
-                                throw new Error('No response from hero fetch');
-                            }
-                            
-                            if (heroResponse.data && heroResponse.data.length > 0) {
-                                const hero = heroResponse.data[0];
-                                // Update the visible search input with the hero name
-                                searchInput.value = hero.name;
-                            } else {
-                                console.error("Superhero not found");
-                                searchInput.value = "Superhero not found";
-                            }
-                        } catch (error) {
-                            console.error("Error fetching superhero details:", error);
-                            searchInput.value = "Error loading superhero";
-                        }*/
                     }
                     /*Check the superhero that doesn't work*/
                 catch (error) {
