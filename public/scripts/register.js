@@ -93,7 +93,7 @@ class SearchableSelect {
         this.showResults();
     }
 
-    selectItem(item) {
+    async selectItem(item) {
         this.selectedValue.value = item.id; // Adjust according to your data structure
         this.searchInput.value = item.name; // Adjust according to your data structure
         this.hideResults();
@@ -123,7 +123,99 @@ class SearchableSelect {
                     '</div>'+
                 '</div>';
                 document.getElementById("CardContainer").innerHTML = Div_Car;
+                console.log("dopo stampa cont.")
                 //If the user is logged and has selected an album and have the card in the album i present all data
+                var user_Id = localStorage.getItem("_id");
+                var album_ID = localStorage.getItem("album_ID");
+                console.log("prima controllo localstorage user_Id",user_Id);
+                console.log("prima controllo localstorage album_ID",album_ID);
+                if (!user_Id || !album_ID ) {
+                    return;
+                }
+                console.log("passato controllo localstorage");
+                try {
+                    const response = await fetch('/check_card_album', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            user_Id: user_Id,
+                            album_Id: album_ID,
+                            card_Id: item.id // invio dell'id al posto della password.
+                        })
+                    });
+                    console.log("partito");
+                    if (!response.ok) {
+                        throw new Error("Autenticazione non valida");
+                    }
+                    console.log("partito");
+                    const userData = await response.json();
+                    console.log(userData);
+                    console.log(userData.length);
+                    if (userData.length>0) {
+                        console.log("Hai il personaggio");
+                    const character_details = document.getElementById('character_details');
+                     let seriesHtml=``;
+                     let eventsHtml=``;
+                     let comicsHtml=``;
+                    if ( item.series.available>0 ){
+                        seriesHtml = '<h3>Series:</h3><br><ul>';
+                        for (let series of item.series.items) {
+                            seriesHtml += `<li>${series.name}</li>`;
+                        }
+                        seriesHtml += '</ul>';
+                    }
+                    if ( item.events.available>0 ){
+                        eventsHtml = '<h3>Events:</h3>';
+                        for (let events of item.events.items) {
+                            eventsHtml += `<p>${events.name}</p>`;
+                        }
+                    }
+                    if ( item.comics.available>0 ){
+                        comicsHtml = '<h3>Comics:</h3>';
+                        for (let comic of item.comics.items) {
+                            comicsHtml += `<p>${comic.name}</p>`;
+                        }
+                    }
+                    console.log(comicsHtml);
+                    character_details.innerHTML = seriesHtml + eventsHtml + comicsHtml;
+                }
+                    else
+                    {
+                        console.log("NO");
+                    }
+                    // Get correct select element and update
+                    
+                  /*  if (character_details) {
+                        selectElement.value = userData.superhero;
+                        // Fetch superhero details using the ID
+                        try {
+                            const heroResponse = await getSingleHero(userData.superhero);    
+                            const searchInput = document.getElementById('select_superhero');
+                            if (!heroResponse) {
+                                throw new Error('No response from hero fetch');
+                            }
+                            
+                            if (heroResponse.data && heroResponse.data.length > 0) {
+                                const hero = heroResponse.data[0];
+                                // Update the visible search input with the hero name
+                                searchInput.value = hero.name;
+                            } else {
+                                console.error("Superhero not found");
+                                searchInput.value = "Superhero not found";
+                            }
+                        } catch (error) {
+                            console.error("Error fetching superhero details:", error);
+                            searchInput.value = "Error loading superhero";
+                        }*/
+                    }
+                    /*Check the superhero that doesn't work*/
+                catch (error) {
+                    console.error("Errore!",error);
+                    return "ERR";
+                }
+                //}
             }
     }
 

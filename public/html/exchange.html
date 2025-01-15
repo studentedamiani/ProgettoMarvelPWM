@@ -13,13 +13,66 @@
 		<link rel="stylesheet" href="../css/style.css">
 		<link rel="stylesheet" href="../css/card.css">
 	</head>
-	<body>
-		<!-- Navigation bar -->
+	<body >
 		<div id="menu"></div>
-		Exchange
+		<div class="container">
+			<div class="row ">
+				<div class="col-md-12">
+						<h1>Exchange card</h1>
+					<p>In tihs page you will find a selection of avaiable exchanges.  <br>
+						You will see exhanges that give you a card that you don't have, and send a card that you have at least twice in the selected album.<br>
+						You can also sell cards for credits. A card values 0.2 credits.<br>
+						If you proposed an exchange with a card that you sell, that exchenge will be eliminated.
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="button-container">
+						<button id="cardPack" class="card-pack btn"> M A R V E L</button>
+						<div id="lock" class="text-center hidden">
+							<p class="text-danger" id="error_Message"></p>
+							<i class="fas fa-lock fa-2x"></i>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div id="pack_cards" class="hidden pack_cards">
+							
+						</div>
+					</div>
+				</div>
+				</div> 
+			</div>
+		</div>
 		<footer id="footer"></footer>
-
-		<!-- import of JS -->
+		<script >
+		  async  function toggleLock() {
+		const lockDiv = document.getElementById('lock');
+		const cardPackButton = document.getElementById('cardPack');
+		const credits = await get_credits();
+		if (!localStorage.getItem("album_ID") || credits < 1  ) {
+			lockDiv.classList.add('active');
+			if (!localStorage.getItem("album_ID")) {
+				document.getElementById("error_Message").textContent = "Please select an album first";
+			}
+			else
+			{
+				document.getElementById("error_Message").textContent = "Not enough credits";
+			}
+			lockDiv.classList.remove('hidden');
+			cardPackButton.disabled = true;
+		} else {
+			lockDiv.classList.remove('active');
+			lockDiv.classList.add('hidden');
+			cardPackButton.disabled = false;
+		}
+	}
+		</script>
+		
+		 
+			<!-- import of JS -->
 			<script src="../scripts/theme.js"></script>
 			<!-- import of the bootstrap js -->
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -29,7 +82,12 @@
 			<script src="../scripts/navbar.js"></script>
 			<script src="../scripts/login.js"></script>
 			<script type="module" src="../scripts/footer.js"></script>
-
+			<script>
+			</script>
+			<script> 
+				printCredits();
+				toggleLock();
+			</script>
 		<!-- end of import of JS -->
 	</body>
 </html>

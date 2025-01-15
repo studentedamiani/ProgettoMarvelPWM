@@ -106,6 +106,11 @@ app.get('/print-credits/:username', async (req,res) => {
   // #swagger.description = 'Endpoint to get a package of characters'
 await database.get_Credits(req.params.username).then(response => {res.send(response);})
 });
+app.post('/check_card_album', async (req,res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint to get a package of characters'
+await database.check_card_album(req.body).then(response => {res.send(response);})
+});
 /*Endpoint to get the characters from the Marvel API*/
 app.get("/character/:id", async (req,res) => {
   // #swagger.tags = ['cards']
