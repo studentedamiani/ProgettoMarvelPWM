@@ -380,7 +380,9 @@ ulteriori informazioni sono presenti al link sopra riportato
 ---
 
 ## Personaggi Marvel
-I personaggi Marvel, per essere utilizzati all'iterno dell'applicazione devono essere validati. Per essere validi essi devono obbligatoriamente avere un nome, una descrizione e un'immagine, che può essere quella di default.
+I personaggi Marvel, per essere utilizzati all'iterno dell'applicazione devono essere validati. 
+Per essere validi essi devono obbligatoriamente avere un nome, una descrizione e un'immagine, che può essere quella di default.
+Tutti i personaggi non validi non vengono presi in considerazione dall'applicazione.
 
 ---
 
