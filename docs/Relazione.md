@@ -6,30 +6,20 @@
   - [Front-End](#front-end)
   - [Back-End](#back-end)
   - [NODEJS](#nodejs)
-    - [COS'E' NODEJS ED EXPRESS](#cose-nodejs-ed-express)
-    - [FILE NODEJS](#file-nodejs)
-  - [DATABASE MONGODB](#database-mongodb)
+    - [NODEJS ed EXPRESS](#cose-nodejs-ed-express)
+    - [File NODEJS](#file-nodejs)
+  - [Database MONGODB](#database-mongodb)
     - [ALBUMS](#albums)
-    - [DESCRIZIONE](#descrizione)
-    - [ATTRIBUTI](#attributi)
     - [CARDS](#cards)
-    - [DESCRIZIONE](#descrizione-1)
-    - [ATTRIBUTI](#attributi-1)
     - [USERS](#users)
-    - [DESCRIZIONE](#descrizione-2)
-    - [ATTRIBUTI](#attributi-2)
     - [EXCHANGES](#exchanges)
-    - [DESCRIZIONE](#descrizione-3)
-    - [ATTRIBUTI](#attributi-3)
     - [EXCHANGES_CARDS](#exchanges_cards)
-    - [DESCRIZIONE](#descrizione-4)
-    - [ATTRIBUTI](#attributi-4)
 - [Configurazione dell'applicazione](#configurazione-dellapplicazione)
 - [Scelte implementative e features](#scelte-implementative-e-features)
   - [Swagger JS](#swagger-js)
-  - [FILE SWAGGER.JS](#file-swaggerjs)
-  - [INTERFACCIA GRAFICA SWAGGER](#interfaccia-grafica-swagger)
-  - [INSTALLAZIONE](#installazione)
+  - [File SWAGGER.JS](#file-swaggerjs)
+  - [Interfaccia grafica SWAGGER](#interfaccia-grafica-swagger)
+  - [Installazione](#installazione)
   - [Gestione codici HTTP](#gestione-codici-http)
   - [Esempi di Utilizo](#esempi-di-utilizo)
   - [Personaggi Marvel](#personaggi-marvel)
@@ -57,26 +47,25 @@ Il Front-End è la parte dell'applicazione che si occupa dell'interfaccia utente
 
 All'interno della directory `/public/`, sono presenti i seguenti elementi principali:
 
-- `/html/` Questa directory contiene i file HTML che vengono renderizzati da browser, determinando quindi interfaccia grafica dell'applicazione.
+- `/html/` Questa directory contiene i file HTML che vengono renderizzati da browser, determinando quindi interfaccia grafica dell'applicazione. Tutti i files sono stati validati per lo standard HTML5.
 
-- `/css/`: Questa directory contiene i file di stile che definiscono l'aspetto visivo dell'applicazione. Alcuni dei file principali includono:
+- `/css/`: Questa directory contiene i file di stile che definiscono l'aspetto visivo dell'applicazione. Tutti i files sono stati validati per lo standard CSS3. I file principali sono:
   - /public/css/style.css - _Questo file definisce lo stile generale dell'applicazione_
   -  /public/css/card.css - _Questo file definisce lo stile che riguarda le figurine e tutti i personaggi_
 
 - `/scripts/`: Questa directory contiene file JavaScript che gestiscono la logica del Front-End. Alcuni dei file principali includono:
   - /public/scripts/theme.js - _Questo file si occupa di adattare il tema dell'applicazione a quello definito dal sistema dell'utente_
   - /public/scripts/navbar.js - _Questo file si occupa di definire la barra di navigazione sulle pagine in cui è richiesta e gestisce il caricamento della pagina di login e verifica quando l'utente è loggato._
+  - /public/scripts/footer.js - _Questo file si occupa di il footer sulle pagine in cui è richiesto._
   - /public/scripts/login.js - _Questo file si occupa di tutte le operazioni necessarie al login dell'utente_
   - /public/scripts/register.js - _Questo file si occupa delle operazioni necessarie alla registrazione di un utente. Si occupa anche di caricare i dati dei supereroi per fare selezionare all'utente il suo preferito_
   - /public/scripts/marvel.js - _Questo file si occupa di gestire la maggior parte di ciò che riguarda i personaggi Marvel._
 
 La suddivisione chiara tra file HTML, file CSS e file JavaScript consente una gestione efficiente del Front-End e garantisce un'esperienza utente di alta qualità.
 
-Per ulteriori dettagli sull'implementazione del Front-End, si rimanda alle specifiche sezioni dei file e dei componenti menzionati sopra.
-
 ## Back-End
 > **Back End:** 
-Il Back-End è responsabile delle funzionalità e della logica dell'applicazione lato server. Esso comprende una serie di elementi chiave presenti nella nostra struttura di lavoro. Possiamo suddividere il backend in 3 sezioni principali
+Il Back-End è responsabile delle funzionalità e della logica dell'applicazione lato server. Esso comprende una serie di elementi chiave presenti nella nostra struttura di lavoro.
 
 ### NODEJS
 
@@ -84,7 +73,7 @@ Il Back-End è responsabile delle funzionalità e della logica dell'applicazione
 **Node.js** ed **Express** costituiscono un binomio potente nell'ambito dello sviluppo web di applicazioni scalabili ed efficienti. <br>*Node.js* fornisce un ambiente runtime JavaScript server-side, ottimizzato per l'efficienza e la scalabilità. 
 <br>*Express*, un framework web basato su Node.js, semplifica la creazione di applicazioni web, offrendo funzionalità come la gestione delle richieste HTTP e dell'autenticazione. <br>
 
-#### FILE NODEJS
+#### File NODEJS
 
 - `/lib/api/docs/`: In questa directory sono presenti i file utilizzati per la gestione della documentazione pubblica delle API dell'applicazione, inclusi:
   - swagger.js
@@ -93,19 +82,19 @@ Il Back-End è responsabile delle funzionalità e della logica dell'applicazione
 - `/config/`: Questa cartella contiene i file dedicati alla configurazione dell'applicazione, ad eccezione delle variabili d'ambiente. Al suo interno, sono presenti:
   - prefs.js - _Questo file viene utilizzato per caricare i valori inseriti dall'utente in modo che siano direttamente utilizzabili
 
-- `/src/lib/`: La directory lib contiene tutte le funzioni Node.js utilizzate per le funzionalità degli endpoint. Inoltre
+- `/lib/`: La directory lib contiene tutte le funzioni Node.js utilizzate per le funzionalità degli endpoint. Inoltre
 Alcuni dei file e delle directory principali sono:
-  - /src/lib/database.js
-  - /src/lib/login.js
-  - /src/lib/marvel.js
-  - /src/lib/register.js
-  - /src/lib/utils.js
+  - /lib/database.js
+  - /lib/login.js
+  - /lib/marvel.js
+  - /lib/register.js
+  - /lib/utils.js
 
 - `app.js`: Questo file rappresenta il punto di ingresso principale dell'applicazione, contenente le istruzioni per l'avvio dell'app e la definizione degli endpoint.
 
 La struttura ben organizzata del Back-End garantisce una gestione efficiente delle funzionalità server-side e contribuisce al corretto funzionamento dell'applicazione.
 
-### DATABASE MONGODB
+### Database MONGODB
 
 Nel corso di sviluppo dell'applicazione, è stato fatto largo uso del database MongoDB. Qui di seguito, vengono presentate le collezioni sono state create e utilizzate per immagazzinare i dati essenziali dell'applicazione.
 
@@ -119,7 +108,7 @@ Per questa applicazione sono state utilizzate le seguenti collections:
 - **exchanges**: Collezione che gestisce gli scambi proposti dagli utenti
 - **exchanges_cards**: Collezione che gestisce le carte proposte all'interno degli scambi
 
-Di seguito viene riportata una descrizione delle collections e del loro schem
+Di seguito viene riportata una descrizione delle collections e del loro schema
 
 #### ALBUMS
 ##### DESCRIZIONE
@@ -238,7 +227,7 @@ Tramite la creazione di un file *swagger.js* (/lib/api/docs/) con una apposita c
 
 è possibile visualizzare lo swagger generato all'endpoint **/api-docs**
 
-##### FILE SWAGGER.JS 
+##### File SWAGGER.JS 
 >**NB**: Il codice riportato di seguito rappresenta un esempio molto vicino a quello utilizzato in questa applicazione!
 ```javascript
 import swaggerAutogen from 'swagger-autogen';
@@ -310,11 +299,11 @@ const doc = {
     };
   const swagger = swaggerAutogen(outputFile, endpointsFiles, doc)
 ```
-##### INTERFACCIA GRAFICA SWAGGER
+##### Interfaccia grafica SWAGGER
 ![Alt text](./assets/Swagger1.png)
-![Alt text](./assets/Swagger1.png)
+![Alt text](./assets/Swagger2.png)
 
-##### INSTALLAZIONE
+##### Installazione
 ``` npm install --save-dev swagger-autogen ```<br>
 ulteriori informazioni sono presenti al link sopra riportato
 
@@ -380,7 +369,7 @@ ulteriori informazioni sono presenti al link sopra riportato
 ---
 
 ## Personaggi Marvel
-I personaggi Marvel, per essere utilizzati all'iterno dell'applicazione devono essere validati. 
+I personaggi Marvel, per essere utilizzati all'interno dell'applicazione devono essere validati. 
 Per essere validi essi devono obbligatoriamente avere un nome, una descrizione e un'immagine, che può essere quella di default.
 Tutti i personaggi non validi non vengono presi in considerazione dall'applicazione.
 
@@ -388,7 +377,7 @@ Tutti i personaggi non validi non vengono presi in considerazione dall'applicazi
 
 ## Lingua
 La scelta di utilizzare la lingua inglese, come standard di programmazione, è ampiamente diffusa nell'industria del software ed è guidata principalmente dal desiderio di aderire allo standard internazionale. Questo standard è anche noto nella community di programmatori come **"English-based programming"** . <br>
-Adottare questa convenzione ha numerosi vantaggi, in quanto rende il codice più leggibile e comprensibile per un pubblico globale di sviluppatori. La scelta è derivata anche dalla decisione di rendere il progetto, dopo la conclusione, un applicazione open-source. La scelta della licenza, che è stata come MIT, rispecchia questa scelta.
+Adottare questa convenzione ha numerosi vantaggi, in quanto rende il codice più leggibile e comprensibile per un pubblico globale di sviluppatori. La scelta è derivata anche dalla decisione di rendere il progetto, dopo la conclusione, un applicazione open-source. La scelta della licenza MIT rispecchia questa scelta.
 
 ---
 
