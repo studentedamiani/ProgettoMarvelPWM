@@ -60,7 +60,7 @@ All'interno della directory `/public/`, sono presenti i seguenti elementi princi
 
 - `/scripts/`: Questa directory contiene file JavaScript che gestiscono la logica del Front-End. Alcuni dei file principali includono:
   - /public/scripts/theme.js - _Questo file si occupa di adattare il tema dell'applicazione a quello definito dal sistema dell'utente_
-  - /public/scripts/navbar.js - _Questo file si occupa di definire la barra di navigazione sulle pagine in cui è richiesta e gestisce il caricamento della pagina di login e verifica quando l'utente è loggato._ **TODO: Ricordasi di parlare di questo anche dopo e giustificare con il fatto che così non devo caricare sempre il file per il login che espone più cose visto che tanto questo lo devo caricare lo stesso**
+  - /public/scripts/navbar.js - _Questo file si occupa di definire la barra di navigazione sulle pagine in cui è richiesta e gestisce il caricamento della pagina di login e verifica quando l'utente è loggato._
   - /public/scripts/login.js - _Questo file si occupa di tutte le operazioni necessarie al login dell'utente_
   - /public/scripts/register.js - _Questo file si occupa delle operazioni necessarie alla registrazione di un utente. Si occupa anche di caricare i dati dei supereroi per fare selezionare all'utente il suo preferito_
   - /public/scripts/marvel.js - _Questo file si occupa di gestire la maggior parte di ciò che riguarda i personaggi Marvel._
@@ -78,7 +78,6 @@ Il Back-End è responsabile delle funzionalità e della logica dell'applicazione
 #### COS'E' NODEJS ED  EXPRESS
 **Node.js** ed **Express** costituiscono un binomio potente nell'ambito dello sviluppo web di applicazioni scalabili ed efficienti. <br>*Node.js* fornisce un ambiente runtime JavaScript server-side, ottimizzato per l'efficienza e la scalabilità. 
 <br>*Express*, un framework web basato su Node.js, semplifica la creazione di applicazioni web, offrendo funzionalità come la gestione delle richieste HTTP e dell'autenticazione. <br>
-**TODO:TOGLIERE / VERIFICARE Ulteriori info a questa [pagina](https://kevinm6.github.io/TecnologieLinguaggiWeb/#nodejs).**
 
 #### FILE NODEJS
 
@@ -88,7 +87,6 @@ Il Back-End è responsabile delle funzionalità e della logica dell'applicazione
 
 - `/config/`: Questa cartella contiene i file dedicati alla configurazione dell'applicazione, ad eccezione delle variabili d'ambiente. Al suo interno, sono presenti:
   - prefs.js - _Questo file viene utilizzato per caricare i valori inseriti dall'utente in modo che siano direttamente utilizzabili
-    **TODO:Capire se serve**
 
 - `/src/lib/`: La directory lib contiene tutte le funzioni Node.js utilizzate per le funzionalità degli endpoint. Inoltre
 Alcuni dei file e delle directory principali sono:
@@ -96,7 +94,6 @@ Alcuni dei file e delle directory principali sono:
   - /src/lib/login.js
   - /src/lib/marvel.js
   - /src/lib/register.js
-  - /src/lib/user.js **TODO:Da mettere**
   - /src/lib/utils.js
 
 - `app.js`: Questo file rappresenta il punto di ingresso principale dell'applicazione, contenente le istruzioni per l'avvio dell'app e la definizione degli endpoint.
@@ -111,193 +108,92 @@ Nel corso di sviluppo dell'applicazione, è stato fatto largo uso del database M
 Per lo sviluppo di questa applicazione è stato deciso di appoggiarsi ad una versione Hosted di MongoDB, fornita da Atlas ([Maggiori informazioni](https://www.mongodb.com/it-it/atlas))
 
 Per questa applicazione sono state utilizzate le seguenti collections:
-**TODO:Inserire screen o lista vedi tu**
-![Alt text](./assets/image-2.png)
+- **albums**: Collezione che gestisce informazioni degli album di figurine
+- **cards**: Collezione che gestisce le carte presenti all'interno di ogni album
+- **users**: Collezione che gestisce i dati degli utenti
+- **exchanges**: Collezione che gestisce gli scambi proposti dagli utenti
+- **exchanges_cards**: Collezione che gestisce le carte proposte all'interno degli scambi
 
-Di seguito viene riportata una descrizione delle collections, del loro schema di validation JSON e dei tipi di dato
+Di seguito viene riportata una descrizione delle collections e del loro schem
 
-> **Validazione JSON:** La validazione JSON è un processo cruciale per garantire che i dati immagazzinati nei database siano coerenti e rispettino gli standard dell'applicazione. Definendo regole specifiche per la struttura e il formato dei dati, la validazione riduce il rischio di errori e contribuisce all'affidabilità e all'integrità del sistema. 
-
-#### COMMUNITY
+#### ALBUMS
 ##### DESCRIZIONE
-La collezione *community* ha lo scopo di raccogliere informazioni relative alle comunità all'interno della nostra applicazione.
-
-##### VALIDAZIONE JSON
-
-``` json
-{
-  "$jsonSchema": {
-    "bsonType": "object",
-    "required": [
-      "_id",
-      "creatorId",
-      "name"
-    ],
-    "properties": {
-      "_id": {
-        "bsonType": "objectId",
-        "description": "_id must be an ObjectId and is required"
-      },
-      "creatorId": {
-        "bsonType": "objectId",
-        "description": "creatorId must be an ObjectId and is required"
-      },
-      "name": {
-        "bsonType": "string",
-        "description": "name must be a string and is required"
-      },
-      "desc": {
-        "bsonType": "string",
-        "description": "desc must be a string"
-      },
-      "members": {
-        "bsonType": "array",
-        "description": "members must be an array of ObjectIds"
-      },
-      "playlists": {
-        "bsonType": "array",
-        "description": "playlists must be an array of ObjectIds"
-      }
-    }
-  }
-} 
-```
+La collezione *albums* ha lo scopo di raccogliere l'anagrafica degli album di figurine degli utenti
 
 ##### ATTRIBUTI
-- **_id**: identificatore univoco di una community, di tipo ObjectId. È un campo obbligatorio per identificare univocamente una community nel db.
+- **_id**: identificatore univoco di una album, di tipo ObjectId. È un campo obbligatorio per identificare univocamente un album nel db.
 
-- **creatorId**: identificatore dell'utente creatore della community, di tipo ObjectId. È un campo obbligatorio e serve a linkare la community al suo creatore.
+- **userId**: identificatore dell'utente creatore dell'album, di tipo ObjectId. È un campo obbligatorio e serve a linkare l'album al suo creatore.
 
-- **name**: nome della community, di tipo stringa. È un campo obbligatorio e contiene il nome della community.
+- **name**: nome dellì'album, di tipo stringa. È un campo obbligatorio e contiene il nome dell'album.
 
-- **desc**: rappresenta la descrizione della community, di tipo stringa. È un campo facoltativo e contiene una descrizione testuale della community.
+#### CARDS
 
-- **members**: lista di membri della community, di tipo array. Contiene una serie di ObjectId che identificano gli utenti che fanno parte della community.
+##### DESCRIZIONE
+La collezione *cards* è stata creata per salvare le carte trovate dagli utenti dentro i pacchetti e linkarle all'album in uso in quel momento
 
-- **playlists**: lista di playlist associate alla community, di tipo **array**. Contiene una serie di ObjectId che identificano le playlist associate a questa community.
-
-#### PLAYLISTS
-
-**DESCRIZIONE**  
-La collezione *playlists* è stata creata per rappresentare le playlist musicali all'interno della nostra applicazione. 
-
-##### VALIDAZIONE JSON
-
-``` json
-{
-  "$jsonSchema": {
-     "bsonType": "object",
-    "required": [
-      "_id",
-      "owner_id",
-      "title"
-    ],
-    "properties": {
-      "_id": {
-        "bsonType": "objectId",
-        "description": "_id must be a ObjectId and is required"
-      },
-      "owner_id": {
-        "bsonType": "objectId",
-        "description": "owner_id must be a ObjectId and is required"
-      },
-      "title": {
-        "bsonType": "string",
-        "description": "title must be a string and is required"
-      },
-      "description": {
-        "bsonType": "string",
-        "description": "name must be a string"
-      },
-      "tags": {
-        "bsonType": "array",
-        "description": "name must be an array of ObjectIds"
-      },
-      "songs": {
-        "bsonType": "array",
-        "description": "name must be a array of ObjectIds"
-      }
-    }
-  }
-}
-```
 ##### ATTRIBUTI
-- **_id**: identificatore univoco di una playlist, di tipo ObjectId. È un campo obbligatorio per identificare univocamente una playlist nel database.
+- **_id**: identificatore univoco dell'associazione Carta-Album, di tipo ObjectId. È un campo obbligatorio per identificare univocamente una carta nel database.
 
-- **owner_id**: identificatore dell'utente proprietario della playlist, di tipo ObjectId. È un campo obbligatorio e serve a linkare la playlist al suo proprietario.
+- **user_Id**: identificatore dell'utente proprietario della carta, di tipo ObjectId. È un campo obbligatorio e serve a linkare la carta al suo proprietario.
 
-- **title**: titolo della playlist, di tipo stringa. È un campo obbligatorio e contiene il titolo della playlist.
+- **album_Id**: identificatore dell'album in cui la carta è inserita. Di tipo Stringa. È un campo obbligatoro e serve a linkare la carta all'album.
 
-- **description**: descrizione della playlist, di tipo stringa. È un campo facoltativo e contiene una descrizione testuale della playlist.
-
-- **tags**: lista di tag associati alla playlist, di tipo array. Contiene una serie di strings che identificano i tag associati a questa playlist.
-
-- **songs**: lista di brani musicali presenti nella playlist, di tipo array. Contiene una serie di ObjectIds che identificano i brani musicali presenti in questa playlist.
-
+- **card_Id**: Id del personaggio fornito direttamente dalle API Marvel. Di tipo Numerico. Serve per identificare e collegare alle informazioni fornite da Marvel la carta
 
 #### USERS
+
 ##### DESCRIZIONE
 La collezione *users* è destinata a contenere i dati degli utenti all'interno dell'applicazione. 
 
-##### VALIDAZIONE JSON
-```json
-{
-  "$jsonSchema": {
-    "bsonType": "object",
-    "required": [
-      "_id",
-      "username",
-      "email",
-      "password"
-    ],
-    "properties": {
-      "_id": {
-        "bsonType": "objectId",
-        "description": "_id must be an ObjectId and is required"
-      },
-      "name": {
-        "bsonType": "string",
-        "description": "name must be a string and is required"
-      },
-      "username": {
-        "bsonType": "objectId",
-        "description": "username must be an ObjectId and is required"
-      },
-      "email": {
-        "bsonType": "string",
-        "description": "email must be a string and is required"
-      },
-      "password": {
-        "bsonType": "string",
-        "description": "password must be a string"
-      },
-      "date": {
-        "bsonType": "string",
-        "description": "date must be a string"
-      },
-      "genres": {
-        "bsonType": "array",
-        "description": "genres must be an array of ObjectIds"
-      }
-    }
-  }
-}
-
-```
 ##### ATTRIBUTI
 - **_id**: identificatore univoco di un utente, di tipo ObjectId. È un campo obbligatorio per identificare univocamente un utente nel database.
 
 - **name**: nome dell'utente, di tipo stringa. È un campo obbligatorio e contiene il nome dell'utente.
 
-- **username**: username dell'utente, di tipo ObjectId. È un campo obbligatorio e serve a collegare il soprannome dell'utente.
+- **surname**: cognome dell'utente, di tipo stringa. È un campo obbligatorio e contiene il cognome dell'utente.
+
+- **username**: username dell'utente, di tipo ObjectId. È un campo obbligatorio e contiene la login, alternativa all'email, dell'utente.
 
 - **email**: indirizzo email dell'utente, di tipo stringa. È un campo obbligatorio e contiene l'indirizzo email dell'utente.
 
-- **password**: password dell'utente, di tipo stringa. È un campo facoltativo e contiene la password dell'utente.
+- **password**: password dell'utente, di tipo stringa. È un campo obbligatorio e contiene la password dell'utente cifrata.
 
-- **date**: data associata all'utente, di tipo stringa. È un campo facoltativo e contiene una data associata all'utente.
+- **date**: data di nascita dell'utente, di tipo stringa. È un campo obbligatorio e contiene la data di nascita dell'utente.
 
-- **genres**: lista di generi musicali preferiti dall'utente, di tipo array. Contiene una serie di ObjectIds che identificano i generi musicali preferiti dall'utente.
+- **superhero**: codice identificativo supereroe Marvel. È un campo obbligatorio e contiene il supereroe preferito dell'utente.
+
+- **credits**: numero di crediti attualmente in possesso dell'utente. In fase di creazione corrispondono a 0. Campo obbligatorio
+
+#### EXCHANGES
+
+##### DESCRIZIONE
+La collezione *exchanges* è stata creata per salvare gli scambi di figurine proposti dagli utenti.
+
+##### ATTRIBUTI
+- **_id**: identificatore univoco dello scambio, di tipo ObjectId. È un campo obbligatorio per identificare univocamente uno scambio nel database.
+
+- **user_Id**: identificatore dell'utente proprietario della scambio, di tipo ObjectId. È un campo obbligatorio e serve a linkare lo scambio al suo proprietario.
+
+- **album_Id**: identificatore dell'album da cui l'utente vuole scambiare. Di tipo Stringa. È un campo obbligatoro e serve a linkare lo scambio all'album.
+
+- **requestedCard**: Id del personaggio richiesto per lo scambio, nella sintassi fornita direttamente dalle API Marvel. Di tipo Stringa. Serve per identificare la carta che viene acquisita quando un'altro utente accetta lo scambio
+
+#### EXCHANGES_CARDS
+
+##### DESCRIZIONE
+La collezione *exchanges_cards* è stata creata per salvare le carte da donare durante uno scambio. È stata definita una tabella separata per permettere di dare più carte per una sola carta.
+
+##### ATTRIBUTI
+- **_id**: identificatore univoco dell'associazione Carta-Scambio, di tipo ObjectId. È un campo obbligatorio per identificare univocamente l'associazione nel database.
+
+- **exchange_id**: identificatore univoco dello scambio, di tipo ObjectId. È un campo obbligatorio per identificare univocamente linkare la carta allo scambio.
+
+- **user_id**: identificatore dell'utente proprietario della carta, di tipo ObjectId. È un campo obbligatorio e serve a linkare la carta e lo scambio al suo proprietario.
+
+- **album_id**: identificatore dell'album in cui la carta doppia proposta è inserita. Di tipo Stringa. È un campo obbligatoro e serve a linkare la carta all'album, in modo che se la carta viene venduta nell'album lo scambio viene eliminato.
+
+- **card_Id**: Id del personaggio fornito direttamente dalle API Marvel. Di tipo Numerico. Serve per identificare e collegare alle informazioni fornite da Marvel la carta proposta nello scambio
 
 # Configurazione dell'applicazione
 Il progetto necessita di un file `.env` nella directory principale del dove sono contenuti i
@@ -340,118 +236,7 @@ Tramite la creazione di un file *swagger.js* (/lib/api/docs/) con una apposita c
 ##### FILE SWAGGER.JS 
 >**NB**: Il codice riportato di seguito non è completo, rappresenta solo un esempio molto vicino a quello utilizzato in questa applicazione!
 ```javascript
-import swaggerAutogen from 'swagger-autogen';
-import { config } from "../../../config/prefs.js";
-const outputFile = './swagger-output.json';
-const endpointsFiles = ['../../*.js', '../../../app.js'];  
 
-const doc = {
-    "info": {
-      "title": "Marvel Characters API",
-      "description": "API for AFSE (Album delle Figurine dei Super Eroi)",
-      "version": "1.0.0"
-    },
-    host: `${config.host}:${config.port}`,
-    basePath: "/",
-    schemes: ['http'],
-    consumes: ['application/json'],
-    produces: ['application/json'],
-    tags: [
-      {
-         "name": "fetch",
-         "description": "Endpoints for fetching and searching content."
-      },
-      {
-          "name": "users",
-          "description": "Endpoints for the management of user data and related operations."
-      },
-      ...
-    ]
-    ,
-    definitions: {
-      user: {
-          _id: "ObjectId('64df73b31e5eda5eb868ddcd')",
-          name: "John",
-          username: "Jhonny",
-          surname: "Doe",
-          email: "jhonny@example.com",
-          password: "md5 hashed password",
-          date: "2001-05-20",
-          **TODO:DA SISTEMARE **genres: {
-              0: "pop",
-              1: "rock",
-              2: "metal"
-          }
-      },
-      playlists: {
-        _id: "ObjectId('64e748f0cb18ad90657b9043')",
-        owner_id: "ObjectId('64df73b31e5eda5eb868ddcd')",
-        title: "Example Playlist",
-        description: "Description of playlist",
-        public: true,
-        tags: {
-            0: "chill",
-            1: "relax",
-            2: "vibes"
-        },
-        songs: {
-           0:{
-              title: "Song 1",
-              artist: "Artist1, Artist2, Artist3",
-              duraion: "00:01:11"
-           },
-           1:{
-              title: "Song 2",
-              artist: "Artist1, Artist2, Artist3",
-              duraion: "00:02:22"
-           },
-           2:{
-              title: "Song 3",
-              artist: "Artist1, Artist2, Artist3",
-              duraion: "00:03:33"
-           }
-        },
-        private: true
-    },
-      updateuser: {
-          $name: "Jhon",
-          $username: "johndough",
-          $email: "johndough@example.com",
-          $surname: "Dough"
-      },
-      loggeduser: {
-           $_id: "64df73b31e5eda5eb868ddcd",
-           $username:"johndough",
-           $email: "johndough@gmail.com"
-      },
-      song: {
-        $_id: "78kf73b31e6yda5eb868dder",
-        $artist:"['artist1','artist2']",
-        $duration: "00:11:22", 
-        $year: "1984",
-        $album: "Album Name"
-      },
-      loginrequest: {
-        email: "johndough@gmail.com",
-        username:"johndough",        
-        $password: "password"  
-      },
-      registerrequest: {
-        $name: "John",
-        $username: "johndough",
-        $email: "johndough@example.com",
-        $password: "password"
-      },
-      removesong: {
-        $playlist_id: "ObjectId('64e748f0cb18ad90657b9043')",
-        $track_id: "78kf73b31e6yda5eb868dder",
-        $owner_id: "ObjectId('64df73b31e5eda5eb868ddcd')"
-      }
-  }
-    };
-
-
-  const swagger = swaggerAutogen(outputFile, endpointsFiles, doc)
 ```
 ##### INTERFACCIA GRAFICA SWAGGER
 ![Alt text](./assets/image-3.png)
@@ -540,43 +325,8 @@ export async function getPlaylistFromId(res, playlistid) {
 
 ##### ESEMPIO DI GESTIONE
 
-La gestione che abbiamo deciso di attuare è stata quella di comunicare al sender il codice che la sua richiesta ha "generato"
-Nell'esempio di seguito è possibile vedere la gestione dei codici 400,404,500 200
+La gestione che è stato deciso di attuare è stata quella di comunicare al sender il codice che la sua richiesta ha "generato"
 
-**TODO:FIX**
->**NB**: res.json(data) viene percepito dal client come un codice 200
-```javascript
-export async function getPlaylistFromId(res, playlistid) {
-   if(playlistid==undefined){
-      res.status(400).send("Missing playlist id");
-      utils.log("[PLAYLIST]> getPlaylistFromId > ERROR 400: Missing playlist id");
-      return;     
-   }
-   if(!utils.isValidString(playlistid)){
-      res.status(400).send("Invalid playlistid");
-      utils.log("[PLAYLIST]> getPlaylistFromId > ERROR 400: Invalid playlist id");
-      return;     
-   }
-   try {
-      const collection = await dbPlaylistCollection();
-      const playlist = await collection.findOne({ _id: new ObjectId(playlistid) });
-      if (!playlist) {
-         res.status(404).send("Playlist not found");
-         utils.log("[PLAYLIST]> getPlaylistFromId > ERROR 404: Playlist not found");
-         return; 
-      }
-
-      res.json(playlist);
-      utils.log("[PLAYLIST]> getPlaylistFromId > SUCCESS: SUCCESFULLY FETCHED PLAYLIST "+playlistid);
-      return; 
-
-   } catch (error) {
-      res.status(500).send("INTERNAL ERROR");
-      utils.log("[PLAYLIST]> getPlaylistFromId > ERROR 500: INTERNAL ERROR "+error);
-      return; 
-   }
-}
-```
 ---
 
 ### Esempi di Utilizo
@@ -587,23 +337,38 @@ export async function getPlaylistFromId(res, playlistid) {
 **Profilo**
 ![Profile](./assets/profile.png)
 
-**Playlist Personali**
-![Personal Playlists](./assets/personalPlaylist.png)
+**Cerca superEroe - Non ancora trovato**
+![Find superhero without card](./assets/notFoundCard.png)
 
-**Nuova Playlist**
-![New Playlists](./assets/createPlaylist.png)
+**Cerca superEroe - Trovato**
+![Find superhero card](./assets/FoundCard.png)
 
-**Cerca Playlist pubbliche**
-![Explore Public Playlists](./assets/searchPublicPlaylists.png)
+**Album**
+![Album](./assets/album.png)
 
-**Esplora e importa Playlist**
-![Explore and Import Playlists](./assets/exploreAndAddPlaylist.png)
+**Scambi - Pagina base**
+![Exchanges - base page](./assets/Exchanges.png)
 
-**Comunità**
-![Community](./assets/communityView.png)
+**Scambi - Crea scambio**
+![Exchanges - create exchange](./assets/CreateExchange.png)
 
-**Modifica Comunità**
-![EditCommunity](./assets/communityEdit.png)
+**Scambi - Vendi carte**
+![Exchanges - sell cards](./assets/sellCards.png)
+
+**Pacchetti - Pacchetto non aperto**
+![Not opened package](./assets/NotOpenPackage.png)
+
+**Pacchetti - Pacchetto aperto**
+![Opened package](./assets/OpenedPackage.png)
+
+**Crediti - Acquista crediti**
+![Credits](./assets/credits.png)
+
+**Tema scuro - Pagina iniziale**
+![Dark theme homepage](./assets/Dark_Theme.png)
+
+**Tema scuro - Album**
+![Not opened package](./assets/Dark_Album.png)
 
 ---
 
@@ -614,4 +379,4 @@ I personaggi Marvel, per essere utilizzati all'iterno dell'applicazione devono e
 
 ## Lingua
 La scelta di utilizzare la lingua inglese, come standard di programmazione, è ampiamente diffusa nell'industria del software ed è guidata principalmente dal desiderio di aderire allo standard internazionale. Questo standard è anche noto nella community di programmatori come **"English-based programming"** . <br>
-Adottare questa convenzione ha numerosi vantaggi, in quanto rende il codice più leggibile e comprensibile per un pubblico globale di sviluppatori.
+Adottare questa convenzione ha numerosi vantaggi, in quanto rende il codice più leggibile e comprensibile per un pubblico globale di sviluppatori. La scelta è derivata anche dalla decisione di rendere il progetto, dopo la conclusione, un applicazione open-source. La scelta della licenza, che è stata come MIT, rispecchia questa scelta.
