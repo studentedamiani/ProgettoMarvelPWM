@@ -165,24 +165,24 @@ async function printDuplicatedAlbumCards(albumId) {
     .innerHTML = '<i class="fas fa-spinner fa-spin fa-3x"></i>';
     var action =``;
     if (['/sell_cards' ].includes(window.location.pathname))
-        {   console.log("Sell cards");
+        {   
             action = `<a onclick="removeCard(`;
         } 
     else if (['/create_exchange' ].includes(window.location.pathname))
-   {    console.log("EXHANGE");
+   {    
         action = `<a onclick="toggletoExchange(`;
    } else {
         action = `<a onclick="alert(`;
    }
     await getDuplicatedAlbumcardsDB(albumId)
     .then(response =>
-        {              console.log("Check_in_Duplicare",response); 
+        {              
             var i=0;
             if (response.length > 0) {
                 var Div_Car = `<div class="row">
                             <div class="col-md-12 text-center"> `
                 response.forEach(item => {
-                    console.log("Check_in_Duplicare ",i,item); 
+                     
                     if (i % 3 ==0 ) {
                         Div_Car = Div_Car + 
                         `   </div>
@@ -210,11 +210,11 @@ async function printDuplicatedAlbumCards(albumId) {
                             `</div>`+
                         `</div> </a>`;//
                         i++;
-                        console.log("Check_in_Duplicare Div_Car",i,Div_Car);
+                        
                 });
                 Div_Car = Div_Car + `   </div>
                                     </div>`;
-                console.log(Div_Car);
+                
                 document.getElementById("pack_cards").innerHTML = Div_Car;
                 document.getElementById("pack_cards").classList.remove("hidden");
                 if (['/create_exchange' ].includes(window.location.pathname)) {
@@ -258,8 +258,7 @@ async function getSingleHero(id) {
 }
 
 async function createAlbum(userid,name) {
-    console.log("Funzione JS",userid);
-    console.log(name);
+
 
     try{
         const response = await fetch(`../create_album`, {
@@ -274,7 +273,7 @@ async function createAlbum(userid,name) {
             throw new Error(`HTTP error! status: ${response.status}`);
         } else {
             let JsonResponse = await response.json();
-            console.log("Album_ID",JsonResponse);
+            
         localStorage.setItem("album_ID",JsonResponse.insertedId);
         alert("Album created");
         window.location.reload();
@@ -303,7 +302,7 @@ async function loadCharacterpassed(){
                 id: hero.id,
                 name: hero.name
             };*/
-            console.log(hero);
+            
             var Div_Car =
             '<div class="card card-shine-effect-metal" id="char-'+hero.id+'">'+
                 '<div class="card-header">'+
@@ -321,16 +320,14 @@ async function loadCharacterpassed(){
                 '</div>'+
             '</div>';
             document.getElementById("CardContainer").innerHTML = Div_Car;
-            console.log("dopo stampa cont.")
+            
             //If the user is logged and has selected an album and have the card in the album i present all data
             var user_Id = localStorage.getItem("_id");
             var album_ID = localStorage.getItem("album_ID");
-            console.log("prima controllo localstorage user_Id",user_Id);
-            console.log("prima controllo localstorage album_ID",album_ID);
+
             if (!user_Id || !album_ID ) {
                 return;
             }
-            console.log("passato controllo localstorage");
             try {
                 const response = await fetch('/check_card_album', {
                     method: "POST",
@@ -343,21 +340,16 @@ async function loadCharacterpassed(){
                         card_Id: hero.id
                     })
                 });
-                console.log("partito");
+
                 if (!response.ok) {
                     throw new Error("Autenticazione non valida");
                 }
-                console.log("partito");
                 const userData = await response.json();
-                console.log(userData);
-                console.log(userData.length);
                 if (userData.length>0) {
-                    console.log("Hai il personaggio");
                 const character_details = document.getElementById('character_details');
                  let seriesHtml=``;
                  let eventsHtml=``;
                  let comicsHtml=``;
-                 console.log(userData);
                 if ( hero.series.available>0 ){
                     seriesHtml = '<hr><h3>Series:</h3>';
                     for (let series of hero.series.items) {
@@ -376,13 +368,8 @@ async function loadCharacterpassed(){
                         comicsHtml += `<p>${comic.name}</p>`;
                     }
                 }
-                console.log(comicsHtml);
                 character_details.innerHTML = seriesHtml + eventsHtml + comicsHtml;
             }
-                else
-                {
-                    console.log("NO");
-                }
                 }
                 /*Check the superhero that doesn't work*/
             catch (error) {
@@ -422,11 +409,6 @@ async function createExchange() {
     const userId = localStorage.getItem('_id');
     const cardToGet = document.getElementById('selected_Superhero').value;
     if (!userId || !cardToGet || !collection || collection.length === 0) {
-        console.log('Exchange parameters:', {
-            userId,
-            cardToGet,
-            collection
-        });
         alert("Select one or more cards to send and a card that you want.");
         throw new Error('Missing required exchange parameters');
     }
@@ -452,7 +434,6 @@ async function createExchange() {
       });
 
       if (response.ok) {
-        console.log(response);
         alert("Exchange create successfully");
         window.location.href = '/exchange';
       } else {
@@ -505,7 +486,6 @@ async function deleteExchange(exchangeID) {
                 'Content-Type': 'application/json'
             }
         });
-        console.log("Ended");
         alert("Exchange successfully deleted");
         //Going back to the homepage
         window.location.reload();
