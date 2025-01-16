@@ -26,7 +26,7 @@
   "bugs": {
     "url": "https://github.com/studentedamiani/ProgettoMarvelPWM/issues"
   },
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "app.js",
   "directories": {
     "lib": "lib"
