@@ -10,7 +10,7 @@
   "tags": [
     {
       "name": "fetch",
-      "description": "Endpoints for fetching and searching content."
+      "description": "Basic endpoint."
     },
     {
       "name": "users",
@@ -25,8 +25,12 @@
       "description": "Endpoints for managing the cards of the album."
     },
     {
-      "name": "misc",
-      "description": "Miscellaneous endpoints catering to various operations."
+      "name": "exchanges",
+      "description": "Endpoint to manage exchanges."
+    },
+    {
+      "name": "database",
+      "description": "Endpoint to check the database connection."
     }
   ],
   "schemes": [
@@ -81,7 +85,7 @@
         "tags": [
           "cards"
         ],
-        "description": "Endpoint that allows to fetch the login modal page with the id of the card",
+        "description": "Endpoint that allows to fetch the card detail page",
         "responses": {
           "200": {
             "description": "OK"
@@ -204,9 +208,9 @@
     "/sell_cards": {
       "get": {
         "tags": [
-          "users"
+          "exchanges"
         ],
-        "description": "Endpoint that allows to fetch the user registration page",
+        "description": "Endpoint that allows to fetch the page to sell cards",
         "responses": {
           "200": {
             "description": "OK"
@@ -219,7 +223,7 @@
         "tags": [
           "cards"
         ],
-        "description": "Endpoint that allows to fetch the album page",
+        "description": "Endpoint that allows to fetch the albums of the user",
         "parameters": [
           {
             "name": "userid",
@@ -243,7 +247,7 @@
         "tags": [
           "cards"
         ],
-        "description": "Endpoint that allows to fetch the album page",
+        "description": "Endpoint that allows to fetch the cards in the album",
         "parameters": [
           {
             "name": "albumid",
@@ -267,7 +271,7 @@
         "tags": [
           "cards"
         ],
-        "description": "Endpoint that allows to fetch the album page",
+        "description": "Endpoint that allows to fetch duplicated cards of the album",
         "parameters": [
           {
             "name": "albumid",
@@ -289,9 +293,9 @@
     "/create_exchange": {
       "get": {
         "tags": [
-          "cards"
+          "exchanges"
         ],
-        "description": "Endpoint that allows to fetch the exchange page",
+        "description": "Endpoint that allows to fetch the create exchange page",
         "responses": {
           "200": {
             "description": "OK"
@@ -300,9 +304,9 @@
       },
       "post": {
         "tags": [
-          "cards"
+          "exchanges"
         ],
-        "description": "Endpoint to get a package of characters",
+        "description": "Endpoint to create a exchange",
         "responses": {
           "200": {
             "description": "OK"
@@ -313,7 +317,7 @@
     "/exchange": {
       "get": {
         "tags": [
-          "cards"
+          "exchanges"
         ],
         "description": "Endpoint that allows to fetch the exchange page",
         "responses": {
@@ -336,25 +340,12 @@
         }
       }
     },
-    "/test": {
-      "get": {
-        "tags": [
-          "test"
-        ],
-        "description": "Endpoint that allows to fetch the test page - DEVONLY",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/print-credits/{username}": {
       "get": {
         "tags": [
-          "cards"
+          "users"
         ],
-        "description": "Endpoint to get a package of characters",
+        "description": "Endpoint to get a the credits of user",
         "parameters": [
           {
             "name": "username",
@@ -373,9 +364,9 @@
     "/accept_exchange": {
       "post": {
         "tags": [
-          "cards"
+          "exchanges"
         ],
-        "description": "Endpoint to get a package of characters",
+        "description": "Endpoint to accept a exchange",
         "responses": {
           "200": {
             "description": "OK"
@@ -388,7 +379,7 @@
         "tags": [
           "cards"
         ],
-        "description": "Endpoint to get a package of characters",
+        "description": "Endpoint to check if a card is in an album",
         "responses": {
           "200": {
             "description": "OK"
@@ -399,9 +390,9 @@
     "/check_exchanges": {
       "post": {
         "tags": [
-          "cards"
+          "exchanges"
         ],
-        "description": "Endpoint to get a package of characters",
+        "description": "Endpoint to get a list of exchanges",
         "responses": {
           "200": {
             "description": "OK"
@@ -412,9 +403,9 @@
     "/check_my_exchanges": {
       "post": {
         "tags": [
-          "cards"
+          "exchanges"
         ],
-        "description": "Endpoint to get a package of characters",
+        "description": "Endpoint to get a list of my exchanges",
         "responses": {
           "200": {
             "description": "OK"
@@ -427,7 +418,7 @@
         "tags": [
           "cards"
         ],
-        "description": "Endpoint to check get characters from Marvel API",
+        "description": "Endpoint to check get specific character from Marvel API",
         "parameters": [
           {
             "name": "id",
@@ -442,19 +433,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/db": {
-      "get": {
-        "tags": [
-          "database"
-        ],
-        "description": "Endpoint that allows to register a new user",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }
@@ -477,14 +455,29 @@
         "tags": [
           "users"
         ],
-        "description": "Endpoint to buy credits",
+        "description": "Endpoint to variate credits",
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "description": "Body containing credit variation information",
+            "name": "headers",
+            "in": "headers",
+            "description": "Headers containing credit variation information",
+            "type": "object",
             "schema": {
-              "$ref": "#/definitions/creditrequest"
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "credits": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "operation": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
             }
           }
         ],
@@ -519,7 +512,7 @@
         "tags": [
           "cards"
         ],
-        "description": "Endpoint to check get characters from Marvel API",
+        "description": "Endpoint to check get characters from Marvel API with a custom query",
         "parameters": [
           {
             "name": "query",
@@ -571,7 +564,10 @@
     },
     "/update-user": {
       "put": {
-        "description": "",
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint to edit a user.",
         "responses": {
           "200": {
             "description": "OK"
@@ -581,7 +577,10 @@
     },
     "/delete-user/{userid}": {
       "delete": {
-        "description": "",
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint to delete a user",
         "parameters": [
           {
             "name": "userid",
@@ -599,7 +598,10 @@
     },
     "/delete-exchange/{exchangeid}": {
       "delete": {
-        "description": "",
+        "tags": [
+          "exchanges"
+        ],
+        "description": "Endpoint to delete an exchange",
         "parameters": [
           {
             "name": "exchangeid",
@@ -617,7 +619,10 @@
     },
     "/sell_card/": {
       "delete": {
-        "description": "",
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint to sell a card",
         "responses": {
           "200": {
             "description": "OK"
@@ -652,159 +657,23 @@
         },
         "password": {
           "type": "string",
-          "example": "md5 hashed password"
+          "example": "hashed_password"
         },
-        "date": {
-          "type": "string",
-          "example": "2001-05-20"
+        "credits": {
+          "type": "number",
+          "example": 100
         },
-        "genres": {
-          "type": "object",
-          "properties": {
-            "0": {
-              "type": "string",
-              "example": "pop"
-            },
-            "1": {
-              "type": "string",
-              "example": "rock"
-            },
-            "2": {
-              "type": "string",
-              "example": "metal"
-            }
+        "cards": {
+          "type": "array",
+          "example": [
+            "card_id1",
+            "card_id2"
+          ],
+          "items": {
+            "type": "string"
           }
         }
       }
-    },
-    "playlists": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string",
-          "example": "ObjectId('64e748f0cb18ad90657b9043')"
-        },
-        "owner_id": {
-          "type": "string",
-          "example": "ObjectId('64df73b31e5eda5eb868ddcd')"
-        },
-        "title": {
-          "type": "string",
-          "example": "Example Playlist"
-        },
-        "description": {
-          "type": "string",
-          "example": "Description of playlist"
-        },
-        "public": {
-          "type": "boolean",
-          "example": true
-        },
-        "tags": {
-          "type": "object",
-          "properties": {
-            "0": {
-              "type": "string",
-              "example": "chill"
-            },
-            "1": {
-              "type": "string",
-              "example": "relax"
-            },
-            "2": {
-              "type": "string",
-              "example": "vibes"
-            }
-          }
-        },
-        "songs": {
-          "type": "object",
-          "properties": {
-            "0": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Song 1"
-                },
-                "artist": {
-                  "type": "string",
-                  "example": "Artist1, Artist2, Artist3"
-                },
-                "duraion": {
-                  "type": "string",
-                  "example": "00:01:11"
-                }
-              }
-            },
-            "1": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Song 2"
-                },
-                "artist": {
-                  "type": "string",
-                  "example": "Artist1, Artist2, Artist3"
-                },
-                "duraion": {
-                  "type": "string",
-                  "example": "00:02:22"
-                }
-              }
-            },
-            "2": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Song 3"
-                },
-                "artist": {
-                  "type": "string",
-                  "example": "Artist1, Artist2, Artist3"
-                },
-                "duraion": {
-                  "type": "string",
-                  "example": "00:03:33"
-                }
-              }
-            }
-          }
-        },
-        "private": {
-          "type": "boolean",
-          "example": true
-        }
-      }
-    },
-    "updateuser": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "example": "Jhon"
-        },
-        "username": {
-          "type": "string",
-          "example": "johndough"
-        },
-        "email": {
-          "type": "string",
-          "example": "johndough@example.com"
-        },
-        "surname": {
-          "type": "string",
-          "example": "Dough"
-        }
-      },
-      "required": [
-        "name",
-        "username",
-        "email",
-        "surname"
-      ]
     },
     "loggeduser": {
       "type": "object",
@@ -833,38 +702,6 @@
         "name"
       ]
     },
-    "song": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string",
-          "example": "78kf73b31e6yda5eb868dder"
-        },
-        "artist": {
-          "type": "string",
-          "example": "['artist1','artist2']"
-        },
-        "duration": {
-          "type": "string",
-          "example": "00:11:22"
-        },
-        "year": {
-          "type": "string",
-          "example": "1984"
-        },
-        "album": {
-          "type": "string",
-          "example": "Album Name"
-        }
-      },
-      "required": [
-        "_id",
-        "artist",
-        "duration",
-        "year",
-        "album"
-      ]
-    },
     "loginrequest": {
       "type": "object",
       "properties": {
@@ -883,55 +720,6 @@
       },
       "required": [
         "password"
-      ]
-    },
-    "registerrequest": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "example": "John"
-        },
-        "username": {
-          "type": "string",
-          "example": "johndough"
-        },
-        "email": {
-          "type": "string",
-          "example": "johndough@example.com"
-        },
-        "password": {
-          "type": "string",
-          "example": "password"
-        }
-      },
-      "required": [
-        "name",
-        "username",
-        "email",
-        "password"
-      ]
-    },
-    "removesong": {
-      "type": "object",
-      "properties": {
-        "playlist_id": {
-          "type": "string",
-          "example": "ObjectId('64e748f0cb18ad90657b9043')"
-        },
-        "track_id": {
-          "type": "string",
-          "example": "78kf73b31e6yda5eb868dder"
-        },
-        "owner_id": {
-          "type": "string",
-          "example": "ObjectId('64df73b31e5eda5eb868ddcd')"
-        }
-      },
-      "required": [
-        "playlist_id",
-        "track_id",
-        "owner_id"
       ]
     }
   }

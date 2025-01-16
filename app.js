@@ -43,7 +43,7 @@ app.get('/package',(req,res) => {
 /*Endpoint for the card page*/
 app.get('/card', async (req, res) => {
   // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint that allows to fetch the login modal page with the id of the card'
+  // #swagger.description = 'Endpoint that allows to fetch the card detail page'
   res.sendFile(path.resolve("./public/html/card_detail.html"));
 });
 /*Endpoint for the user manage page*/
@@ -72,14 +72,14 @@ app.get('/album', async (req, res) => {
 });
 /*Endpoint for the sell cards*/
 app.get('/sell_cards', async (req, res) => {
-  // #swagger.tags = ['users']
-  // #swagger.description = 'Endpoint that allows to fetch the user registration page'
+  // #swagger.tags = ['exchanges']
+  // #swagger.description = 'Endpoint that allows to fetch the page to sell cards'
   res.sendFile(path.resolve("./public/html/sell_cards.html"));
 });
 /*Endpoint for the albums of the user*/
 app.get('/albums/:userid', async (req, res) => {
   // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint that allows to fetch the album page'
+  // #swagger.description = 'Endpoint that allows to fetch the albums of the user'
   try {
     const response = await database.getUserAlbums(req.params.userid);
     res.send(response);
@@ -93,7 +93,7 @@ app.get('/albums/:userid', async (req, res) => {
 /*Endpoint for the cards of albums of the user*/
 app.get('/albums_cards/:albumid', async (req, res) => {
   // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint that allows to fetch the album page'
+  // #swagger.description = 'Endpoint that allows to fetch the cards in the album'
   try {
     const response = await database.getAlbumsCards(req.params.albumid);
     // For each card in response, fetch its Marvel character details
@@ -108,10 +108,10 @@ app.get('/albums_cards/:albumid', async (req, res) => {
     res.status(500).json({ error: "Failed to fetch albums: " + error.message });
 }
 });
-/*Endpoint for the cards of albums of the user*/
+/*Endpoint for the duplicated cards of albums of the user*/
 app.get('/albums_duplicated_cards/:albumid', async (req, res) => {
   // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint that allows to fetch the album page'
+  // #swagger.description = 'Endpoint that allows to fetch duplicated cards of the album'
   try {
     const response = await database.getDuplicatedAlbumsCards(req.params.albumid);
     // For each card in response, fetch its Marvel character details
@@ -128,13 +128,13 @@ app.get('/albums_duplicated_cards/:albumid', async (req, res) => {
 });
 /*Endpoint for the create exchange page*/
 app.get('/create_exchange', async (req, res) => {
-  // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint that allows to fetch the exchange page'
+  // #swagger.tags = ['exchanges']
+  // #swagger.description = 'Endpoint that allows to fetch the create exchange page'
   res.sendFile(path.resolve("./public/html/create_exchange.html"));
 });
 /*Endpoint for the exchange page*/
 app.get('/exchange', async (req, res) => {
-  // #swagger.tags = ['cards']
+  // #swagger.tags = ['exchanges']
   // #swagger.description = 'Endpoint that allows to fetch the exchange page'
   res.sendFile(path.resolve("./public/html/select_exchange.html"));
 });
@@ -144,46 +144,40 @@ app.get('/get-credits', async (req, res) => {
   // #swagger.description = 'Endpoint that allows to fetch the page to buy credits'
   res.sendFile(path.resolve("./public/html/get_credits.html"));
 });
-/*Endpoint for test page DEVONLY*/
-app.get('/test', async (req, res) => {
-  // #swagger.tags = ['test']
-  // #swagger.description = 'Endpoint that allows to fetch the test page - DEVONLY'
-  res.sendFile(path.resolve("./public/html/test_page.html"));
-});
 app.get('/print-credits/:username', async (req,res) => {
-  // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint to get a package of characters'
+  // #swagger.tags = ['users']
+  // #swagger.description = 'Endpoint to get a the credits of user'
 await database.get_Credits(req.params.username).then(response => {res.send(response);})
 });
 app.post('/create_exchange', async (req,res) => {
-  // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint to get a package of characters'
+  // #swagger.tags = ['exchanges']
+  // #swagger.description = 'Endpoint to create a exchange'
 await database.create_exchange(req.body).then(response => {res.send(response);})
 });
 app.post('/accept_exchange', async (req,res) => {
-  // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint to get a package of characters'
+  // #swagger.tags = ['exchanges']
+  // #swagger.description = 'Endpoint to accept a exchange'
 await database.accept_exchange(req.body).then(response => {res.send(response);})
 });
 app.post('/check_card_album', async (req,res) => {
   // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint to get a package of characters'
+  // #swagger.description = 'Endpoint to check if a card is in an album'
 await database.check_card_album(req.body).then(response => {res.send(response);})
 });
 app.post('/check_exchanges', async (req,res) => {
-  // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint to get a package of characters'
+  // #swagger.tags = ['exchanges']
+  // #swagger.description = 'Endpoint to get a list of exchanges'
 await database.get_valid_exchanges(req.body).then(response => {res.send(response);})
 });
 app.post('/check_my_exchanges', async (req,res) => {
-  // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint to get a package of characters'
+  // #swagger.tags = ['exchanges']
+  // #swagger.description = 'Endpoint to get a list of my exchanges'
 await database.get_my_exchanges(req.body).then(response => {res.send(response);})
 });
 /*Endpoint to get the characters from the Marvel API*/
 app.get("/character/:id", async (req,res) => {
   // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint to check get characters from Marvel API'
+  // #swagger.description = 'Endpoint to check get specific character from Marvel API'
   try {
     const response = await marvel_API.getFromMarvel(req, 'public/characters/' + req.params.id,'');
     res.json(response);
@@ -197,12 +191,6 @@ app.get("/character/:id", async (req,res) => {
 /***********SWAGGER MAAGEMENT***********/
 app.use('/api-docs', swaggerUiServe, swaggerUiSetup(swaggerDocument));
 /*******END OF SWAGGER MANAGEMENT*********/
-
-/* ****************** API ENDPOINTS ****************** */
-app.get("/db",(req,res) => {
-  // #swagger.tags = ['database']
-  // #swagger.description = 'Endpoint that allows to register a new user'
-})
 
 /* ****************** POST ENDPOINTS ****************** */
 /*Endpoint to registrer a user*/
@@ -238,6 +226,7 @@ app.post('/package',(req,res) => {
   // #swagger.description = 'Endpoint to get a package of characters'
   marvel_API.returnPackage(req.body).then(response => {res.send(response);})
 });
+/*Enpoint to create an album*/
 app.post('/create_album',(req,res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint to get a package of characters'
@@ -246,14 +235,18 @@ app.post('/create_album',(req,res) => {
 /*Endpoint to get a buy credits*/
 app.post('/edit-credits',(req,res) => {
   // #swagger.tags = ['users']
-  // #swagger.description = 'Endpoint to buy credits'
+  // #swagger.description = 'Endpoint to variate credits'
 
-  /* #swagger.parameters['body'] = {
-    in: 'body',
-    description: 'Body containing credit variation information',
+  /* #swagger.parameters['headers'] = {
+    in: 'headers',
+    description: 'Headers containing credit variation information',
     type: 'object',
-    schema: { $ref: "#/definitions/creditrequest" }
-     }
+    schema: {
+      username: 'string',
+      credits: 'number',
+      operation: 'string'
+    }
+  }
   */
   /* #swagger.responses[200] = {
     description: 'Credits successfully updated'
@@ -279,7 +272,7 @@ app.post('/check-db', async (req, res) => {
 /*Endpoint to get the characters from the Marvel API*/
 app.post("/characters",(req,res) => {
   // #swagger.tags = ['cards']
-  // #swagger.description = 'Endpoint to check get characters from Marvel API'
+  // #swagger.description = 'Endpoint to check get characters from Marvel API with a custom query'
      marvel_API.getFromMarvel(req ,'public/characters',req.query.query)
        .then(response => {res.send(response);})
  });
@@ -287,7 +280,7 @@ app.post("/characters",(req,res) => {
 /*Endpoint to login a user*/
 app.post("/login", async (req, res) => {
   // #swagger.tags = ['auth']
-  // #swagger.description = 'Endpoint that allows to check if user's login data is correct and valid for logging in the application'
+  // #swagger.description = 'Endpoint that allows to check if user'''s login data is correct and valid for logging in the application'
   /* #swagger.parameters['body'] = {
        in: 'body',
         description: 'Body to validate login.',
@@ -340,17 +333,26 @@ app.post("/get_user_data", async (req, res) => {
 });
 
 app.put("/update-user", async (req, res) => {
+    // #swagger.tags = ['users']
+  // #swagger.description = 'Endpoint to edit a user.'
+  
   await database.update_user(req.body).then(response => {res.send(response);})
 });
 
 app.delete("/delete-user/:userid", async (req, res) => {
+  // #swagger.tags = ['users']
+  // #swagger.description = 'Endpoint to delete a user'
   await database.delete_user(req.params.userid).then(response => {res.send(response);})
 });
 app.delete("/delete-exchange/:exchangeid", async (req, res) => {
+  // #swagger.tags = ['exchanges'] 
+  // #swagger.description = 'Endpoint to delete an exchange'
   await database.delete_exchange(req.params.exchangeid).then(response => {res.send(response);})
 });
 app.delete("/sell_card/", async (req, res) => {
- await database.remove_card(req.body,'sell_card').then(response => {res.send(response);})
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint to sell a card'
+  await database.remove_card(req.body,'sell_card').then(response => {res.send(response);})
 });
 /************APP ACTIVATION***********/
 /*Start the server on the port defined in the .env file*/
