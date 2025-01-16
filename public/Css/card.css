@@ -8,16 +8,7 @@
     gap: 20px;
     max-width: calc(var(--card-width) * 3 + 40px);
     margin: 0 auto;
-   /* width: calc(var(--card-width) *3 + 40);*/
-}/*
-.pack_cards{
-    display: grid;
-    grid-template-columns: repeat(3, var(--card-width));
-    gap: 20px;
-    max-width: calc(var(--card-width) * 3 + 40px);
-    margin: 0 auto;
-   width: calc(var(--card-width) *3 + 40);
-}*/
+}
 .card {
     background-color: var(--bs-red);
     border: 10px solid var(--bs-black);
@@ -62,7 +53,6 @@
     justify-content: center;
     align-items: center;
     border : 1px solid black
-    /*overflow: hidden;*/
 }
 .card-body::-webkit-scrollbar {
 
@@ -71,8 +61,8 @@
   .card-body::-webkit-scrollbar-thumb {
     background: red; 
   }
-/* Track */
-.card-body::-webkit-scrollbar-track {
+
+  .card-body::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey; 
     border-radius: 10px;
   }
@@ -175,18 +165,18 @@ transform: translateX(-100%) rotate(var(--shine-deg));
     100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 .button-container {
-    position: relative; /* Container for button and lock */
+    position: relative; 
 }
 
 #lock.active {
-    display: none; /* Hidden by default */
+    display: none; 
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* Same width as button */
-    height: 100%; /* Same height as button */
+    width: 100%; 
+    height: 100%; 
     background: rgba(255, 255, 255, 0.9);
-    z-index: 2; /* Above the button */
+    z-index: 2; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -194,5 +184,5 @@ transform: translateX(-100%) rotate(var(--shine-deg));
 }
 
 #lock {
-    display: block; /* Show when active */
+    display: block; 
 }

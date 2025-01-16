@@ -24,7 +24,7 @@
 						You can also sell cards for credits using the button below. A card values 0.2 credits.<br>
 						If you proposed an exchange with a card that you sell, that exchange will be eliminated.<br>
 						<a href="/sell_cards" class="btn btn-success" id="card_sell"><i class="fas fa-dollar-sign"></i> Sell duplicate cards</a>
-						<a class="btn btn-success"  href="/create_exchange"id="create_exchange"><i class="fas fa-plus"></i>Create new exchange</a>	
+						<a class="btn btn-success"  href="/create_exchange" id="create_exchange"><i class="fas fa-plus"></i>Create new exchange</a>	
 					</p>
 				</div>
 			</div>
@@ -40,8 +40,8 @@
 				<div class="row">
 					
 					<div class="col-md-12">
-						<div id="lock" class="text-center hidden">
-							<p class="text-danger" id="error_Message"></p>
+						<div id="second_lock" class="text-center hidden">
+							<p class="text-danger" id="second_error_Message"></p>
 							<i class="fas fa-lock fa-2x"></i>
 						</div>
 						<div id="report_container">
@@ -85,7 +85,6 @@
 				</div>
 				</div> 
 			</div>
-		</div>
 		<footer id="footer"></footer>
 		<script >
 		async function toggleLock() {
