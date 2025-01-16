@@ -99,7 +99,7 @@ async function printAlbumCards(albumId) {
     .innerHTML = '<i class="fas fa-spinner fa-spin fa-3x"></i>';
     await getAlbumcardsDB(albumId)
     .then(response =>
-        {   console.log("Response of getAlbumCards--->",response);
+        {   
              var i=0;
                 var Div_Car = `<div class="row">
                             <div class="col-md-12 text-center"> `
@@ -111,9 +111,6 @@ async function printAlbumCards(albumId) {
                         <div class="row">
                             <div class="col-md-12 text-center"> `;
                     }
-                    console.log("Item",item);
-                    console.log("Item marvel",item.marvel_data);
-                    console.log("item.marvel_data.data[0].id",item.marvel_data.data[0].name);
 
                     Div_Car =
                         Div_Car + 
@@ -130,7 +127,7 @@ async function printAlbumCards(albumId) {
                             item.marvel_data.data[0].description+
                             '</div>'+
                             '<div class="card-footer">'+
-                            item.marvel_data.attributionText+
+                            'Data provided by ©Marvel'+
                             '</div>'+
                         '</div></a>';
                         i++;
@@ -166,12 +163,26 @@ async function removeCard(cardId) {
 async function printDuplicatedAlbumCards(albumId) {
     document.getElementById("pack_cards")
     .innerHTML = '<i class="fas fa-spinner fa-spin fa-3x"></i>';
+    var action =``;
+    if (['/sell_cards' ].includes(window.location.pathname))
+        {   console.log("Sell cards");
+            action = `<a onclick="removeCard(`;
+        } 
+    else if (['/create_exchange' ].includes(window.location.pathname))
+   {    console.log("EXHANGE");
+        action = `<a onclick="toggletoExchange(`;
+   } else {
+        action = `<a onclick="alert(`;
+   }
     await getDuplicatedAlbumcardsDB(albumId)
     .then(response =>
-        {               var i=0;
+        {              console.log("Check_in_Duplicare",response); 
+            var i=0;
+            if (response.length > 0) {
                 var Div_Car = `<div class="row">
                             <div class="col-md-12 text-center"> `
                 response.forEach(item => {
+                    console.log("Check_in_Duplicare ",i,item); 
                     if (i % 3 ==0 ) {
                         Div_Car = Div_Car + 
                         `   </div>
@@ -179,10 +190,10 @@ async function printDuplicatedAlbumCards(albumId) {
                         <div class="row">
                             <div class="col-md-12 text-center"> `;
                     }
-
+                    
                     Div_Car =
-                        Div_Car + 
-                        `<a onclick="removeCard(`+item.marvel_data.data[0].id+`)"> `+
+                        Div_Car + action
+                        +item.marvel_data.data[0].id+`)"> `+
                         `<div class="card card-shine-effect-metal" id="char-`+item.marvel_data.data[0].id+`">`+
                             `<div class="card-header">`+
                                 item.marvel_data.data[0].name+
@@ -195,15 +206,30 @@ async function printDuplicatedAlbumCards(albumId) {
                             item.marvel_data.data[0].description+
                             `</div>`+
                             `<div class="card-footer">`+
-                            item.marvel_data.attributionText+
+                           'Data provided by ©Marvel'+
                             `</div>`+
                         `</div> </a>`;//
                         i++;
+                        console.log("Check_in_Duplicare Div_Car",i,Div_Car);
                 });
                 Div_Car = Div_Car + `   </div>
                                     </div>`;
+                console.log(Div_Car);
                 document.getElementById("pack_cards").innerHTML = Div_Car;
                 document.getElementById("pack_cards").classList.remove("hidden");
+                if (['/create_exchange' ].includes(window.location.pathname)) {
+                document.getElementById("recieveCard").classList.remove("hidden");
+                document.getElementById("card_sell").classList.remove("hidden");
+                }
+            } else
+            {
+                document.getElementById("pack_cards").classList.remove("hidden");
+                document.getElementById("pack_cards").innerHTML="<p> No duplicate cards avaible to exchange</p>"
+                if (['/create_exchange' ].includes(window.location.pathname)){
+                    document.getElementById("card_sell").disabled = true;
+                }
+                
+            }
             }
     )
     .catch(response => console.error("Calculation error!"+response)) 
@@ -333,20 +359,19 @@ async function loadCharacterpassed(){
                  let comicsHtml=``;
                  console.log(userData);
                 if ( hero.series.available>0 ){
-                    seriesHtml = '<h3>Series:</h3><br><ul>';
+                    seriesHtml = '<hr><h3>Series:</h3>';
                     for (let series of hero.series.items) {
-                        seriesHtml += `<li>${series.name}</li>`;
+                        seriesHtml += `<p>${series.name}</p>`;
                     }
-                    seriesHtml += '</ul>';
                 }
                 if ( hero.events.available>0 ){
-                    eventsHtml = '<h3>Events:</h3>';
+                    eventsHtml = '<hr><h3>Events:</h3>';
                     for (let events of hero.events.items) {
                         eventsHtml += `<p>${events.name}</p>`;
                     }
                 }
                 if ( hero.comics.available>0 ){
-                    comicsHtml = '<h3>Comics:</h3>';
+                    comicsHtml = '<hr><h3>Comics:</h3>';
                     for (let comic of hero.comics.items) {
                         comicsHtml += `<p>${comic.name}</p>`;
                     }
@@ -373,4 +398,120 @@ async function loadCharacterpassed(){
         searchInput.value = "Error loading superhero";
     }
 }
+}
+let collection = [];
+
+function toggletoExchange (cardId)
+{
+    const found = collection.filter(item => item.id === cardId);
+    if (found.length>0) {
+        document.getElementById("char-"+cardId).style="";
+        collection = collection.filter(item => item.id !== cardId);
+    } else {
+        document.getElementById("char-"+cardId).style="background-color: var(--bs-green);";
+        // Add/Insert item
+        collection.push({
+            id: cardId,
+        });
+    }
+}
+
+
+
+async function createExchange() {
+    const userId = localStorage.getItem('_id');
+    const cardToGet = document.getElementById('selected_Superhero').value;
+    if (!userId || !cardToGet || !collection || collection.length === 0) {
+        console.log('Exchange parameters:', {
+            userId,
+            cardToGet,
+            collection
+        });
+        alert("Select one or more cards to send and a card that you want.");
+        throw new Error('Missing required exchange parameters');
+    }
+
+    // Check if cardToGet is in the collection
+    if (collection.some(card => card.id === cardToGet)) {
+        alert("You cannot request a card that you're offering to send.");
+        throw new Error('Card requested is in the send collection');
+    }
+
+    try {
+      const response = await fetch('/create_exchange', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: userId,
+          cardtoGet: cardToGet,
+          cardtosend: collection,
+            albumId: localStorage.getItem('album_ID')
+        })
+      });
+
+      if (response.ok) {
+        console.log(response);
+        alert("Exchange create successfully");
+        window.location.href = '/exchange';
+      } else {
+        throw new Error('Exchange creation failed');
+      }
+    } catch (error) {
+      console.error('Error creating exchange:', error);
+      throw error;
+    }
+}
+
+async function acceptExchange(exchangeId) {
+    const userId = localStorage.getItem('_id');
+    const albumId = localStorage.getItem('album_ID');
+
+    try {
+        const response = await fetch('/accept_exchange', {
+            method: 'POST', 
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+            exchange_id: exchangeId,
+            acceptingUserId: userId,
+            album_id: albumId
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        alert('Exchange accepted successfully');
+        window.location.reload();
+    } catch (error) {
+        console.error('Error accepting exchange:', error);
+        alert('Failed to accept exchange');
+    }
+}
+
+async function deleteExchange(exchangeID) {
+    const userId = localStorage.getItem('_id');
+    const albumId = localStorage.getItem('album_ID');
+
+    try{
+        const response = await fetch(`../delete-exchange/${exchangeID}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log("Ended");
+        alert("Exchange successfully deleted");
+        //Going back to the homepage
+        window.location.reload();
+
+    } catch (error) {
+        console.error("Errore!",error);
+        return "ERR";
+    }
 }

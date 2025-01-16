@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="Album delle figurine dei super eroi (AFSE) - Base page">
 		<title>
-			Exchange cards
+			Create exchange
 		</title>
 		<!-- import of the logo -->
 		<link rel="icon" href="../images/logo.png" type="image/x-icon">
@@ -18,12 +18,10 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-						<h1>Exchange card</h1>
-					<p>In tihs page you will find a selection of avaiable exchanges.  <br>
-						You will see exhanges that give you a card that you don't have, and send a card that you have at least twice in the selected album.<br>
-						You can also sell cards for credits. A card values 0.2 credits.<br>
-						If you proposed an exchange with a card that you sell, that exchenge will be eliminated.<br>
-						<a href="/sell_cards" class="btn btn-success"><i class="fas fa-dollar-sign"></i> Sell duplicate cards</a>
+						<h1>Create exchange</h1>
+					<p>In tihs page you can create an exchange.<br>
+						You con only trade in a card that you have at least twice, and you can oly request a card that you don't have.
+						<a href="/sell_cards" class="btn btn-success hidden" id="card_sell"><i class="fas fa-dollar-sign"></i> Sell duplicate cards</a>
 					</p>
 				</div>
 			</div>
@@ -38,10 +36,37 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<div id="pack_cards" class="hidden pack_cards">
-							
+						<div id="pack_cards" class="pack_cards">
 						</div>
 					</div>
+				</div>
+				<div class="row hidden" id="recieveCard">
+					<div class="col-md-12">
+						<p> Select the card that you want to obtain with this exchange</p>
+						<div class="form-floating mb-3 ">
+							<div class="form-floating">
+								<input type="text" 
+									   class="form-control" 
+									   id="select_superhero" 
+									   placeholder="Requested superhero"
+									   autocomplete="off"
+									   required="required">
+								<label for="select_superhero">Requested superhero</label>
+								<div class="dropdown-menu w-100" id="resultsDropdown">
+									<ul class="search-results" id="searchResults">
+										<!-- Results will be populated here -->
+									</ul>
+									<div class="text-center p-2 d-none" id="loadingIndicator">
+										<div class="spinner-border spinner-border-sm" role="status">
+											<span class="visually-hidden">Loading...</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<input type="hidden" id="selected_Superhero">
+						</div>
+					</div>
+				<button class="btn btn-success" onclick="createExchange()">Create exchange</button>	
 				</div>
 				</div> 
 			</div>
@@ -76,12 +101,15 @@
 			<script src="../scripts/marvel.js"></script>
 			<script src="../scripts/navbar.js"></script>
 			<script src="../scripts/login.js"></script>
+			<script src="../scripts/register.js"></script>
 			<script type="module" src="../scripts/footer.js"></script>
 			<script>
 			</script>
 			<script> 
 				printCredits();
 				toggleLock();
+				var albumid = localStorage.getItem("album_ID");
+                printDuplicatedAlbumCards(albumid);
 			</script>
 		<!-- end of import of JS -->
 	</body>

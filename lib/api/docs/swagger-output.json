@@ -201,6 +201,19 @@
         }
       }
     },
+    "/sell_cards": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint that allows to fetch the user registration page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/albums/{userid}": {
       "get": {
         "tags": [
@@ -221,6 +234,78 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/albums_cards/{albumid}": {
+      "get": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint that allows to fetch the album page",
+        "parameters": [
+          {
+            "name": "albumid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/albums_duplicated_cards/{albumid}": {
+      "get": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint that allows to fetch the album page",
+        "parameters": [
+          {
+            "name": "albumid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/create_exchange": {
+      "get": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint that allows to fetch the exchange page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint to get a package of characters",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -278,6 +363,58 @@
             "type": "string"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/accept_exchange": {
+      "post": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint to get a package of characters",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/check_card_album": {
+      "post": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint to get a package of characters",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/check_exchanges": {
+      "post": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint to get a package of characters",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/check_my_exchanges": {
+      "post": {
+        "tags": [
+          "cards"
+        ],
+        "description": "Endpoint to get a package of characters",
         "responses": {
           "200": {
             "description": "OK"
@@ -453,6 +590,34 @@
             "type": "string"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/delete-exchange/{exchangeid}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "exchangeid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/sell_card/": {
+      "delete": {
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"

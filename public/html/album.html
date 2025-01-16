@@ -52,7 +52,6 @@
         <script>
             function selectAlbum(albumid){
                 if (!albumid) return;
-                console.log(albumid);
                 document.querySelectorAll('.btn-album').forEach(b => {
                         b.classList.remove('btn-success');
                         b.classList.add('btn-primary');
@@ -67,17 +66,13 @@
             }
             async function createAlbumButtons() {
                 var id=localStorage.getItem("_id");
-                console.log("_id",id);
                 try {
                     const response = await fetch(`/albums/${id}`);
                     const albums = await response.json();
-                    console.log(albums);
                     const albumsArray = Array.isArray(albums) ? albums : [albums];
-                    console.log(albumsArray.length);
                     const container = document.getElementById('album_selector_container');
                     if (albumsArray.length > 0 && albumsArray[0] !== null) {
                         albumsArray.forEach(album => {
-                            console.log("EACH",album);
                             const button = document.createElement('button');
                             button.className = 'btn btn-primary m-2 btn-album';
                             button.textContent = `${album.name}`;
@@ -86,7 +81,6 @@
                             container.appendChild(button);
                         });
                     } else{
-                        console.log("no_album");
                     }
                     // Create form for new album
                     const form = document.createElement('form');

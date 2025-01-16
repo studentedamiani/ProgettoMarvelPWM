@@ -97,9 +97,8 @@ app.get('/albums_cards/:albumid', async (req, res) => {
   try {
     const response = await database.getAlbumsCards(req.params.albumid);
     // For each card in response, fetch its Marvel character details
-    console.log(response.length);
     for (let i = 0; i < response.length; i++) {
-      const marvelData = await marvel_API.getFromMarvel(req, 'public/characters/'+ response[i].card_Id);
+      const marvelData = await marvel_API.getFromMarvel(req, 'public/characters/'+ response[i].card_Id,'');
       response[i].marvel_data = marvelData;
     }
     res.send(response);
@@ -117,7 +116,7 @@ app.get('/albums_duplicated_cards/:albumid', async (req, res) => {
     const response = await database.getDuplicatedAlbumsCards(req.params.albumid);
     // For each card in response, fetch its Marvel character details
     for (let i = 0; i < response.length; i++) {
-      const marvelData = await marvel_API.getFromMarvel(req, 'public/characters/'+ response[i].card_Id);
+      const marvelData = await marvel_API.getFromMarvel(req, 'public/characters/'+ response[i].card_Id,'');
       response[i].marvel_data = marvelData;
     }
     res.send(response);
@@ -127,11 +126,17 @@ app.get('/albums_duplicated_cards/:albumid', async (req, res) => {
     res.status(500).json({ error: "Failed to fetch albums: " + error.message });
 }
 });
+/*Endpoint for the create exchange page*/
+app.get('/create_exchange', async (req, res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint that allows to fetch the exchange page'
+  res.sendFile(path.resolve("./public/html/create_exchange.html"));
+});
 /*Endpoint for the exchange page*/
 app.get('/exchange', async (req, res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint that allows to fetch the exchange page'
-  res.sendFile(path.resolve("./public/html/exchange.html"));
+  res.sendFile(path.resolve("./public/html/select_exchange.html"));
 });
 /*Endpoint for the credits buying*/
 app.get('/get-credits', async (req, res) => {
@@ -150,17 +155,37 @@ app.get('/print-credits/:username', async (req,res) => {
   // #swagger.description = 'Endpoint to get a package of characters'
 await database.get_Credits(req.params.username).then(response => {res.send(response);})
 });
+app.post('/create_exchange', async (req,res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint to get a package of characters'
+await database.create_exchange(req.body).then(response => {res.send(response);})
+});
+app.post('/accept_exchange', async (req,res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint to get a package of characters'
+await database.accept_exchange(req.body).then(response => {res.send(response);})
+});
 app.post('/check_card_album', async (req,res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint to get a package of characters'
 await database.check_card_album(req.body).then(response => {res.send(response);})
+});
+app.post('/check_exchanges', async (req,res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint to get a package of characters'
+await database.get_valid_exchanges(req.body).then(response => {res.send(response);})
+});
+app.post('/check_my_exchanges', async (req,res) => {
+  // #swagger.tags = ['cards']
+  // #swagger.description = 'Endpoint to get a package of characters'
+await database.get_my_exchanges(req.body).then(response => {res.send(response);})
 });
 /*Endpoint to get the characters from the Marvel API*/
 app.get("/character/:id", async (req,res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint to check get characters from Marvel API'
   try {
-    const response = await marvel_API.getFromMarvel(req, 'public/characters/' + req.params.id);
+    const response = await marvel_API.getFromMarvel(req, 'public/characters/' + req.params.id,'');
     res.json(response);
 } catch (error) {
     console.error("Error fetching character:", error);
@@ -216,8 +241,7 @@ app.post('/package',(req,res) => {
 app.post('/create_album',(req,res) => {
   // #swagger.tags = ['cards']
   // #swagger.description = 'Endpoint to get a package of characters'
-  console.log("Endpooint",req.body);
-  database.createAlbum(req.body).then(response => {console.log("appJSresponse",response);res.send(response);})
+  database.createAlbum(req.body).then(response => {res.send(response);})
 });
 /*Endpoint to get a buy credits*/
 app.post('/edit-credits',(req,res) => {
@@ -320,11 +344,12 @@ app.put("/update-user", async (req, res) => {
 });
 
 app.delete("/delete-user/:userid", async (req, res) => {
-  console.log("REQ BODY!",req.params.userid);
   await database.delete_user(req.params.userid).then(response => {res.send(response);})
 });
+app.delete("/delete-exchange/:exchangeid", async (req, res) => {
+  await database.delete_exchange(req.params.exchangeid).then(response => {res.send(response);})
+});
 app.delete("/sell_card/", async (req, res) => {
-  console.log("REQ BODY!",req.body);
  await database.remove_card(req.body,'sell_card').then(response => {res.send(response);})
 });
 /************APP ACTIVATION***********/

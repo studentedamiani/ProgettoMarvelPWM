@@ -131,7 +131,7 @@ function checkUserLogged() {
     else
     {
         //If user not logged and I am in a page that requires login I redirect to homepage
-        if (['/album', '/get-credits', '/package', '/exchange', '/user' ].includes(window.location.pathname))
+        if (['/album', '/get-credits', '/package', '/exchange', '/user', '/sell_cards' , '/create_exchanges' ].includes(window.location.pathname))
         {   //Only just for
             window.location.href = '/';
         }

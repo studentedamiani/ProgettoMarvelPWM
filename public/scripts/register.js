@@ -48,8 +48,37 @@ class SearchableSelect {
             
             // Creation of the query
             query="nameStartsWith="+query+"&orderBy=name&"
-            await getMarvelCarachters(query).then (response => {
-                this.displayResults(response.data);
+
+            await getMarvelCarachters(query).then (async response  => {
+                if (window.location.pathname === '/create_exchange') {
+                    const user_Id = localStorage.getItem("_id");
+                    const album_ID = localStorage.getItem("album_ID");
+                    
+                    if (user_Id && album_ID) {
+                        const filteredData = [];
+                        for (const character of response.data) {
+                            try {
+                                const checkResponse = await fetch('/check_card_album', {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({
+                                        user_Id: user_Id,
+                                        album_Id: album_ID,
+                                        card_Id: character.id
+                                    })
+                                });
+                                const result = await checkResponse.json();
+                                if (result.length < 1) {
+                                    filteredData.push(character);
+                                }
+                            } catch (err) {
+                                console.error('Error checking card:', err);
+                            }
+                        }
+                        response.data = filteredData;
+                    }
+                }
+                    this.displayResults(response.data);
                 if (response.code!=200) {
                 throw new Error('Network response was not ok'+response.code);
                 }
@@ -161,20 +190,19 @@ class SearchableSelect {
                      let eventsHtml=``;
                      let comicsHtml=``;
                     if ( item.series.available>0 ){
-                        seriesHtml = '<h3>Series:</h3><br><ul>';
+                        seriesHtml = '<hr><h3>Series:</h3><br>';
                         for (let series of item.series.items) {
-                            seriesHtml += `<li>${series.name}</li>`;
+                            seriesHtml += `<p>${series.name}</p>`;
                         }
-                        seriesHtml += '</ul>';
                     }
                     if ( item.events.available>0 ){
-                        eventsHtml = '<h3>Events:</h3>';
+                        eventsHtml = '<hr><h3>Events:</h3>';
                         for (let events of item.events.items) {
                             eventsHtml += `<p>${events.name}</p>`;
                         }
                     }
                     if ( item.comics.available>0 ){
-                        comicsHtml = '<h3>Comics:</h3>';
+                        comicsHtml = '<hr><h3>Comics:</h3>';
                         for (let comic of item.comics.items) {
                             comicsHtml += `<p>${comic.name}</p>`;
                         }

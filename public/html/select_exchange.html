@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Album delle figurine dei super eroi (AFSE) - Base page">
+		<title>
+			Exchange cards
+		</title>
+		<!-- import of the logo -->
+		<link rel="icon" href="../images/logo.png" type="image/x-icon">
+		<!-- import of custom CSS-->
+		<link rel="stylesheet" href="../css/style.css">
+		<link rel="stylesheet" href="../css/card.css">
+	</head>
+	<body >
+		<div id="menu"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+						<h1>Exchange card</h1>
+					<p>In tihs page you will find a selection of avaiable exchanges.  <br>
+						You will see exchanges that give you a card that you don't have, and send a card that you have at least twice in the selected album.<br>
+						You can also sell cards for credits using the button below. A card values 0.2 credits.<br>
+						If you proposed an exchange with a card that you sell, that exchange will be eliminated.<br>
+						<a href="/sell_cards" class="btn btn-success" id="card_sell"><i class="fas fa-dollar-sign"></i> Sell duplicate cards</a>
+						<a class="btn btn-success"  href="/create_exchange"id="create_exchange"><i class="fas fa-plus"></i>Create new exchange</a>	
+					</p>
+				</div>
+			</div>
+			<div class="row p-4 md-4">
+				<div class="col-md-12">
+					<div class="button-container" style="width:100%; display: inline-table;">
+						<div id="lock" class="text-center hidden">
+							<p class="text-danger" id="error_Message"></p>
+							<i class="fas fa-lock fa-2x"></i>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					
+					<div class="col-md-12">
+						<div id="lock" class="text-center hidden">
+							<p class="text-danger" id="error_Message"></p>
+							<i class="fas fa-lock fa-2x"></i>
+						</div>
+						<div id="report_container">
+						<h1>Avaiable exchanges</h1>
+						<div id="pack_cards" class="pack_cards">
+						</div>
+						<hr>
+						<h1>Your exchanges</h1>
+						<div id="my_exchanges" class="pack_cards">
+						</div>
+						</div>
+					</div>
+				</div>
+				<div class="row hidden" id="recieveCard">
+					<div class="col-md-12">
+						<p> Select the card that you want to obtain with this exchange</p>
+						<div class="form-floating mb-3 ">
+							<div class="form-floating">
+								<input type="text" 
+									   class="form-control" 
+									   id="select_superhero" 
+									   placeholder="Requested superhero"
+									   autocomplete="off"
+									   required="required">
+								<label for="select_superhero">Requested superhero</label>
+								<div class="dropdown-menu w-100" id="resultsDropdown">
+									<ul class="search-results" id="searchResults">
+										<!-- Results will be populated here -->
+									</ul>
+									<div class="text-center p-2 d-none" id="loadingIndicator">
+										<div class="spinner-border spinner-border-sm" role="status">
+											<span class="visually-hidden">Loading...</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<input type="hidden" id="selected_Superhero">
+						</div>
+					</div>
+					
+				</div>
+				</div> 
+			</div>
+		</div>
+		<footer id="footer"></footer>
+		<script >
+		async function toggleLock() {
+			const lockDiv = document.getElementById('lock');
+			const reportContainer = document.getElementById('report_container');
+			//const myExchanges = document.getElementById('my_exchanges');
+			const credits = await get_credits();
+			
+			if (!localStorage.getItem("album_ID") || credits < 1) {
+				lockDiv.classList.add('active');
+				if (!localStorage.getItem("album_ID")) {
+					document.getElementById("error_Message").textContent = "Please select an album first";
+				} else {
+					document.getElementById("error_Message").textContent = "Not enough credits";
+				}
+				lockDiv.classList.remove('hidden');
+				reportContainer.classList.add('hidden');
+				lockDiv.style.position = 'absolute';
+				lockDiv.style.width = '100%';
+				lockDiv.style.height = '100%';
+				lockDiv.style.backgroundColor = 'rgba(0,0,0,0.7)';
+				lockDiv.style.zIndex = '1000';
+				//packCards.classList.add("hidden");
+				//myExchanges.classList.add("hidden");
+				//packCards.style.opacity = '0.3';
+				//myExchanges.style.opacity = '0.3';
+			} else {
+				lockDiv.classList.remove('active');
+				lockDiv.classList.add('hidden');
+				reportContainer.classList.remove('hidden');
+
+				// packCards.classList.remove("hidden");
+				// myExchanges.classList.remove("hidden");
+				// packCards.style.opacity = '1';
+				// myExchanges.style.opacity = '1';
+			}
+		}
+		</script>
+			<!-- import of JS -->
+			<script src="../scripts/theme.js"></script>
+			<!-- import of the bootstrap js -->
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+			<!-- import of the jquery -->
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+			<script src="../scripts/marvel.js"></script>
+			<script src="../scripts/navbar.js"></script>
+			<script src="../scripts/login.js"></script>
+			<script src="../scripts/register.js"></script>
+			<script type="module" src="../scripts/footer.js"></script>
+			<script type="module">
+			async function getHeroName (heroId)  {
+					try {
+						const response = await fetch(`/character/${heroId}`);
+						if (response.ok) {
+							const data = await response.json();
+							return data.data[0].name;
+						}
+						return heroId;
+					} catch (error) {
+						console.error("Error fetching hero name:", error);
+						return heroId;
+					}
+				};
+
+			var user_Id = localStorage.getItem("_id");
+			var album_ID = localStorage.getItem("album_ID");
+			try {
+                const response = await fetch('/check_exchanges', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        userid: user_Id,
+                        albumid: album_ID
+                    })
+                });
+				const userData = await response.json();
+				if (!userData || !userData.exchanges) {
+					throw new Error("Invalid response format");
+				}
+                if (!response.ok) {
+                    throw new Error("Autenticazione non valida");
+                }
+				if (response.status === 204) {
+					// No content
+					const userData = [];
+				} else {
+					//const userData = await response.json();
+				}
+                if (userData.exchanges.length>0) {
+                
+			const exchangesTable = document.createElement('table');
+			exchangesTable.className = 'table table-striped';
+			exchangesTable.innerHTML = `
+				<thead>
+					<tr>
+						<th>Card to Give</th>
+						<th>Card/s to Receive</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+			`;
+
+			userData.exchanges.forEach(async (exchange) => {
+				// Fetch hero names before creating table row
+				const requestedHeroName = await getHeroName(exchange.requestedCard);
+				const proposedHeroNames = await Promise.all(
+					exchange.proposedCards.map(cardId => getHeroName(cardId))
+				);
+				exchangesTable.querySelector('tbody').innerHTML += `
+					<tr>
+						<td>${requestedHeroName}</td>
+						<td>${proposedHeroNames.join(', ')}</td>
+						<td>
+							<button class="btn btn-primary" onclick="acceptExchange('${exchange.exchange_ID}')">
+								Accept Exchange
+							</button>
+						</td>
+					</tr>
+				`;
+			});
+
+			document.getElementById('pack_cards').appendChild(exchangesTable);
+            }
+
+                }
+                /*Check the superhero that doesn't work*/
+            catch (error) {
+                console.error("Errore!",error);
+            }
+
+
+			try {
+                const response = await fetch('/check_my_exchanges', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        userid: user_Id,
+                        albumid: album_ID
+                    })
+                });
+				const userData = await response.json();
+				if (!userData || !userData.exchanges) {
+					throw new Error("Invalid response format");
+				}
+                if (!response.ok) {
+                    throw new Error("Autenticazione non valida");
+                }
+				if (response.status === 204) {
+					// No content
+					const userData = [];
+				}
+                if (userData.exchanges.length>0) {
+                
+			const exchangesTable = document.createElement('table');
+			exchangesTable.className = 'table table-striped';
+			exchangesTable.innerHTML = `
+				<thead>
+					<tr>
+						<th>Card to Recieve</th>
+						<th>Card/s to Give</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+			`;
+
+			userData.exchanges.forEach(async (exchange) => {
+				// Fetch hero names before creating table row
+				const requestedHeroName = await getHeroName(exchange.requestedCard);
+				const proposedHeroNames = await Promise.all(
+					exchange.proposedCards.map(cardId => getHeroName(cardId))
+				);
+				exchangesTable.querySelector('tbody').innerHTML += `
+					<tr>
+						<td>${requestedHeroName}</td>
+						<td>${proposedHeroNames.join(', ')}</td>
+						<td>
+							<button class="btn btn-primary" onclick="deleteExchange('${exchange.exchange_ID}')">
+								Delete Exchange
+							</button>
+						</td>
+					</tr>
+				`;
+			});
+
+			document.getElementById('my_exchanges').appendChild(exchangesTable);
+            }
+                }
+                /*Check the superhero that doesn't work*/
+            catch (error) {
+                console.error("Errore!",error);
+            }
+			</script>
+
+			<script> 
+				printCredits();
+				toggleLock();
+				var albumid = localStorage.getItem("album_ID");
+                //printDuplicatedAlbumCards(albumid);
+			</script>
+		<!-- end of import of JS -->
+	</body>
+</html>
