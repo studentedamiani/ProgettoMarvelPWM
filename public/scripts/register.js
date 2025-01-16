@@ -135,7 +135,6 @@ class SearchableSelect {
         if (['/card' ].includes(window.location.pathname))
             {
                 document.getElementById('character_details').innerHTML=``;
-                console.log(item);
                 var Div_Car =
                 '<div class="card card-shine-effect-metal" id="char-'+item.id+'">'+
                     '<div class="card-header">'+
@@ -153,16 +152,12 @@ class SearchableSelect {
                     '</div>'+
                 '</div>';
                 document.getElementById("CardContainer").innerHTML = Div_Car;
-                console.log("dopo stampa cont.")
                 //If the user is logged and has selected an album and have the card in the album i present all data
                 var user_Id = localStorage.getItem("_id");
                 var album_ID = localStorage.getItem("album_ID");
-                console.log("prima controllo localstorage user_Id",user_Id);
-                console.log("prima controllo localstorage album_ID",album_ID);
                 if (!user_Id || !album_ID ) {
                     return;
                 }
-                console.log("passato controllo localstorage");
                 try {
                     const response = await fetch('/check_card_album', {
                         method: "POST",
@@ -175,16 +170,11 @@ class SearchableSelect {
                             card_Id: item.id // invio dell'id al posto della password.
                         })
                     });
-                    console.log("partito");
                     if (!response.ok) {
                         throw new Error("Autenticazione non valida");
                     }
-                    console.log("partito");
                     const userData = await response.json();
-                    console.log(userData);
-                    console.log(userData.length);
                     if (userData.length>0) {
-                        console.log("Hai il personaggio");
                     const character_details = document.getElementById('character_details');
                      let seriesHtml=``;
                      let eventsHtml=``;
@@ -207,13 +197,8 @@ class SearchableSelect {
                             comicsHtml += `<p>${comic.name}</p>`;
                         }
                     }
-                    console.log(comicsHtml);
                     character_details.innerHTML = seriesHtml + eventsHtml + comicsHtml;
                 }
-                    else
-                    {
-                        console.log("NO");
-                    }
                     }
                     /*Check the superhero that doesn't work*/
                 catch (error) {
@@ -435,7 +420,6 @@ async function register() {
 
 
  async function populateUserProfile() {
-    console.log("partito");
     var email = localStorage.getItem("email");
     var username = localStorage.getItem("username");
     var _id = localStorage.getItem("_id");
@@ -444,7 +428,6 @@ async function register() {
         return;
     }
     try {
-        console.log("partito");
         const response = await fetch('/get_user_data', {
             method: "POST",
             headers: {
@@ -456,13 +439,10 @@ async function register() {
                 _id: _id // invio dell'id al posto della password.
             })
         });
-        console.log("partito");
         if (!response.ok) {
             throw new Error("Autenticazione non valida");
         }
-        console.log("partito");
         const userData = await response.json();
-        console.log(userData);
         // Mostra i dati dell'utente nel profilo
         document.getElementById("username").value = userData.username;
         document.getElementById("email").value = userData.email;
@@ -652,7 +632,6 @@ async function updateUser() {
 
 async function deleteUser() {
     var _id = localStorage.getItem("_id");
-    console.log("deleteUser",_id);
     try{
         const response = await fetch(`../delete-user/${_id}`, {
             method: 'DELETE',
@@ -661,7 +640,6 @@ async function deleteUser() {
                 'Content-Type': 'application/json'
             }
         });
-        console.log("Ended");
         alert("User successfully deleted. Now you will return to homepage");
         localStorage.clear();    
         //Going back to the homepage
