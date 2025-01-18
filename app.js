@@ -13,7 +13,7 @@ import {
   setup as swaggerUiSetup,
 } from "swagger-ui-express"
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './lib/api/docs/swagger-output.json'assert { type: 'json' };; // Specify the path to your generated Swagger JSON file
+import swaggerDocument from './lib/api/docs/swagger-output.json' with { type: 'json' };; // Specify the path to your generated Swagger JSON file
 /*End of import of necessary modules through ES6 syntax*/
 
 /*Global variable declaration*/
