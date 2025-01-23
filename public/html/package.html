@@ -60,30 +60,29 @@
     </script>
 
     <script >
-      async  function toggleLock() {
-    const lockDiv = document.getElementById('lock');
-    const cardPackButton = document.getElementById('cardPack');
-    const credits = await get_credits();
-    if (!localStorage.getItem("album_ID") || credits < 1  ) {
-        lockDiv.classList.add('active');
-        if (!localStorage.getItem("album_ID")) {
-            document.getElementById("error_Message").textContent = "Please select an album first";
+    async function toggleLock() {
+        const lockDiv = document.getElementById('lock');
+        const cardPackButton = document.getElementById('cardPack');
+        const credits = await get_credits();
+        if (!localStorage.getItem("album_ID") || credits < 1  ) {
+            lockDiv.classList.add('active');
+            if (!localStorage.getItem("album_ID")) {
+                document.getElementById("error_Message").textContent = "Please select an album first";
+            }
+            else
+            {
+                document.getElementById("error_Message").textContent = "Not enough credits";
+            }
+            lockDiv.classList.remove('hidden');
+            cardPackButton.disabled = true;
+        } else {
+            lockDiv.classList.remove('active');
+            lockDiv.classList.add('hidden');
+            cardPackButton.disabled = false;
         }
-        else
-        {
-            document.getElementById("error_Message").textContent = "Not enough credits";
-        }
-        lockDiv.classList.remove('hidden');
-        cardPackButton.disabled = true;
-    } else {
-        lockDiv.classList.remove('active');
-        lockDiv.classList.add('hidden');
-        cardPackButton.disabled = false;
     }
-}
     </script>
     
-     
 		<!-- import of JS -->
         <script src="../scripts/theme.js"></script>
         <!-- import of the bootstrap js -->
