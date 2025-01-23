@@ -36,3 +36,9 @@ Il file `package.json` contiene già le dipendenze e requisiti necessari per il 
 
 Dopo aver configurato i file `.env` come riportato nella [Relazione](./docs/Relazione.md#configurazione-dellapplicazione),  
 è sufficiente eseguire il comando `npm start` da terminale.  
+
+### Autore
+
+Stefano Damiani.
+
+Sono a disposizione per dubbi sul codice, nelle prossime settimane il codice verrà sistemato e commentato. Verranno segnalati gli errori presenti 
